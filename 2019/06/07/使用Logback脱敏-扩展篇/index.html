@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="介绍本文是一次数据泄漏之后的一点儿思考，系统日志对于后端系统而言是非常重要的，但是大多数开发人员在打印日志时，是非常随意的，不会去想太多，觉得日志打印的越多，排查总是越是方便。但是一些关键信息在打印日志时一定要注意，如果这些信息被人利用，可能会存在很大的风险。下面我举例几个场景，想想这样的场景中存在的风险  1、用户名、密码、交易密码等敏感信息，如果这些信息明文打印在日志，这些信息被人拿到之后，就">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用Logback脱敏-扩展篇">
+<meta property="og:url" content="http://yoursite.com/2019/06/07/使用Logback脱敏-扩展篇/index.html">
+<meta property="og:site_name" content="徐静个人博客">
+<meta property="og:description" content="介绍本文是一次数据泄漏之后的一点儿思考，系统日志对于后端系统而言是非常重要的，但是大多数开发人员在打印日志时，是非常随意的，不会去想太多，觉得日志打印的越多，排查总是越是方便。但是一些关键信息在打印日志时一定要注意，如果这些信息被人利用，可能会存在很大的风险。下面我举例几个场景，想想这样的场景中存在的风险  1、用户名、密码、交易密码等敏感信息，如果这些信息明文打印在日志，这些信息被人拿到之后，就">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/.com//2019_06_06_img1.jpg%22%E7%A4%BA%E4%BE%8B%E5%9B%BE%E7%89%87%22">
+<meta property="og:updated_time" content="2019-06-07T08:02:02.884Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用Logback脱敏-扩展篇">
+<meta name="twitter:description" content="介绍本文是一次数据泄漏之后的一点儿思考，系统日志对于后端系统而言是非常重要的，但是大多数开发人员在打印日志时，是非常随意的，不会去想太多，觉得日志打印的越多，排查总是越是方便。但是一些关键信息在打印日志时一定要注意，如果这些信息被人利用，可能会存在很大的风险。下面我举例几个场景，想想这样的场景中存在的风险  1、用户名、密码、交易密码等敏感信息，如果这些信息明文打印在日志，这些信息被人拿到之后，就">
+<meta name="twitter:image" content="http://yoursite.com/.com//2019_06_06_img1.jpg%22%E7%A4%BA%E4%BE%8B%E5%9B%BE%E7%89%87%22">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/06/07/使用Logback脱敏-扩展篇/">
+
+
+
+
+
+  <title>使用Logback脱敏-扩展篇 | 徐静个人博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">徐静个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">BK</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-schedule">
+          <a href="/schedule/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br>
+            
+            日程表
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/07/使用Logback脱敏-扩展篇/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="BK">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/head.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="徐静个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">使用Logback脱敏-扩展篇</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-07T15:34:54+08:00">
+                2019-06-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h4 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h4><p>本文是一次数据泄漏之后的一点儿思考，系统日志对于后端系统而言是非常重要的，但是大多数开发人员在打印日志时，是非常随意的，不会去想太多，觉得日志打印的越多，排查总是越是方便。但是一些关键信息在打印日志时一定要注意，如果这些信息被人利用，可能会存在很大的风险。<br>下面我举例几个场景，想想这样的场景中存在的风险</p>
+<blockquote>
+<p>1、用户名、密码、交易密码等敏感信息，如果这些信息明文打印在日志，这些信息被人拿到之后，就存在很大的安全隐患，这种隐患可能会直接导致用户的损失，影响公司的形象。</p>
+</blockquote>
+<blockquote>
+<p>2、薪资系统中，姓名、薪资等敏感信息，在每次列表、详情查询的时候不加考虑全部打印日志，只要有日志查看权限的人员中就可能查看到大部分人的薪资情况，导致公司薪资信息泄漏，可能会导致同一团队的人员的薪资泄漏，造成人员流失等</p>
+</blockquote>
+<p>其实对于这些场景，我们只要在日志打印时，进行脱敏处理就可以，最近公司存在一起数据泄漏的事件，在这个事件之后，公司也比较重视这一块，BOSS也因此很不开心，在此事之后，下班之余看了自己扩写了一个日志脱敏的工具，因为公司内部打印日志统一用的logback，本次扩展也是针对logback进行扩展</p>
+<h4 id="主要思路"><a href="#主要思路" class="headerlink" title="主要思路"></a>主要思路</h4><pre><code>每个团队甚至每个人打印日志的习惯和风格都不一样，基于日志格式输出的多样性，
+所以本人觉得最好的办法是通过配置脱敏规则，然后在日志输出之前进行脱敏处理</code></pre><p> 整理了一下我们系统中日志打印的风格，大数数是以下三种</p>
+<ul>
+<li>log.info(“xxxxx: {} “ , JSONObject.toJsonString(result));</li>
+<li>log.info(“xxxxx: {} “ , result );</li>
+<li>log.info(“xxxxxx: “ + result );<h3 id="实现过程"><a href="#实现过程" class="headerlink" title="实现过程"></a>实现过程</h3><blockquote>
+<p>第一步：针对上述日志整理，我们先定义一下自己的脱敏规则，增加配置文件logback-desensitization-rule.properties，配置如下<br>这里需要一些正则的知识，大家请自行补一下</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">#JSON字段中的mobile , telphone关键字对应的内容进行脱敏</span><br><span class="line">RULE_REG_1=(\&quot;mobile\&quot;|\&quot;telphone\&quot;)(:\&quot;)(\\w&#123;3&#125;)(\\w&#123;4&#125;)(\\w&#123;4&#125;)*(\&quot;)&amp;$1$2$3****$5$6</span><br><span class="line">#JSON字段中的&quot;证件号码&quot;关键字对应的内容进行脱敏</span><br><span class="line">RULE_REG_2=(\&quot;idcard\&quot;)(:\&quot;)(\\w&#123;2&#125;)(\\w&#123;1,&#125;)(\\w&#123;2&#125;)(\&quot;)&amp;$1$2$3*********$5$6</span><br><span class="line">#JSON字段中的&quot;密码&quot;对应的内容进行全部*显示 </span><br><span class="line">RULE_REG_3=(\&quot;password\&quot;)(:\&quot;)(\\w+)(\&quot;)&amp;$1$2*****$4</span><br><span class="line">#JSON字段中的&quot;用户名&quot;对应的内容除第一位，其它位脱敏显示  </span><br><span class="line">RULE_REG_4=(\&quot;customerName\&quot;|\&quot;userName\&quot;|\&quot;name\&quot;)(:\&quot;)([\u4E00-\u9FA5]&#123;1&#125;)[\u4E00-\u9FA5]&#123;1,&#125;(\&quot;)&amp;$1$2$3**$4</span><br><span class="line">#log.info(&quot;password:&#123;&#125;&quot;,password);类似这样的日志，关键字后的8位中，后五位脱敏显示 </span><br><span class="line">RULE_REG_5=(password|mobile)([:|=|,| ]+)(\\w&#123;3&#125;)(\\w&#123;5&#125;)&amp;$1$2$3*****</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<blockquote>
+<p>第二步：继承MessageConverter实现日志脱敏</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br></pre></td><td class="code"><pre><span class="line">package com.bk.framework.extension.logback;</span><br><span class="line"></span><br><span class="line">import ch.qos.logback.classic.LoggerContext;</span><br><span class="line">import ch.qos.logback.classic.pattern.MessageConverter;</span><br><span class="line">import ch.qos.logback.classic.spi.ILoggingEvent;</span><br><span class="line">import com.google.common.collect.Lists;</span><br><span class="line">import lombok.Data;</span><br><span class="line">import lombok.extern.slf4j.Slf4j;</span><br><span class="line">import org.apache.commons.lang3.ArrayUtils;</span><br><span class="line">import org.slf4j.LoggerFactory;</span><br><span class="line"></span><br><span class="line">import java.util.List;</span><br><span class="line">import java.util.Map;</span><br><span class="line">import java.util.regex.Pattern;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * @author BK</span><br><span class="line"> * @version V2.0</span><br><span class="line"> * @description: logback扩展消息转换器  支持正则脱敏</span><br><span class="line"> * @date 2019/6/1 21:23</span><br><span class="line"> */</span><br><span class="line">@Slf4j</span><br><span class="line">public class DesensitizationMessageConverter extends MessageConverter &#123;</span><br><span class="line">    private static volatile List&lt;RuleConfig&gt; configList;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public String convert(ILoggingEvent event) &#123;</span><br><span class="line">        initRuleConfig();</span><br><span class="line">        return doConvert(event);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 初始化规则配置</span><br><span class="line">     */</span><br><span class="line">    private void initRuleConfig() &#123;</span><br><span class="line">        if (configList == null) &#123;</span><br><span class="line">            synchronized (DesensitizationMessageConverter.class) &#123;</span><br><span class="line">                if (configList == null) &#123;</span><br><span class="line">                    configList = Lists.newArrayList();</span><br><span class="line">                    Map&lt;String, String&gt; propertyMap = ((LoggerContext) LoggerFactory.getILoggerFactory()).getCopyOfPropertyMap();</span><br><span class="line">                    for (String s : propertyMap.keySet()) &#123;</span><br><span class="line">                        if (s.startsWith(&quot;RULE_REG_&quot;)) &#123;</span><br><span class="line">                            String[] array = propertyMap.get(s).split(&quot;&amp;&quot;);</span><br><span class="line">                            if (ArrayUtils.isNotEmpty(array) &amp;&amp; array.length == 2) &#123;</span><br><span class="line">                                configList.add(new RuleConfig(array[0], array[1]));</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                    log.info(&quot;desensitization rule config init end ! &quot;);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 日志内容转换</span><br><span class="line">     *</span><br><span class="line">     * @param event</span><br><span class="line">     * @return</span><br><span class="line">     */</span><br><span class="line">    private String doConvert(ILoggingEvent event) &#123;</span><br><span class="line">        String result = event.getFormattedMessage();</span><br><span class="line">        if (configList != null) &#123;</span><br><span class="line">            for (RuleConfig ruleConfig : configList) &#123;</span><br><span class="line">                result = ruleConfig.apply(result);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            result = super.convert(event);</span><br><span class="line">        &#125;</span><br><span class="line">        return result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Data</span><br><span class="line">    private class RuleConfig &#123;</span><br><span class="line">        private String reg;</span><br><span class="line">        private String replacement;</span><br><span class="line"></span><br><span class="line">        RuleConfig(String reg, String replacement) &#123;</span><br><span class="line">            this.reg = reg;</span><br><span class="line">            this.replacement = replacement;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        String apply(String message) &#123;</span><br><span class="line">            return Pattern.compile(reg).matcher(message).replaceAll(replacement);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>第三步：增加logback.xml文件，整合规则与转换逻辑</p>
+<ul>
+<li>1、引入我们第一步配置的脱敏规则属性文件（这里要注意，属性的scope，默认是local，详细配置可以参考logback官网）</li>
+<li>2、配置我们第二步增加的转换器，同时配置conversionWord=”xxx”，当日志输出的pattern中引用%xxx时，会通过此转换顺进日志输出的转换<br>配置如下</li>
+</ul>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;configuration&gt;</span><br><span class="line">    &lt;property  scope=&quot;context&quot; resource=&quot;./logback-desensitization-rule.properties&quot;/&gt;</span><br><span class="line"></span><br><span class="line">    &lt;conversionRule conversionWord=&quot;msg&quot;</span><br><span class="line">                    converterClass=&quot;com.bk.framework.extension.logback.DesensitizationMessageConverter&quot;/&gt;</span><br><span class="line">    &lt;conversionRule conversionWord=&quot;rid&quot; converterClass=&quot;com.bk.framework.extension.logback.ClassicConverterExt&quot;/&gt;</span><br><span class="line">    &lt;property name=&quot;CONSOLE_LOG_PATTERN&quot;</span><br><span class="line">              value=&quot;%date&#123;yyyy-MM-dd HH:mm:ss&#125; | %boldYellow(%rid) | %highlight(%-5level) | %boldYellow(%thread) | %boldGreen(%logger) | %msg%n&quot;/&gt;</span><br><span class="line">    &lt;appender name=&quot;stdout&quot; class=&quot;ch.qos.logback.core.ConsoleAppender&quot;&gt;</span><br><span class="line">        &lt;encoder class=&quot;ch.qos.logback.classic.encoder.PatternLayoutEncoder&quot;&gt;</span><br><span class="line">            &lt;pattern&gt;$&#123;CONSOLE_LOG_PATTERN&#125;&lt;/pattern&gt;</span><br><span class="line">        &lt;/encoder&gt;</span><br><span class="line">    &lt;/appender&gt;</span><br><span class="line"></span><br><span class="line">    &lt;root level=&quot;INFO&quot;&gt;</span><br><span class="line">        &lt;appender-ref ref=&quot;stdout&quot;/&gt;</span><br><span class="line">    &lt;/root&gt;</span><br><span class="line">&lt;/configuration&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="测试效果"><a href="#测试效果" class="headerlink" title="测试效果"></a>测试效果</h4><ol>
+<li><p>编辑测试类</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">package com.bk.framework.extension;</span><br><span class="line"></span><br><span class="line">import lombok.extern.slf4j.Slf4j;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * @author BK</span><br><span class="line"> * @version V2.0</span><br><span class="line"> * @date 2019-06-03 23:43</span><br><span class="line"> */</span><br><span class="line">@Slf4j</span><br><span class="line">public class ExtensionApplication &#123;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        log.info(&quot;mobile:&#123;&#125;&quot;, &quot;13588889999&quot;);</span><br><span class="line">        log.info(&quot;userInfo:&#123;&#125;&quot;, &quot;&#123;\n&quot; + &quot;            \&quot;userName\&quot;:\&quot;罗志祥\&quot;，\n&quot; + &quot;            \&quot;idcard\&quot;:\&quot;321183197701017846\&quot;,\n&quot; + &quot;            \&quot;password\&quot;:\&quot;luozhixiang1234\&quot;,\n&quot; + &quot;            \&quot;mobile\&quot;:\&quot;18888888888\&quot;\n&quot; + &quot;        &#125;&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>运行main方法<br><img src="/.com//2019_06_06_img1.jpg%22%E7%A4%BA%E4%BE%8B%E5%9B%BE%E7%89%87%22" alt="运行结果"></p>
+<blockquote>
+<p>可以看到，只需要增加一个转换器，配置几个正则，就可以实现日志的脱敏，希望可以帮到大家</p>
+</blockquote>
+</li>
+</ol>
+<h4 id="关于优化的一点儿思路"><a href="#关于优化的一点儿思路" class="headerlink" title="关于优化的一点儿思路"></a>关于优化的一点儿思路</h4><p>其实到现在，我们可以实现日志脱敏，但是做法有些丑陋，不是很美观，可以推荐一个思路</p>
+<blockquote>
+<p>通过DTD或得schema文件 ，定义自己的XML格式文件</p>
+<ul>
+<li>设置对于json，xml，等不同式日志的脱敏关键字的replacement等信息，主要目的是为了简化配置，封装正则的配置难度，后台根据配置自动生成正则和替换规则</li>
+<li>在logback start时，解析配置文件，读取配置生成相应的正则，进行脱敏</li>
+</ul>
+</blockquote>
+<h4 id="一点儿建议"><a href="#一点儿建议" class="headerlink" title="一点儿建议"></a>一点儿建议</h4><ol>
+<li>过大对象一般不建议打日志<br> 对于一些过大的对象，比如查询列表的结果建议不要打印，如果需要打印的话，建议在DEBUG级别打印<br>一般这种日志，对于问题排查意义不大，而且这种日志导致日志文件巨增，同时如果日志被窃取会存在信息泄漏的风险</li>
+<li>打印日志时一定要有危机意识<br> 哪些日志可以打印，如些日志打印会有风险，一定要做到心里有数</li>
+<li>打印error级别日志时，建议使用log.error(“xxxxxx” ,e );<br>不要使用log.error(“xxxxxx” ,e.getMessage() );</li>
+</ol>
+<h4 id="参与贡献"><a href="#参与贡献" class="headerlink" title="参与贡献"></a>参与贡献</h4><p><a href="https://logback.qos.ch/manual/configuration.html" target="_blank" rel="noopener">https://logback.qos.ch/manual/configuration.html</a></p>
+<h4 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h4><p>这点儿东西写了三遍，简书是不是最近有问题，图片展示不了，没有发布的内容总是丢失，这已经是第三遍了。</p>
+<blockquote>
+<p>欢迎大家讨论，本人才疏学浅，有不正确的地方还请斧正。</p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/06/07/hello-world/" rel="next" title="Hello World">
+                <i class="fa fa-chevron-left"></i> Hello World
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/06/07/JVM篇之-GC算法/" rel="prev" title="JVM篇之 GC算法">
+                JVM篇之 GC算法 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+     <div id="gitalk-container"></div>
+  
+
+
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/head.png" alt="BK">
+            
+              <p class="site-author-name" itemprop="name">BK</p>
+              <p class="site-description motion-element" itemprop="description">记录生活的点点滴滴</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#介绍"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#主要思路"><span class="nav-number">2.</span> <span class="nav-text">主要思路</span></a></li></ol><li class="nav-item nav-level-3"><a class="nav-link" href="#实现过程"><span class="nav-number"></span> <span class="nav-text">实现过程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#测试效果"><span class="nav-number">1.</span> <span class="nav-text">测试效果</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#关于优化的一点儿思路"><span class="nav-number">2.</span> <span class="nav-text">关于优化的一点儿思路</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#一点儿建议"><span class="nav-number">3.</span> <span class="nav-text">一点儿建议</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参与贡献"><span class="nav-number">4.</span> <span class="nav-text">参与贡献</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#写在最后"><span class="nav-number">5.</span> <span class="nav-text">写在最后</span></a></li></ol></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">BK</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+   <script type="text/javascript">
+        var gitalk = new Gitalk({
+          clientID: '7bc426813d909e13c62c',
+          clientSecret: 'db4f912e1c0d11dd971890748a97d467ded5322f',
+          repo: 'xjbk.github.io',
+          owner: '18921569386',
+          admin: ['18921569386'],
+          id: location.pathname,
+          
+          distractionFreeMode: 'true'
+        })
+        gitalk.render('gitalk-container')           
+       </script>
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
