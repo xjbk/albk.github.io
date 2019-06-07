@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta name="description" content="什么是可见性问题在多线程环境下，一个线程对某个共享变量更新之后，其它线程访问该变量的线程，是否可以立刻读取到这个变量的更新结果，或者说，线程A对共享变量的修改，是否对线程B可见。这就是线程安全问题的另一个表现形式，可见性。 为什么出现这样的问题 线程是运行在处理器上，现在的计算机大多数都是多核的，计算机有主内存（RAM）、每个处理器有自己的写缓冲器（Store Buffer)、高速缓存，由于读取速">
 <meta name="keywords" content="后端">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://albk.tech/2019/06/07/hello-world/index.html">
+<meta property="og:title" content="从另一个角度了解JAVA的可见性">
+<meta property="og:url" content="http://albk.tech/2019/06/07/从另一个角度了解JAVA的可见性/index.html">
 <meta property="og:site_name" content="徐静个人博客">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta property="og:description" content="什么是可见性问题在多线程环境下，一个线程对某个共享变量更新之后，其它线程访问该变量的线程，是否可以立刻读取到这个变量的更新结果，或者说，线程A对共享变量的修改，是否对线程B可见。这就是线程安全问题的另一个表现形式，可见性。 为什么出现这样的问题 线程是运行在处理器上，现在的计算机大多数都是多核的，计算机有主内存（RAM）、每个处理器有自己的写缓冲器（Store Buffer)、高速缓存，由于读取速">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-06-07T01:41:13.351Z">
+<meta property="og:updated_time" content="2019-06-07T15:31:00.108Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hello World">
-<meta name="twitter:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta name="twitter:title" content="从另一个角度了解JAVA的可见性">
+<meta name="twitter:description" content="什么是可见性问题在多线程环境下，一个线程对某个共享变量更新之后，其它线程访问该变量的线程，是否可以立刻读取到这个变量的更新结果，或者说，线程A对共享变量的修改，是否对线程B可见。这就是线程安全问题的另一个表现形式，可见性。 为什么出现这样的问题 线程是运行在处理器上，现在的计算机大多数都是多核的，计算机有主内存（RAM）、每个处理器有自己的写缓冲器（Store Buffer)、高速缓存，由于读取速">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://albk.tech/2019/06/07/hello-world/">
+  <link rel="canonical" href="http://albk.tech/2019/06/07/从另一个角度了解JAVA的可见性/">
 
 
 
 
 
-  <title>Hello World | 徐静个人博客</title>
+  <title>从另一个角度了解JAVA的可见性 | 徐静个人博客</title>
   
 
 
@@ -283,7 +283,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://albk.tech/2019/06/07/hello-world/">
+    <link itemprop="mainEntityOfPage" href="http://albk.tech/2019/06/07/从另一个角度了解JAVA的可见性/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="BK">
@@ -300,7 +300,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Hello World</h1>
+          <h1 class="post-title" itemprop="name headline">从另一个角度了解JAVA的可见性</h1>
         
 
         <div class="post-meta">
@@ -312,7 +312,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-07T09:41:13+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-07T23:30:46+08:00">
                 2019-06-07
               </time>
             
@@ -350,19 +350,51 @@
       
 
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+        <h1 id="什么是可见性问题"><a href="#什么是可见性问题" class="headerlink" title="什么是可见性问题"></a>什么是可见性问题</h1><p>在多线程环境下，一个线程对某个共享变量更新之后，其它线程访问该变量的线程，是否可以立刻读取到这个变量的更新结果，或者说，线程A对共享变量的修改，是否对线程B可见。这就是线程安全问题的另一个表现形式，可见性。</p>
+<h1 id="为什么出现这样的问题"><a href="#为什么出现这样的问题" class="headerlink" title="为什么出现这样的问题"></a>为什么出现这样的问题</h1><p> 线程是运行在处理器上，现在的计算机大多数都是多核的，计算机有主内存（RAM）、每个处理器有自己的写缓冲器（Store Buffer)、高速缓存，由于读取速度不匹配，所以处理器并不是直接与主内存打交道，内存的读写操作都是通过寄存器、高速缓存、写缓冲器、无效化队列等部件执行内存读写的。这些部件相当于主内存数据的副本，副本存储的份数越多，数据一致性越难保证。多个处理器读写数据也是优先读写当前处理器的副本数据，这就可能导致多个副本之间数据不一致。</p>
+<blockquote>
+<p>既然有这样的问题，处理器是如何屏蔽的呢，这就引入了缓存一致性协议，也就是俗称的缓存同步。缓存同步使得一个处理器上可以读取到另一个处理器对共享变量所做的更新。在这里缓存一致性读者可以下来看一下MESI协议。</p>
+</blockquote>
+<p>所以，缓存同步的是可以保障可见性的。</p>
+<blockquote>
+<p>对变量的更新缓存的层级关系如下：<br>      <strong>写缓冲器  -&gt;  高速缓存  -&gt;  主内存</strong></p>
+</blockquote>
+<p>下面我们看两个定义</p>
+<blockquote>
+<ul>
+<li>处理器对<strong>共享变量</strong>所做的更新操作，从写缓冲器中写入处理器的高速缓存或者主内存中，这个动作被称为<strong>冲刷处理器缓存</strong></li>
+<li>处理器读取<strong>共享变量</strong>时，如果其它处理器更新了该值，那么处理器要从其它处理器的高速缓存或者主内存中进行同步相应的变量值到本缓存，这个动作被称为<strong>刷处理器缓存</strong></li>
+</ul>
+<ul>
+<li>对于上面两个定义，我们提取一下关键字：</li>
+</ul>
+</blockquote>
+<hr>
+<pre><code>**共享变量**     **更新（写）**      **读取（读）** </code></pre><p> 看到这里，我们其实主要提到的关键字是共享变量，主要的操作是读写，也就是说对于共享变量的读写才会有可见性问题。</p>
+<blockquote>
+<p><em>处理器会在写共享变量的时候冲刷处理器，读取共享变量的时候刷新处理器缓存，<strong>保证对变量的更新已经同步到高速缓存或者主内存，然后通过MESI协议，保证共享变量在多线程的可见性。</strong></em></p>
+</blockquote>
+<p> 从这个角度来分析，只要我们告诉处理器，谁是共享变量，处理器就可以保证该变量的可见性了</p>
+<blockquote>
+<p>　但是遗憾的是，JAVA中的变量都是JVM堆中存储的，无法告诉处理器哪个变量是共享变量。但是既然已经知道了处理器是怎么保证可见性的， 那么我们是不是可以定义一个关键字，对于这个关键字做下面这样的处理，就可以保证可见性呢</p>
+</blockquote>
+<pre><code>读的时候去刷处理器缓存，写的时候去冲刷处理器缓存</code></pre><p>java中就是这样处理的，在java中，有一个关键字<strong>volatile</strong>大家一定都知道，怎么去理解它</p>
+<blockquote>
+<ul>
+<li>被volatile标识的变量，其实就是告诉处理器，该变量是共享变量，需要保证该变量的可见性</li>
+<li>另一方面，被volatile修饰的变量，可以告诉JIT编译器该变量可能会被共享，优化时悠着点儿。</li>
+</ul>
+</blockquote>
+<p>从CPU指令角度来看volatile关键字的实现 ，其实是使用到的<strong>内存屏障</strong>，通过内存屏障保证在<strong>共享变量写的时候冲刷处理器</strong>，<strong>共享变量读的时候刷新处理器缓存</strong>。volatile关键字的内存屏障具体是如何实现的， 后续会有文章更新，希望大家继续关注我。</p>
+<blockquote>
+<p>到这里，希望看到本文章的读者是，可以从另一个角度去认识JAVA中的volatile关键字。</p>
+</blockquote>
+<p>##结尾再废话两句<br>在说起可见性的时候，我们说到了多线程，说到多线程我们一定会与多个处理器想到一起，<strong>其实并非在多个处理器下才会出现可见性问题， 在单核处理器也会出现可见性问题</strong></p>
+<blockquote>
+<p>单个处理器，在线程切换的时候 ，当前线程对共享变量的修改会作为线程的上下文保存起来，这就可能导致其它处理器无法看到该线程对共享变量的更新（无法看到该变量的相对新值）。</p>
+</blockquote>
+<pre><code>下面可能可能会写一篇关于JAVA中有序性的文章，请大家继续关注 </code></pre><hr>
+<p>希望大家可以继续关注我，一起成长，记录下成长路上的点点滴滴。</p>
 
       
     </div>
@@ -387,15 +419,15 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2019/06/07/JVM篇之栈的应用/" rel="next" title="JVM篇之栈的应用">
+                <i class="fa fa-chevron-left"></i> JVM篇之栈的应用
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/06/07/使用Logback脱敏-扩展篇/" rel="prev" title="使用Logback脱敏-扩展篇">
-                使用Logback脱敏-扩展篇 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -533,7 +565,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Quick-Start"><span class="nav-number">1.</span> <span class="nav-text">Quick Start</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-a-new-post"><span class="nav-number">1.1.</span> <span class="nav-text">Create a new post</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Run-server"><span class="nav-number">1.2.</span> <span class="nav-text">Run server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generate-static-files"><span class="nav-number">1.3.</span> <span class="nav-text">Generate static files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deploy-to-remote-sites"><span class="nav-number">1.4.</span> <span class="nav-text">Deploy to remote sites</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是可见性问题"><span class="nav-number">1.</span> <span class="nav-text">什么是可见性问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#为什么出现这样的问题"><span class="nav-number">2.</span> <span class="nav-text">为什么出现这样的问题</span></a></li></ol></div>
             
 
           </div>

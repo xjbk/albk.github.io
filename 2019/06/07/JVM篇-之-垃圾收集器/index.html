@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="JVM,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="##前言  本篇讲一下各种GC之间的细微差异讲的清楚的，希望通过本篇文章，读者可以对GC的种类有更深刻的了解。对于GC算法的可参数文章JVM篇之 GC算法  一、串行收集器-SerialSerial收集器最古老的，最稳定的，历经考验，内部的BUG比较少的一个收集器，单个GC线程进行垃圾回收。  会作为CMS收集器降级处理时会使用此收集器。  JVM GC参数增加JVM参数  -XX:+UseSer">
+<meta name="keywords" content="JVM">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JVM篇 之 垃圾收集器">
+<meta property="og:url" content="http://albk.tech/2019/06/07/JVM篇-之-垃圾收集器/index.html">
+<meta property="og:site_name" content="徐静个人博客">
+<meta property="og:description" content="##前言  本篇讲一下各种GC之间的细微差异讲的清楚的，希望通过本篇文章，读者可以对GC的种类有更深刻的了解。对于GC算法的可参数文章JVM篇之 GC算法  一、串行收集器-SerialSerial收集器最古老的，最稳定的，历经考验，内部的BUG比较少的一个收集器，单个GC线程进行垃圾回收。  会作为CMS收集器降级处理时会使用此收集器。  JVM GC参数增加JVM参数  -XX:+UseSer">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://psqhc4tjv.bkt.clouddn.com/1.png">
+<meta property="og:image" content="http://psqhc4tjv.bkt.clouddn.com/2.png">
+<meta property="og:image" content="http://psqhc4tjv.bkt.clouddn.com/3.png">
+<meta property="og:image" content="http://psqhc4tjv.bkt.clouddn.com/4.png">
+<meta property="og:image" content="http://psqhc4tjv.bkt.clouddn.com/5.png">
+<meta property="og:image" content="http://psqhc4tjv.bkt.clouddn.com/6.png">
+<meta property="og:image" content="http://psqhc4tjv.bkt.clouddn.com/7.png">
+<meta property="og:image" content="http://psqhc4tjv.bkt.clouddn.com/8.png">
+<meta property="og:image" content="http://psqhc4tjv.bkt.clouddn.com/9.png">
+<meta property="og:updated_time" content="2019-06-07T17:06:34.626Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JVM篇 之 垃圾收集器">
+<meta name="twitter:description" content="##前言  本篇讲一下各种GC之间的细微差异讲的清楚的，希望通过本篇文章，读者可以对GC的种类有更深刻的了解。对于GC算法的可参数文章JVM篇之 GC算法  一、串行收集器-SerialSerial收集器最古老的，最稳定的，历经考验，内部的BUG比较少的一个收集器，单个GC线程进行垃圾回收。  会作为CMS收集器降级处理时会使用此收集器。  JVM GC参数增加JVM参数  -XX:+UseSer">
+<meta name="twitter:image" content="http://psqhc4tjv.bkt.clouddn.com/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://albk.tech/2019/06/07/JVM篇-之-垃圾收集器/">
+
+
+
+
+
+  <title>JVM篇 之 垃圾收集器 | 徐静个人博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">徐静个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">BK</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-schedule">
+          <a href="/schedule/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br>
+            
+            日程表
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://albk.tech/2019/06/07/JVM篇-之-垃圾收集器/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="BK">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/head.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="徐静个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">JVM篇 之 垃圾收集器</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-07T22:44:26+08:00">
+                2019-06-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JVM/" itemprop="url" rel="index">
+                    <span itemprop="name">JVM</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>##前言</p>
+<blockquote>
+<p>本篇讲一下各种GC之间的细微差异讲的清楚的，希望通过本篇文章，读者可以对GC的种类有更深刻的了解。<br>对于GC算法的可参数文章<a href="https://www.jianshu.com/p/2ae9a0c9790a" target="_blank" rel="noopener">JVM篇之 GC算法</a></p>
+</blockquote>
+<h1 id="一、串行收集器-Serial"><a href="#一、串行收集器-Serial" class="headerlink" title="一、串行收集器-Serial"></a>一、串行收集器-Serial</h1><p>Serial收集器最古老的，最稳定的，历经考验，内部的BUG比较少的一个收集器，单个GC线程进行垃圾回收。</p>
+<blockquote>
+<p>会作为CMS收集器降级处理时会使用此收集器。</p>
+</blockquote>
+<h4 id="JVM-GC参数"><a href="#JVM-GC参数" class="headerlink" title="JVM GC参数"></a>JVM GC参数</h4><pre><code>增加JVM参数  -XX:+UseSerialGC 使用串行收集器，启用此参数后
+- 新生代、老年代使用串行回收
+- 新生代使用复制算法
+- 老年代使用标记-压缩</code></pre><h4 id="回收过程如下图："><a href="#回收过程如下图：" class="headerlink" title="回收过程如下图："></a>回收过程如下图：</h4><p><img src="http://psqhc4tjv.bkt.clouddn.com/1.png" alt="串行收集器.png"><br>通过上图，可以看出在应用程序线程到达安全点后，会全部暂停，然后运行GC线程(单线程)，GC线程线程执行完成之后，再开始执行应用线程。</p>
+<blockquote>
+<p>缺点：因为是串行的，只使用一个线程进行回收，所以会产生较长的停顿时间，在多核的CPU上，是无法发挥CPU的性能</p>
+</blockquote>
+<h4 id="GC日志"><a href="#GC日志" class="headerlink" title="GC日志"></a>GC日志</h4><p><img src="http://psqhc4tjv.bkt.clouddn.com/2.png" alt="Serial收集器GC日志 .png"></p>
+<blockquote>
+<p>当看GC日志有红色加粗显示的标识时，说明当前使用的是Serial收集器GC</p>
+</blockquote>
+<h1 id="二、并行收集器-ParNew"><a href="#二、并行收集器-ParNew" class="headerlink" title="二、并行收集器-ParNew"></a>二、并行收集器-ParNew</h1><p>Serial收集器<strong>新生代</strong>的<strong>并行</strong>版本，与Serial收集器相比只影响新生代的回收，此收集器需要多核cpu的支持，GC性能会更好。</p>
+<h4 id="JVM-GC参数-1"><a href="#JVM-GC参数-1" class="headerlink" title="JVM GC参数"></a>JVM GC参数</h4><pre><code>增加JVM参数  -XX:+UseParNewGC ，启用ParNew收集器，启用之后
+-新生代并行
+-新生代使用复制算法
+-老年代串行
+-老年代使用标记-压缩算法</code></pre><p>由于新生代是并行回收，可以通过参数来调整并行回收的线程数量</p>
+<h4 id><a href="#" class="headerlink" title=" "></a> </h4><pre><code>-XX:ParallelGCThreads 限制线程数量</code></pre><blockquote>
+<p>ParNew收集器与Serial收集器主要区别在于，新生代的回收，前者是多线程回收，后者是单线程回收</p>
+</blockquote>
+<h4 id="回收过程如下图：-1"><a href="#回收过程如下图：-1" class="headerlink" title="回收过程如下图："></a>回收过程如下图：</h4><p><img src="http://psqhc4tjv.bkt.clouddn.com/3.png" alt=" ParNew收集器.png"><br>通过上图，可以看出在应用程序线程到达安全点后，会全部暂停，然后运行<strong>多个GC线程</strong>去做垃圾回收，GC线程线程执行完成之后，再开始执行应用线程。</p>
+<h4 id="GC日志-1"><a href="#GC日志-1" class="headerlink" title="GC日志"></a>GC日志</h4><p> 在GC日志中出现上图中红色加粗显示的标识时，说明当前GC使用的是ParNew收集器,如下图显示<img src="http://psqhc4tjv.bkt.clouddn.com/4.png" alt="ParNew GC日志.png"></p>
+<h1 id="三、Parallel收集器"><a href="#三、Parallel收集器" class="headerlink" title="三、Parallel收集器"></a>三、Parallel收集器</h1><ul>
+<li>Serial收集器在新生代和老年代的多线程版收集器</li>
+<li>ParNew收集器，在老年代的并行版收集器<br># <ul>
+<li>新生代复制算法</li>
+<li>老年代 标记-压缩</li>
+<li>更加关注吞吐量<h4 id="JVM-GC参数-2"><a href="#JVM-GC参数-2" class="headerlink" title="JVM GC参数"></a>JVM GC参数</h4></li>
+<li>XX:+UseParallelGC <ul>
+<li>新生代使用Parallel收集器 </li>
+<li>老年代串行</li>
+</ul>
+</li>
+<li>XX:+UseParallelOldGC<ul>
+<li>新生代使用Parallel收集器</li>
+<li>并行老年代<h4 id="回收过程如下图"><a href="#回收过程如下图" class="headerlink" title="回收过程如下图"></a>回收过程如下图</h4><img src="http://psqhc4tjv.bkt.clouddn.com/5.png" alt="图片.png"><h4 id="GC日志-2"><a href="#GC日志-2" class="headerlink" title="GC日志"></a>GC日志</h4>在GC日志中出现上图中红色加粗显示的标识时，说明当前GC使用的是Parallel收集器,如下图显示!<img src="http://psqhc4tjv.bkt.clouddn.com/6.png" alt="Parallel GC日志.png"><h4 id="其它JVM参数"><a href="#其它JVM参数" class="headerlink" title="其它JVM参数"></a>其它JVM参数</h4>由于Parallel收集器比较关注吞吐量，所以还提供了一些配套的参数来控制GC的时间和占比<br># </li>
+</ul>
+</li>
+<li>XX:MaxGCPauseMills（停顿时间）<br>   设置GC的最大停顿时间，单位毫秒<br>   GC尽力保证回收时间不超过设定值<br>   作为一个GC的目标值</li>
+<li>XX:GCTimeRatio（可理解为吞吐量）<br>   GC所使用的CPU时间占用总时间的百分比<br>   在0-100的取值范围<br>   默认99，即最大允许1%时间做GC<br>通常情况下，我们希望GC停顿时间短 ,同时又希望吞吐量高，但事实上这两个参数是矛盾的。因为停顿时间和吞吐量不可能同时调优。在GC工作负载不变的情况下</li>
+</ul>
+</li>
+<li>如果提高GC的频率，因为频率高了，所以每次GC要处理的垃圾就少了，GC速度自然速度就会加快，但是频繁的GC会对系统的整体性能有损伤的，就会出现GC停顿时间短了，但是系统整体性能并不会很好。 </li>
+<li>如果降低GC的频率，自然而然每次要处理的垃圾就会增加，所以会导致每次GC的时间相对就会增加，但是对系统的整体性能是有所上升的。<h6 id="对吞吐量的理解"><a href="#对吞吐量的理解" class="headerlink" title="对吞吐量的理解"></a>对吞吐量的理解</h6></li>
+<li>cpu分到应用程序上的时间越多，吞吐量自然就会增加</li>
+<li>cpu分到GC线程上的时间越多，处理应用线程就会越少。<br>所以吞吐量，可以用应用线程占用CPU时间的长短来衡量。</li>
+</ul>
+<p>在停顿时间和吞吐量两者上，在GC工作负载不变的情况下，不可能两者同时提高，个人认为除非优化GC算法，从根本上降低GC的工作负载。</p>
+<blockquote>
+<p>所以在调试停顿时间 和吞吐量这两个参数时，要根据实际情况来调整。</p>
+</blockquote>
+<h1 id="四、CMS收集器"><a href="#四、CMS收集器" class="headerlink" title="四、CMS收集器"></a>四、CMS收集器</h1><p>CMS(Concurrent Mark Sweep) 并发标记清除，并发的意思是与用户线程一起运行，从名字上可以理解，此算法是使用标记-清除算法，比较关注停顿时间 。</p>
+<h4 id="JVM-GC参数-3"><a href="#JVM-GC参数-3" class="headerlink" title="JVM GC参数"></a>JVM GC参数</h4><pre><code>增加JVM参数  -XX:+UseConcMarkSweepGC，启用CMS收集器，启用之后
+- 新生代使用ParNew收集器
+- 新生代使用复制算法
+- 老年代使用CMS收集器
+- 老年代使用并发标记-清除</code></pre><h4 id="回收过程"><a href="#回收过程" class="headerlink" title="回收过程"></a>回收过程</h4><p>因为CMS收集器要与用户线程一起运行，所以它的算法和实现机制比较复杂，主要工作可以分为五步：</p>
+<ul>
+<li><p>初始标记</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">- 标识根节点直可达的对象</span><br><span class="line">- 速度快</span><br><span class="line">- 会产生STW</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>并发标记（和用户线程一起）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-  并发标记存活对象</span><br><span class="line">- 占用时间相对较长</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>重新标记</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">- 由于并发标记时，用户线程依然运行因以在正式清理前，对有变化的对象，所以需要修正，对对象重新标记</span><br><span class="line">- 会产生STW</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>并发清除（和用户线程一起）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-  基于标记结果，直接清理不可达的对象</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>并发重置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">- 为下一次CMS GC做准备</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h5 id="回收过程如下"><a href="#回收过程如下" class="headerlink" title="回收过程如下"></a>回收过程如下</h5><p><img src="http://psqhc4tjv.bkt.clouddn.com/7.png" alt="cms回收过程.png"></p>
+<h4 id="GC日志-3"><a href="#GC日志-3" class="headerlink" title="GC日志"></a>GC日志</h4><pre><code>CMS-initial-mark  初始标记
+CMS-concurrent-mark  并发标记
+CMS-remark   重新标记
+CMS-concurrent-sweep  并发清除
+CMS-concurrent-reset  并发重置</code></pre><p>具体的日志内容如下:<img src="http://psqhc4tjv.bkt.clouddn.com/8.png" alt="图片.png"></p>
+<h6 id="cms收集器的特点"><a href="#cms收集器的特点" class="headerlink" title="cms收集器的特点"></a>cms收集器的特点</h6><ul>
+<li>尽可能降低停顿</li>
+<li>会影响系统整体吞吐量和性能<br>  比如，在用户线程运行过程中，分一半CPU去做GC，系统性能在GC阶段，反应速度就下降一半</li>
+<li>清理不彻底<br>因为在清理阶段，用户线程还在运行，会产生新的垃圾，无法清理</li>
+<li>与标记-压缩相比会产生内存碎片 </li>
+<li>并发阶段会降低吞吐量</li>
+</ul>
+<p>因为CMS收集器和用户线程一起运行，所以不能在空间快满时再清理，因为与用户线程同时进入，如果在快满的时候进行清理的话，很容易出两用户线程申请内存，出现concurrent mode failure的情况，所以JVM考虑到这点，提供相应的参数进行设置触发GC的阈值</p>
+<p># 
+        -XX:CMSInitiatingOccupancyFraction设置触发GC的阈值<br>        -XX:CMSInitiatingPermOccupancyFraction：当永久区占用率达到这一百分比时，启动CMS回收<br>        -XX:CMSInitiatingOccupancyFraction：设置CMS收集器在老年代空间被使用多少后触发<br> 即使设置了阈值也不能保证不会出现并发收集的错误 ，如果不幸内存预留空间不够，就会引起concurrent mode failure，当发生这种情况之后，CMS收集器会降级到Serial收集器进行垃圾回收，这时候会暂停用户线程，会产生一个长时间的停顿来回收垃圾。<br>下图是发生concurrent mode failure时的GC日志<img src="http://psqhc4tjv.bkt.clouddn.com/9.png" alt="concurrent mode failure.png"></p>
+<h2 id="有关碎片"><a href="#有关碎片" class="headerlink" title="有关碎片"></a>有关碎片</h2><p>因为CMS采用标记清除算法，所以会产生大量的内存碎片，所以JVM提供了两个参数来对碎片进行整理<br>#
+        -XX:+ UseCMSCompactAtFullCollection<br>            Full GC后，进行一次整理<br>            整理过程是独占的，会引起停顿时间变长（因为要移动大量的存活对象)<br>        -XX:+CMSFullGCsBeforeCompaction<br>            设置进行几次Full GC后，进行一次碎片整理<br>        -XX:ParallelCMSThreads<br>           设定CMS的线程数量</p>
+<h1 id="五、各GC收集器对比"><a href="#五、各GC收集器对比" class="headerlink" title="五、各GC收集器对比"></a>五、各GC收集器对比</h1><table>
+<thead>
+<tr>
+<th>收集器</th>
+<th align="center">JVM参数</th>
+<th align="center">新生代</th>
+<th align="center">老年代</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Serial</td>
+<td align="center">-XX:+UseSerialGC</td>
+<td align="center">串行、复制算法</td>
+<td align="center">串行、标记压缩算法</td>
+</tr>
+<tr>
+<td>ParNew</td>
+<td align="center">-XX:+UseParNewGC</td>
+<td align="center">并行、复制算法</td>
+<td align="center">串行、标记压缩算法</td>
+</tr>
+<tr>
+<td>Parallel</td>
+<td align="center">-XX:+UseParallelGC  -XX:+UseParallelOldGC</td>
+<td align="center">串行或并行、复制算法</td>
+<td align="center">串行或者并行、标记压缩算法</td>
+</tr>
+<tr>
+<td>CMS</td>
+<td align="center">-XX:+UseConcMarkSweepGC</td>
+<td align="center">并行、复制算法</td>
+<td align="center">并发、标记清除算法</td>
+</tr>
+</tbody></table>
+<h2 id="六、疑问"><a href="#六、疑问" class="headerlink" title="六、疑问"></a>六、疑问</h2><ul>
+<li>为什么CMS不直接使用标记-压缩算法呢?</li>
+</ul>
+<blockquote>
+<p>作者：BK<br><a href="https://www.jianshu.com/u/a5230c4f0b7a" target="_blank" rel="noopener">https://www.jianshu.com/u/a5230c4f0b7a</a><br>鉴于本人才疏学浅,不足之处还望斧正,也欢迎关注我，无特殊说明的都是自己一字一句码出来的，尊重原创，如果转载请说明出处！</p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JVM/" rel="tag"># JVM</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/06/07/JVM篇之-GC算法/" rel="next" title="JVM篇之 GC算法">
+                <i class="fa fa-chevron-left"></i> JVM篇之 GC算法
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/06/07/JVM篇之类加载/" rel="prev" title="JVM篇之类加载">
+                JVM篇之类加载 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+     <div id="gitalk-container"></div>
+  
+
+
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/head.png" alt="BK">
+            
+              <p class="site-author-name" itemprop="name">BK</p>
+              <p class="site-description motion-element" itemprop="description">记录生活的点点滴滴</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、串行收集器-Serial"><span class="nav-number">1.</span> <span class="nav-text">一、串行收集器-Serial</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#JVM-GC参数"><span class="nav-number">1.0.0.1.</span> <span class="nav-text">JVM GC参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#回收过程如下图："><span class="nav-number">1.0.0.2.</span> <span class="nav-text">回收过程如下图：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#GC日志"><span class="nav-number">1.0.0.3.</span> <span class="nav-text">GC日志</span></a></li></ol></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#二、并行收集器-ParNew"><span class="nav-number">2.</span> <span class="nav-text">二、并行收集器-ParNew</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#JVM-GC参数-1"><span class="nav-number">2.0.0.1.</span> <span class="nav-text">JVM GC参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#"><span class="nav-number">2.0.0.2.</span> <span class="nav-text"> </span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#回收过程如下图：-1"><span class="nav-number">2.0.0.3.</span> <span class="nav-text">回收过程如下图：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#GC日志-1"><span class="nav-number">2.0.0.4.</span> <span class="nav-text">GC日志</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#三、Parallel收集器"><span class="nav-number">3.</span> <span class="nav-text">三、Parallel收集器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#JVM-GC参数-2"><span class="nav-number">3.0.0.1.</span> <span class="nav-text">JVM GC参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#回收过程如下图"><span class="nav-number">3.0.0.2.</span> <span class="nav-text">回收过程如下图</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#GC日志-2"><span class="nav-number">3.0.0.3.</span> <span class="nav-text">GC日志</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#其它JVM参数"><span class="nav-number">3.0.0.4.</span> <span class="nav-text">其它JVM参数</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#对吞吐量的理解"><span class="nav-number">3.0.0.4.0.1.</span> <span class="nav-text">对吞吐量的理解</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#四、CMS收集器"><span class="nav-number">4.</span> <span class="nav-text">四、CMS收集器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#JVM-GC参数-3"><span class="nav-number">4.0.0.1.</span> <span class="nav-text">JVM GC参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#回收过程"><span class="nav-number">4.0.0.2.</span> <span class="nav-text">回收过程</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#回收过程如下"><span class="nav-number">4.0.0.2.1.</span> <span class="nav-text">回收过程如下</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#GC日志-3"><span class="nav-number">4.0.0.3.</span> <span class="nav-text">GC日志</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#cms收集器的特点"><span class="nav-number">4.0.0.3.0.1.</span> <span class="nav-text">cms收集器的特点</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#有关碎片"><span class="nav-number">4.1.</span> <span class="nav-text">有关碎片</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#五、各GC收集器对比"><span class="nav-number">5.</span> <span class="nav-text">五、各GC收集器对比</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#六、疑问"><span class="nav-number">5.1.</span> <span class="nav-text">六、疑问</span></a></li></ol></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">BK</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+   <script type="text/javascript">
+        var gitalk = new Gitalk({
+          clientID: 'aa29fec414ea26547d94',
+          clientSecret: 'cfa63037be0c9d00d2a646bd05fa108b7e545a6b',
+          repo: 'xjbk',
+          owner: '18921569386',
+          admin: ['18921569386'],
+          id: location.pathname,
+          distractionFreeMode: 'true'
+        })
+        gitalk.render('gitalk-container')           
+       </script>
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
