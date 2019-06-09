@@ -83,16 +83,16 @@
 <meta name="keywords" content="扩展">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用Logback脱敏-扩展篇">
-<meta property="og:url" content="http://albk.tech/2019/06/07/使用Logback脱敏-扩展篇/index.html">
+<meta property="og:url" content="http://albk.tech/使用Logback脱敏-扩展篇.html">
 <meta property="og:site_name" content="徐静个人博客">
 <meta property="og:description" content="介绍本文是一次数据泄漏之后的一点儿思考，系统日志对于后端系统而言是非常重要的，但是大多数开发人员在打印日志时，是非常随意的，不会去想太多，觉得日志打印的越多，排查总是越是方便。但是一些关键信息在打印日志时一定要注意，如果这些信息被人利用，可能会存在很大的风险。下面我举例几个场景，想想这样的场景中存在的风险  1、用户名、密码、交易密码等敏感信息，如果这些信息明文打印在日志，这些信息被人拿到之后，就">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://albk.tech/2019/06/07/使用Logback脱敏-扩展篇/2019_06_06_img1.jpg">
+<meta property="og:image" content="http://albk.tech/2019_06_06_img1.jpg">
 <meta property="og:updated_time" content="2019-06-07T17:05:59.224Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用Logback脱敏-扩展篇">
 <meta name="twitter:description" content="介绍本文是一次数据泄漏之后的一点儿思考，系统日志对于后端系统而言是非常重要的，但是大多数开发人员在打印日志时，是非常随意的，不会去想太多，觉得日志打印的越多，排查总是越是方便。但是一些关键信息在打印日志时一定要注意，如果这些信息被人利用，可能会存在很大的风险。下面我举例几个场景，想想这样的场景中存在的风险  1、用户名、密码、交易密码等敏感信息，如果这些信息明文打印在日志，这些信息被人拿到之后，就">
-<meta name="twitter:image" content="http://albk.tech/2019/06/07/使用Logback脱敏-扩展篇/2019_06_06_img1.jpg">
+<meta name="twitter:image" content="http://albk.tech/2019_06_06_img1.jpg">
 
 
 
@@ -122,7 +122,7 @@
 
 
 
-  <link rel="canonical" href="http://albk.tech/2019/06/07/使用Logback脱敏-扩展篇/">
+  <link rel="canonical" href="http://albk.tech/使用Logback脱敏-扩展篇.html">
 
 
 
@@ -275,7 +275,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://albk.tech/2019/06/07/使用Logback脱敏-扩展篇/">
+    <link itemprop="mainEntityOfPage" href="http://albk.tech/使用Logback脱敏-扩展篇.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="BK">
@@ -345,8 +345,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2019/06/07/使用Logback脱敏-扩展篇/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2019/06/07/使用Logback脱敏-扩展篇/" itemprop="commentCount"></span>
+                <a href="/使用Logback脱敏-扩展篇.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/使用Logback脱敏-扩展篇.html" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -354,7 +354,7 @@
 
           
           
-             <span id="/2019/06/07/使用Logback脱敏-扩展篇/" class="leancloud_visitors" data-flag-title="使用Logback脱敏-扩展篇">
+             <span id="/使用Logback脱敏-扩展篇.html" class="leancloud_visitors" data-flag-title="使用Logback脱敏-扩展篇">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -423,7 +423,7 @@
 <li><p>编辑测试类</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">package com.bk.framework.extension;</span><br><span class="line"></span><br><span class="line">import lombok.extern.slf4j.Slf4j;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * @author BK</span><br><span class="line"> * @version V2.0</span><br><span class="line"> * @date 2019-06-03 23:43</span><br><span class="line"> */</span><br><span class="line">@Slf4j</span><br><span class="line">public class ExtensionApplication &#123;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        log.info(&quot;mobile:&#123;&#125;&quot;, &quot;13588889999&quot;);</span><br><span class="line">        log.info(&quot;userInfo:&#123;&#125;&quot;, &quot;&#123;\n&quot; + &quot;            \&quot;userName\&quot;:\&quot;罗志祥\&quot;，\n&quot; + &quot;            \&quot;idcard\&quot;:\&quot;321183197701017846\&quot;,\n&quot; + &quot;            \&quot;password\&quot;:\&quot;luozhixiang1234\&quot;,\n&quot; + &quot;            \&quot;mobile\&quot;:\&quot;18888888888\&quot;\n&quot; + &quot;        &#125;&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>运行main方法<br><img src="//albk.tech/2019/06/07/使用Logback脱敏-扩展篇/2019_06_06_img1.jpg" alt="运行结果" title="运行结果"></p>
+<li><p>运行main方法<br><img src="//albk.tech/2019_06_06_img1.jpg" alt="运行结果" title="运行结果"></p>
 <blockquote>
 <p>可以看到，只需要增加一个转换器，配置几个正则，就可以实现日志的脱敏，希望可以帮到大家</p>
 </blockquote>
@@ -499,7 +499,7 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/06/07/JVM篇之-GC算法/" rel="prev" title="JVM篇之 GC算法">
+              <a href="/JVM篇之-GC算法.html" rel="prev" title="JVM篇之 GC算法">
                 JVM篇之 GC算法 <i class="fa fa-chevron-right"></i>
               </a>
             
