@@ -87,18 +87,18 @@
 <meta property="og:site_name" content="徐静个人博客">
 <meta property="og:description" content="–引用计数法 是一个老牌垃圾回收算法，通过引用计算来标记，判断一个对象是不是垃圾，是不是要回收。 基本思想 ： 为每一个对象都标记一个引用数量，引用计数器的实现很简单，对于一个对象A，只要有任何一个对象引用了A，则A的引用计数器就加1，当引用失效时，引用计数器就减1。只要对象A的引用计数器的值为0，则对象A就不可能再被使用。  对于上图，根对象和ABC三个对象，有互相引用的关系，ABC引用计数分别">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://albk.tech/1.png">
-<meta property="og:image" content="http://albk.tech/2.png">
-<meta property="og:image" content="http://albk.tech/3.png">
-<meta property="og:image" content="http://albk.tech/4.png">
-<meta property="og:image" content="http://albk.tech/5.png">
-<meta property="og:image" content="http://albk.tech/6.png">
-<meta property="og:image" content="http://albk.tech/7.png">
-<meta property="og:updated_time" content="2019-06-07T17:06:32.279Z">
+<meta property="og:image" content="http://psqhc4tjv.bkt.clouddn.com/gc1.png">
+<meta property="og:image" content="http://psqhc4tjv.bkt.clouddn.com/gc2.png">
+<meta property="og:image" content="http://psqhc4tjv.bkt.clouddn.com/gc3.png">
+<meta property="og:image" content="http://psqhc4tjv.bkt.clouddn.com/gc4.png">
+<meta property="og:image" content="http://psqhc4tjv.bkt.clouddn.com/gc5.png">
+<meta property="og:image" content="http://psqhc4tjv.bkt.clouddn.com/gc6.png">
+<meta property="og:image" content="http://psqhc4tjv.bkt.clouddn.com/gc7.png">
+<meta property="og:updated_time" content="2019-06-12T17:37:29.047Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JVM篇之 GC算法">
 <meta name="twitter:description" content="–引用计数法 是一个老牌垃圾回收算法，通过引用计算来标记，判断一个对象是不是垃圾，是不是要回收。 基本思想 ： 为每一个对象都标记一个引用数量，引用计数器的实现很简单，对于一个对象A，只要有任何一个对象引用了A，则A的引用计数器就加1，当引用失效时，引用计数器就减1。只要对象A的引用计数器的值为0，则对象A就不可能再被使用。  对于上图，根对象和ABC三个对象，有互相引用的关系，ABC引用计数分别">
-<meta name="twitter:image" content="http://albk.tech/1.png">
+<meta name="twitter:image" content="http://psqhc4tjv.bkt.clouddn.com/gc1.png">
 
 
 
@@ -394,22 +394,22 @@
         <p>–引用计数法</p>
 <p>是一个老牌垃圾回收算法，通过引用计算来标记，判断一个对象是不是垃圾，是不是要回收。</p>
 <p>基本思想 ： 为每一个对象都标记一个引用数量，引用计数器的实现很简单，对于一个对象A，只要有任何一个对象引用了A，则A的引用计数器就加1，当引用失效时，引用计数器就减1。只要对象A的引用计数器的值为0，则对象A就不可能再被使用。</p>
-<p><img src="//albk.tech/1.png" alt="引用计数"></p>
+<p><img src="http://psqhc4tjv.bkt.clouddn.com/gc1.png" alt="引用计数"></p>
 <p>对于上图，根对象和ABC三个对象，有互相引用的关系，ABC引用计数分别为1</p>
 <p>当A对B的引用失去之后，B的引用变成了0，根据引用计数的规则，引用为0 的B对象就会当作垃圾回收掉，回收之后堆中只剩下根对象和AC。</p>
 <p>引用计数法带来的问题</p>
 <p>1、引用和去引用伴随加法和减法，，因为要实时的计算当前对象有多少个引用，对象的引用和消是无时无刻存在的，所以对影响有一定性能</p>
-<p>2、很难处理循环引用的问题，看下面的问题，<br><img src="//albk.tech/2.png" alt="循环引用"><br>上图中，根对象引用A，引用C，C引用B，B又引用A，所以引用计算A(2),C(1),B(1),当，根对象失去对A的引用时，由于A,B,C三者互相引用，所以三个对象的引用计数都是1，所以A,B,C相当于一个独立体，无法被回收，如果堆中存在大量这样的无用对象，就会导致不停的GC，而GC后又无效果，最终内存溢出</p>
+<p>2、很难处理循环引用的问题，看下面的问题，<br><img src="http://psqhc4tjv.bkt.clouddn.com/gc2.png" alt="循环引用"><br>上图中，根对象引用A，引用C，C引用B，B又引用A，所以引用计算A(2),C(1),B(1),当，根对象失去对A的引用时，由于A,B,C三者互相引用，所以三个对象的引用计数都是1，所以A,B,C相当于一个独立体，无法被回收，如果堆中存在大量这样的无用对象，就会导致不停的GC，而GC后又无效果，最终内存溢出</p>
 <p>–标记清除</p>
 <pre><code>标记-清除算法是现代垃圾回收算法的思想基础。    
 
-基本思想：标记-清除算法将垃圾回收分为两个阶段：标记阶段和清除阶段。一种可行的实现是，在标记阶段，首先通过根节点做搜索，标记所有从根节点开始的可达对象。因此，未被标记的对象就是未被引用的垃圾对象。然后，在清除阶段，清除所有未被标记的对象。</code></pre><p><img src="//albk.tech/3.png" alt="标记清除"><br>在标记清除算法中，大致总结思路如下：从根节点开始做两件事情</p>
+基本思想：标记-清除算法将垃圾回收分为两个阶段：标记阶段和清除阶段。一种可行的实现是，在标记阶段，首先通过根节点做搜索，标记所有从根节点开始的可达对象。因此，未被标记的对象就是未被引用的垃圾对象。然后，在清除阶段，清除所有未被标记的对象。</code></pre><p><img src="http://psqhc4tjv.bkt.clouddn.com/gc3.png" alt="标记清除"><br>在标记清除算法中，大致总结思路如下：从根节点开始做两件事情</p>
 <p>1、标活（标记可达对象）,标记A,B,C,D,E是可达对象</p>
 <p>2、去死 （去除不可达对象），去除黑色区域不可达对象</p>
 <p>通过上面图可以反应出，从堆中清空垃圾对象后，堆中的可用空间比较分散不连续，这时候如果有一个大的对象需要申请6个连续的空间，是无法分配，会造成大量的空间碎片。标记压缩算法可以避免这种情况的发生。</p>
 <p>–标记压缩</p>
 <p>基本思路：在标记-清除算法的基础上做了一些优化。和标记-清除算法一样，标记-压缩算法也首先需要从根节点开始，对所有可达对象做一次标记。但之后，它并不简单的清理未标记的对象，而是将所有的存活对象压缩到内存的一端。之后，清理边界外所有的空间。</p>
-<p>执行过程如下图：<br><img src="//albk.tech/4.png" alt="标记压缩"><br>标记压缩<br>大致总结思路如下：从根节点开始做两件事情</p>
+<p>执行过程如下图：<br><img src="http://psqhc4tjv.bkt.clouddn.com/gc4.png" alt="标记压缩"><br>标记压缩<br>大致总结思路如下：从根节点开始做两件事情</p>
 <p>1、标活</p>
 <p>2、移动存活对象到一端</p>
 <p>3、清除边界外的所有空间</p>
@@ -417,20 +417,20 @@
 <p>相比与标记清除算法，清理之后，会有大量的连续空间，不会有空间碎片，标记-压缩算法适合用于存活对象较多的场合，如老年代。</p>
 <p>–复制算法</p>
 <p>基本思想 ：将原有的内存空间分为两块，每次只使用其中一块，在垃圾回收时，将正在使用的内存中的存活对象复制到未使用的内存块中，之后，清除正在使用的内存块中的所有对象，交换两个内存的角色，完成垃圾回收</p>
-<p>复制算法两空一样大小的空间，下面是复制算法的执行过程：<br><img src="//albk.tech/5.png" alt="标记压缩"><br>复制算法<br>1、标活</p>
+<p>复制算法两空一样大小的空间，下面是复制算法的执行过程：<br><img src="http://psqhc4tjv.bkt.clouddn.com/gc5.png" alt="标记压缩"><br>复制算法<br>1、标活</p>
 <p>2、复制存活对象从FROM区域到TO区域</p>
 <p>3、交换FROM与TO的角色</p>
 <p>与标记-清除算法相比，复制算法是一种相对高效的回收方法，在现在的JVM中，复制算法一般会用于年轻代，但是复制算法的最大问题是：空间浪费，每次只使用一半的空间。</p>
 <p>可以想想，比如为复制算法分配8G的空间，但是在使用过程中会浪费4G的空间，当然8G的复制空间也只是举个例子，为了更能突出空间的浪费 ，因为复制算法本身的特性决定 ，是需要将存活对象进行一次复制 ，所以复制空间一般都不会很大，因为大的空间，如果在极端情况下，会涉及大量存活对象的移动，这种大量的移动对于系统本身，无疑问是灾难性的。</p>
 <p>在现在的JVM中也不会很大，每一块复制区域默认占用1/10的空间。比如，有10M的空间默认的，FROM和TO区域分别占用1M。</p>
-<p>所以一般整合标记清理思想，对复制算法会做一些改进，如下图：<br><img src="//albk.tech/6.png" alt="标记压缩"><br>复制算法改进<br>因为复制空间越大，浪费的空间越大，复制算法空间一般不会很大，一般在复制过程 中会了现两种情况</p>
+<p>所以一般整合标记清理思想，对复制算法会做一些改进，如下图：<br><img src="http://psqhc4tjv.bkt.clouddn.com/gc6.png" alt="标记压缩"><br>复制算法改进<br>因为复制空间越大，浪费的空间越大，复制算法空间一般不会很大，一般在复制过程 中会了现两种情况</p>
 <p>第一种：对象太大，放不到复制空间</p>
 <p>第二种：即使大对象放得下，也会导致大量的小对象无法存放，会导致大量的不符合老年代特性的小对象进行老年代</p>
 <p>所以复制算法一般需要一个担保空间，如上图中蓝色区域。</p>
 <p>比如：C、D、F是大对象，在一执行复制算法后，会直接进入到担保空间。</p>
 <p>对于对JVM堆内存划分有了解的人，可能对上面的图比较熟悉，这其实已经很接近JVM堆空间的结构，蓝色区域复制算法的担保空间就我们经常说的老年代(Old Generation)。顶部的区域就是年轻代（Eden），而中间两块复制算法的空间就是幸存区(Surivor),对比上面和下面的图，发现是完全可以吻合的。</p>
 <p>JVM堆内存划分</p>
-<p><img src="//albk.tech/7.png" alt="标记压缩"></p>
+<p><img src="http://psqhc4tjv.bkt.clouddn.com/gc7.png" alt="标记压缩"></p>
 <p>分代思想</p>
 <p>依据对象的存活周期进行分类</p>
 <p>第一类：有些对象创建后，很快就会回收，我们把短命对象归为新生代，</p>

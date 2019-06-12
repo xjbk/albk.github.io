@@ -87,12 +87,12 @@
 <meta property="og:site_name" content="徐静个人博客">
 <meta property="og:description" content="介绍本文是一次数据泄漏之后的一点儿思考，系统日志对于后端系统而言是非常重要的，但是大多数开发人员在打印日志时，是非常随意的，不会去想太多，觉得日志打印的越多，排查总是越是方便。但是一些关键信息在打印日志时一定要注意，如果这些信息被人利用，可能会存在很大的风险。下面我举例几个场景，想想这样的场景中存在的风险  1、用户名、密码、交易密码等敏感信息，如果这些信息明文打印在日志，这些信息被人拿到之后，就">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://albk.tech/2019_06_06_img1.jpg">
-<meta property="og:updated_time" content="2019-06-07T17:05:59.224Z">
+<meta property="og:image" content="http://psqhc4tjv.bkt.clouddn.com/2019_06_06_img1.jpg">
+<meta property="og:updated_time" content="2019-06-12T17:37:26.691Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用Logback脱敏-扩展篇">
 <meta name="twitter:description" content="介绍本文是一次数据泄漏之后的一点儿思考，系统日志对于后端系统而言是非常重要的，但是大多数开发人员在打印日志时，是非常随意的，不会去想太多，觉得日志打印的越多，排查总是越是方便。但是一些关键信息在打印日志时一定要注意，如果这些信息被人利用，可能会存在很大的风险。下面我举例几个场景，想想这样的场景中存在的风险  1、用户名、密码、交易密码等敏感信息，如果这些信息明文打印在日志，这些信息被人拿到之后，就">
-<meta name="twitter:image" content="http://albk.tech/2019_06_06_img1.jpg">
+<meta name="twitter:image" content="http://psqhc4tjv.bkt.clouddn.com/2019_06_06_img1.jpg">
 
 
 
@@ -421,28 +421,38 @@
 
 <h4 id="测试效果"><a href="#测试效果" class="headerlink" title="测试效果"></a>测试效果</h4><ol>
 <li><p>编辑测试类</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">package com.bk.framework.extension;</span><br><span class="line"></span><br><span class="line">import lombok.extern.slf4j.Slf4j;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * @author BK</span><br><span class="line"> * @version V2.0</span><br><span class="line"> * @date 2019-06-03 23:43</span><br><span class="line"> */</span><br><span class="line">@Slf4j</span><br><span class="line">public class ExtensionApplication &#123;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        log.info(&quot;mobile:&#123;&#125;&quot;, &quot;13588889999&quot;);</span><br><span class="line">        log.info(&quot;userInfo:&#123;&#125;&quot;, &quot;&#123;\n&quot; + &quot;            \&quot;userName\&quot;:\&quot;罗志祥\&quot;，\n&quot; + &quot;            \&quot;idcard\&quot;:\&quot;321183197701017846\&quot;,\n&quot; + &quot;            \&quot;password\&quot;:\&quot;luozhixiang1234\&quot;,\n&quot; + &quot;            \&quot;mobile\&quot;:\&quot;18888888888\&quot;\n&quot; + &quot;        &#125;&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">package com.bk.framework.extension;</span><br><span class="line"></span><br><span class="line">import lombok.extern.slf4j.Slf4j;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * @author BK</span><br><span class="line"> * @version V2.0</span><br><span class="line"> * @date 2019-06-03 23:43</span><br><span class="line"> */</span><br><span class="line">@Slf4j</span><br><span class="line">public class ExtensionApplication &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        log.info(&quot;mobile:&#123;&#125;&quot;, &quot;13588889999&quot;);</span><br><span class="line">        log.info(&quot;userInfo:&#123;&#125;&quot;, &quot;&#123;\n&quot; + &quot;            \&quot;userName\&quot;:\&quot;罗志祥\&quot;，\n&quot; + &quot;            \&quot;idcard\&quot;:\&quot;321183197701017846\&quot;,\n&quot; + &quot;            \&quot;password\&quot;:\&quot;luozhixiang1234\&quot;,\n&quot; + &quot;            \&quot;mobile\&quot;:\&quot;18888888888\&quot;\n&quot; + &quot;        &#125;&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>运行main方法<br><img src="//albk.tech/2019_06_06_img1.jpg" alt="运行结果" title="运行结果"></p>
+<li><p>运行main方法<br><img src="http://psqhc4tjv.bkt.clouddn.com/2019_06_06_img1.jpg" alt="运行结果"></p>
 <blockquote>
-<p>可以看到，只需要增加一个转换器，配置几个正则，就可以实现日志的脱敏，希望可以帮到大家</p>
+<p>可以看到，只需要增加一个转换器，配置几个正则，就可以实现日志的脱敏，希望可以帮到大家，相关的代码参考logback日志脱敏V1版本，传送门<a href="https://github.com/18921569386/framework" target="_blank" rel="noopener">项目地址</a>.</p>
 </blockquote>
-</li>
-</ol>
 <h4 id="关于优化的一点儿思路"><a href="#关于优化的一点儿思路" class="headerlink" title="关于优化的一点儿思路"></a>关于优化的一点儿思路</h4><p>其实到现在，我们可以实现日志脱敏，但是做法有些丑陋，不是很美观，可以推荐一个思路</p>
 <blockquote>
 <p>通过DTD或得schema文件 ，定义自己的XML格式文件</p>
+</blockquote>
+</li>
+</ol>
 <ul>
 <li>设置对于json，xml，等不同式日志的脱敏关键字的replacement等信息，主要目的是为了简化配置，封装正则的配置难度，后台根据配置自动生成正则和替换规则</li>
 <li>在logback start时，解析配置文件，读取配置生成相应的正则，进行脱敏</li>
 </ul>
+<p>另一种优化的思路</p>
+<blockquote>
+<p>增加注解，对需要脱敏的字段进行标记关键字 @Desensitization(type=Desensitization.NAME)  //或者 MOBILE 等其它，可以自己定义，只是需要在和配置文件中的统一</p>
+<ul>
+<li>增加SpringBoot注解  EnableLogBackDesensitization(pageckage = “com.bk.test, com.bk.xxx”)</li>
+<li>参考Spring的component-scan，进行 包路径扫描，把相关的字段，根据分类收集起来，对正则中关键字部分替换</li>
+<li>在收集完成之后打印日志时，进行脱敏</li>
+</ul>
 </blockquote>
+<p>相关代码会传到我的github上，相关的代码参考logback日志脱敏V2版本，传送门<a href="https://github.com/18921569386/framework" target="_blank" rel="noopener">项目地址</a></p>
 <h4 id="一点儿建议"><a href="#一点儿建议" class="headerlink" title="一点儿建议"></a>一点儿建议</h4><ol>
 <li>过大对象一般不建议打日志<br> 对于一些过大的对象，比如查询列表的结果建议不要打印，如果需要打印的话，建议在DEBUG级别打印<br>一般这种日志，对于问题排查意义不大，而且这种日志导致日志文件巨增，同时如果日志被窃取会存在信息泄漏的风险</li>
 <li>打印日志时一定要有危机意识<br> 哪些日志可以打印，如些日志打印会有风险，一定要做到心里有数</li>
 <li>打印error级别日志时，建议使用log.error(“xxxxxx” ,e );<br>不要使用log.error(“xxxxxx” ,e.getMessage() );</li>
 </ol>
-<h4 id="参与贡献"><a href="#参与贡献" class="headerlink" title="参与贡献"></a>参与贡献</h4><p><a href="https://logback.qos.ch/manual/configuration.html" target="_blank" rel="noopener">https://logback.qos.ch/manual/configuration.html</a></p>
+<h4 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h4><p><a href="https://logback.qos.ch/manual/configuration.html" target="_blank" rel="noopener">https://logback.qos.ch/manual/configuration.html</a></p>
 <h4 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h4><p>这点儿东西写了三遍，简书是不是最近有问题，图片展示不了，没有发布的内容总是丢失，这已经是第三遍了。</p>
 <blockquote>
 <p>欢迎大家讨论，本人才疏学浅，有不正确的地方还请斧正。</p>
@@ -656,7 +666,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#介绍"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#主要思路"><span class="nav-number">2.</span> <span class="nav-text">主要思路</span></a></li></ol><li class="nav-item nav-level-3"><a class="nav-link" href="#实现过程"><span class="nav-number"></span> <span class="nav-text">实现过程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#测试效果"><span class="nav-number">1.</span> <span class="nav-text">测试效果</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#关于优化的一点儿思路"><span class="nav-number">2.</span> <span class="nav-text">关于优化的一点儿思路</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#一点儿建议"><span class="nav-number">3.</span> <span class="nav-text">一点儿建议</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参与贡献"><span class="nav-number">4.</span> <span class="nav-text">参与贡献</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#写在最后"><span class="nav-number">5.</span> <span class="nav-text">写在最后</span></a></li></ol></li></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#介绍"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#主要思路"><span class="nav-number">2.</span> <span class="nav-text">主要思路</span></a></li></ol><li class="nav-item nav-level-3"><a class="nav-link" href="#实现过程"><span class="nav-number"></span> <span class="nav-text">实现过程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#测试效果"><span class="nav-number">1.</span> <span class="nav-text">测试效果</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#关于优化的一点儿思路"><span class="nav-number">2.</span> <span class="nav-text">关于优化的一点儿思路</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#一点儿建议"><span class="nav-number">3.</span> <span class="nav-text">一点儿建议</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参考资料"><span class="nav-number">4.</span> <span class="nav-text">参考资料</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#写在最后"><span class="nav-number">5.</span> <span class="nav-text">写在最后</span></a></li></ol></li></div>
             
 
           </div>
