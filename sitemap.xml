@@ -2,6 +2,27 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://albk.tech/categories/index.html</loc>
+    
+    <lastmod>2019-06-13T16:46:39.985Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://albk.tech/about/index.html</loc>
+    
+    <lastmod>2019-06-13T16:45:44.571Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://albk.tech/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E8%A3%85%E9%A5%B0%E6%A8%A1%E5%BC%8F.html</loc>
+    
+    <lastmod>2019-06-13T16:39:39.234Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://albk.tech/JVM%E7%AF%87%E4%B9%8B-GC%E7%AE%97%E6%B3%95.html</loc>
     
     <lastmod>2019-06-12T17:37:29.047Z</lastmod>
@@ -23,13 +44,6 @@
   </url>
   
   <url>
-    <loc>http://albk.tech/about/index.html</loc>
-    
-    <lastmod>2019-06-09T13:34:17.634Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://albk.tech/JVM%E7%AF%87-%E4%B9%8B-%E5%9E%83%E5%9C%BE%E6%94%B6%E9%9B%86%E5%99%A8.html</loc>
     
     <lastmod>2019-06-07T17:06:34.626Z</lastmod>
@@ -40,13 +54,6 @@
     <loc>http://albk.tech/JVM%E7%AF%87%E4%B9%8B%E7%B1%BB%E5%8A%A0%E8%BD%BD.html</loc>
     
     <lastmod>2019-06-07T17:05:16.911Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://albk.tech/categories/index.html</loc>
-    
-    <lastmod>2019-06-07T17:03:14.718Z</lastmod>
     
   </url>
   
