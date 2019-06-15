@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="设计模式,">
 
 
 
@@ -79,17 +79,20 @@
 
 
 
-<meta name="description" content="记录生活的点点滴滴">
-<meta name="keywords" content="后端">
-<meta property="og:type" content="website">
-<meta property="og:title" content="徐静的个人博客">
-<meta property="og:url" content="http://albk.tech/archives/2019/06/index.html">
+<meta name="description" content="设计模式是一套被在实际使用中，总结出来的一些代码设计经验的总结，学习设计模式有助于理解框架的结构。成熟的框架通常使用了多种设计模式，如果你熟悉这些设计模式，毫无疑问，对于快速掌握框架的结构有很大的帮助。  主要功能  用来建造一个对象“产品”，主要是用来创建那些构造过程比较复杂并且内部构造顺过程是比较稳定的对象。能够将一个复杂的构建与其表示相分离，使得同样的构建过程可以创建不同的表现(主要体现在">
+<meta name="keywords" content="设计模式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="设计模式-建造者模式">
+<meta property="og:url" content="http://albk.tech/设计模式-建造者模式.html">
 <meta property="og:site_name" content="徐静的个人博客">
-<meta property="og:description" content="记录生活的点点滴滴">
+<meta property="og:description" content="设计模式是一套被在实际使用中，总结出来的一些代码设计经验的总结，学习设计模式有助于理解框架的结构。成熟的框架通常使用了多种设计模式，如果你熟悉这些设计模式，毫无疑问，对于快速掌握框架的结构有很大的帮助。  主要功能  用来建造一个对象“产品”，主要是用来创建那些构造过程比较复杂并且内部构造顺过程是比较稳定的对象。能够将一个复杂的构建与其表示相分离，使得同样的构建过程可以创建不同的表现(主要体现在">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://psqhc4tjv.bkt.clouddn.com/11.jpg">
+<meta property="og:updated_time" content="2019-06-15T16:39:24.151Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="徐静的个人博客">
-<meta name="twitter:description" content="记录生活的点点滴滴">
+<meta name="twitter:title" content="设计模式-建造者模式">
+<meta name="twitter:description" content="设计模式是一套被在实际使用中，总结出来的一些代码设计经验的总结，学习设计模式有助于理解框架的结构。成熟的框架通常使用了多种设计模式，如果你熟悉这些设计模式，毫无疑问，对于快速掌握框架的结构有很大的帮助。  主要功能  用来建造一个对象“产品”，主要是用来创建那些构造过程比较复杂并且内部构造顺过程是比较稳定的对象。能够将一个复杂的构建与其表示相分离，使得同样的构建过程可以创建不同的表现(主要体现在">
+<meta name="twitter:image" content="http://psqhc4tjv.bkt.clouddn.com/11.jpg">
 
 
 
@@ -119,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="http://albk.tech/archives/2019/06/">
+  <link rel="canonical" href="http://albk.tech/设计模式-建造者模式.html">
 
 
 
 
 
-  <title>归档 | 徐静的个人博客</title>
+  <title>设计模式-建造者模式 | 徐静的个人博客</title>
   
 
 
@@ -144,7 +147,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -248,317 +251,220 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
+  <div id="posts" class="posts-expand">
+    
 
-      <span class="archive-page-counter">
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://albk.tech/设计模式-建造者模式.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="BK">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/head.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="徐静的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
         
         
+          <h1 class="post-title" itemprop="name headline">设计模式-建造者模式</h1>
         
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-15T23:07:15+08:00">
+                2019-06-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
           
-        
-        嗯..! 目前共计 8 篇日志。 继续努力。
-      </span>
 
-      
-
-        
-        
-        
-
-        
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2019">2019</h1>
-          </div>
-        
-        
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/设计模式-建造者模式.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/设计模式-建造者模式.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
 
-        
+          
+          
+             <span id="/设计模式-建造者模式.html" class="leancloud_visitors" data-flag-title="设计模式-建造者模式">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+          
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/设计模式-建造者模式.html" itemprop="url">
-              
-                <span itemprop="name">设计模式-建造者模式</span>
-              
-            </a>
-        
-      </h2>
+          
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-06-15T23:07:15+08:00" content="2019-06-15">
-          06-15
-        </time>
-      </div>
-      <meta name="baidu-site-verification" content="qZnrddf9DT">
-    </header>
-  </article>
+          
 
+        </div>
+      </header>
+    
 
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/设计模式-装饰模式.html" itemprop="url">
-              
-                <span itemprop="name">设计模式-装饰模式</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-06-13T21:57:03+08:00" content="2019-06-13">
-          06-13
-        </time>
-      </div>
-      <meta name="baidu-site-verification" content="qZnrddf9DT">
-    </header>
-  </article>
-
-
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/从另一个角度了解JAVA的可见性.html" itemprop="url">
-              
-                <span itemprop="name">从另一个角度了解JAVA的可见性</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-06-07T23:30:46+08:00" content="2019-06-07">
-          06-07
-        </time>
-      </div>
-      <meta name="baidu-site-verification" content="qZnrddf9DT">
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/JVM篇之栈的应用.html" itemprop="url">
-              
-                <span itemprop="name">JVM篇之栈的应用</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-06-07T23:29:22+08:00" content="2019-06-07">
-          06-07
-        </time>
-      </div>
-      <meta name="baidu-site-verification" content="qZnrddf9DT">
-    </header>
-  </article>
-
-
+      
+        <blockquote>
+<p>设计模式是一套被在实际使用中，总结出来的一些代码设计经验的总结，学习设计模式有助于理解框架的结构。成熟的框架通常使用了多种设计模式，如果你熟悉这些设计模式，毫无疑问，对于快速掌握框架的结构有很大的帮助。</p>
+</blockquote>
+<h2 id="主要功能"><a href="#主要功能" class="headerlink" title="主要功能"></a>主要功能</h2><blockquote>
+<p> 用来建造一个对象“产品”，主要是用来创建那些构造过程比较复杂并且内部构造顺过程是比较稳定的对象。能够将一个复杂的构建与其表示相分离，使得同样的构建过程可以创建不同的表现(主要体现在对象内在不同)</p>
+</blockquote>
+<h2 id="UML类图结构"><a href="#UML类图结构" class="headerlink" title="UML类图结构"></a>UML类图结构</h2><p><img src="http://psqhc4tjv.bkt.clouddn.com/11.jpg" alt="建造模式的UML的类图结构"></p>
+<h2 id="装饰模式中的角色"><a href="#装饰模式中的角色" class="headerlink" title="装饰模式中的角色"></a>装饰模式中的角色</h2><ul>
+<li><strong>抽象建造者(Builder)</strong>: 抽象接口，要以是抽象类也可以是接口，一般会有一些buildXX()方法，用于构造”产品”的各个部件，还会有一个方法build()，用于返回构造好的”产品”</li>
+<li><strong>具体构造角色(ConcreteBuilder )</strong>:实现Builder接口，实现各个部件的具体构造</li>
+<li><strong>产品角色(Product)</strong>：被构造的复杂对象</li>
+<li><strong>指挥者(Director)</strong>: 控制复杂对象的建造过程，也用它来隔离建造过程与产品的关联，包含一个具体构造角色，通过Set方法或构造方法传入</li>
+</ul>
+<h2 id="对模式的理解"><a href="#对模式的理解" class="headerlink" title="对模式的理解"></a>对模式的理解</h2><h3 id="适用场景"><a href="#适用场景" class="headerlink" title="适用场景"></a>适用场景</h3><ul>
+<li><p>需要生产的产品有复杂的内部结构</p>
+</li>
+<li><p>需要生产的产品对象的属性互相依赖</p>
+</li>
+<li><p>在构造过程中会用到其它对象</p>
+<h3 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h3></li>
+<li><p>关注的是零件类型在装配过程中的顺序</p>
+</li>
+<li><p>封装性，将一个复杂对象的构建过程与它的表示分离，隐藏构造的过程和细节，调用者只需要传入构造者，无需关心建造细节</p>
+</li>
+<li><p>建造者独立，容易扩展</p>
+</li>
+<li><p>便于控制细节风险，因为建造者独立，所以可以对建造过程逐步细化，而不对其它的模块产生任何影响</p>
+</li>
+</ul>
+<h2 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h2><ul>
+<li>Apache HttpClient包中的HttpClients</li>
+</ul>
+<h2 id="结尾"><a href="#结尾" class="headerlink" title="结尾"></a>结尾</h2><blockquote>
+<p>作者：BK</p>
+<p>简书地址：<a href="https://www.jianshu.com/u/a5230c4f0b7a" target="_blank" rel="noopener">https://www.jianshu.com/u/a5230c4f0b7a</a></p>
+<p>鉴于本人才疏学浅,不足之处还望斧正,也欢迎关注我，无特殊说明的都是自己一字一句码出来的，尊重原创，如果转载请说明出处！</p>
+</blockquote>
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/JVM篇之类加载.html" itemprop="url">
-              
-                <span itemprop="name">JVM篇之类加载</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-06-07T23:27:52+08:00" content="2019-06-07">
-          06-07
-        </time>
-      </div>
-      <meta name="baidu-site-verification" content="qZnrddf9DT">
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/JVM篇-之-垃圾收集器.html" itemprop="url">
-              
-                <span itemprop="name">JVM篇 之 垃圾收集器</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-06-07T22:44:26+08:00" content="2019-06-07">
-          06-07
-        </time>
-      </div>
-      <meta name="baidu-site-verification" content="qZnrddf9DT">
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/JVM篇之-GC算法.html" itemprop="url">
-              
-                <span itemprop="name">JVM篇之 GC算法</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-06-07T16:04:24+08:00" content="2019-06-07">
-          06-07
-        </time>
-      </div>
-      <meta name="baidu-site-verification" content="qZnrddf9DT">
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/使用Logback脱敏-扩展篇.html" itemprop="url">
-              
-                <span itemprop="name">使用Logback脱敏-扩展篇</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-06-07T15:34:54+08:00" content="2019-06-07">
-          06-07
-        </time>
-      </div>
-      <meta name="baidu-site-verification" content="qZnrddf9DT">
-    </header>
-  </article>
-
-
-
-      
-
     </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="http://psqhc4tjv.bkt.clouddn.com/mb-qcode.png" alt="BK wechat" style="width: 200px; max-width: 100%;">
+    <div>扫一扫，用手机访问本站</div>
+</div>
+
+      </div>
+    
+
+    
+
+    
+
+    <div>
+      
+        
+<div style="text-align:center;color: #ccc;font-size:14px;">
+---------------- 本文结束 ----------------<div>
+
+      
+    </div>
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/设计模式/" rel="tag"># 设计模式</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/设计模式-装饰模式.html" rel="next" title="设计模式-装饰模式">
+                <i class="fa fa-chevron-left"></i> 设计模式-装饰模式
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </div></div></article>
 
-  
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -566,6 +472,13 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
 
 
 
@@ -588,8 +501,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -667,6 +589,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#主要功能"><span class="nav-number">1.</span> <span class="nav-text">主要功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#UML类图结构"><span class="nav-number">2.</span> <span class="nav-text">UML类图结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#装饰模式中的角色"><span class="nav-number">3.</span> <span class="nav-text">装饰模式中的角色</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对模式的理解"><span class="nav-number">4.</span> <span class="nav-text">对模式的理解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#适用场景"><span class="nav-number">4.1.</span> <span class="nav-text">适用场景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#特点"><span class="nav-number">4.2.</span> <span class="nav-text">特点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#应用场景"><span class="nav-number">5.</span> <span class="nav-text">应用场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结尾"><span class="nav-number">6.</span> <span class="nav-text">结尾</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -807,6 +745,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
