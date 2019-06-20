@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://albk.tech/about/index.html</loc>
+    
+    <lastmod>2019-06-20T12:21:28.962Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://albk.tech/tags/index.html</loc>
     
     <lastmod>2019-06-17T14:41:28.764Z</lastmod>
@@ -19,13 +26,6 @@
     <loc>http://albk.tech/categories/index.html</loc>
     
     <lastmod>2019-06-13T16:46:39.985Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://albk.tech/about/index.html</loc>
-    
-    <lastmod>2019-06-13T16:45:44.571Z</lastmod>
     
   </url>
   
