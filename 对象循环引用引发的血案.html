@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="徐静的个人博客">
 <meta property="og:description" content="血案现场回顾最近在做一个项目，项目中使用到了图形数据库，从图形数据库中查询数据时候，因为查询返回的图中存在在一个环，导致下列异常 12Servlet.service() for servlet [springDispatcherServlet] in context with path [/Shop] threw exception [Request processing failed; nest">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-07-10T07:16:37.004Z">
+<meta property="og:updated_time" content="2019-07-10T07:22:45.353Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="对象循环引用引发的血案">
 <meta name="twitter:description" content="血案现场回顾最近在做一个项目，项目中使用到了图形数据库，从图形数据库中查询数据时候，因为查询返回的图中存在在一个环，导致下列异常 12Servlet.service() for servlet [springDispatcherServlet] in context with path [/Shop] threw exception [Request processing failed; nest">
@@ -378,7 +378,7 @@
 
 <p>看异常内容是因为环导致循环依赖，导致jackson在序列化的时候产生了无限递归。</p>
 <h1 id="什么是循环引用"><a href="#什么是循环引用" class="headerlink" title="什么是循环引用"></a>什么是循环引用</h1><p>​        循环引用就是循环依赖，就是两个或多个bean相互之前间的持有对方，比如对象CycleA,CycleB两个对象，如果CycleA引用了CycleB实例，CycleB引用了CycleA实例，它们最终反应为一个环</p>
-<h2 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h2><ol>
+<h1 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h1><ol>
 <li><p>使用<code>@JsonIgnore</code>标注在属性或对应的get、set方法上，在序列化的时候将该属性忽略,避免循环引用，但是这种方式在反序列化时，此属性同样会被忽略，不会自动注入。如果需要反序列化时注入该属性，则用下面的方法</p>
 </li>
 <li><p><code>@JsonBackReference</code>和<code>@JsonManagedReference</code>：这两个标注通常配对使用，通常用在父子关系中。</p>
@@ -645,7 +645,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#血案现场回顾"><span class="nav-number">1.</span> <span class="nav-text">血案现场回顾</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是循环引用"><span class="nav-number">2.</span> <span class="nav-text">什么是循环引用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#解决办法"><span class="nav-number">2.1.</span> <span class="nav-text">解决办法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jakson解决循环依赖总结"><span class="nav-number">2.2.</span> <span class="nav-text">jakson解决循环依赖总结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#本文解决方案"><span class="nav-number">3.</span> <span class="nav-text">本文解决方案</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#容易出现循环引用的场景"><span class="nav-number">4.</span> <span class="nav-text">容易出现循环引用的场景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#解决方案"><span class="nav-number">5.</span> <span class="nav-text">解决方案</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#延伸阅读"><span class="nav-number">6.</span> <span class="nav-text">延伸阅读</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#血案现场回顾"><span class="nav-number">1.</span> <span class="nav-text">血案现场回顾</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是循环引用"><span class="nav-number">2.</span> <span class="nav-text">什么是循环引用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#解决办法"><span class="nav-number">3.</span> <span class="nav-text">解决办法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#jakson解决循环依赖总结"><span class="nav-number">3.1.</span> <span class="nav-text">jakson解决循环依赖总结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#本文解决方案"><span class="nav-number">4.</span> <span class="nav-text">本文解决方案</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#容易出现循环引用的场景"><span class="nav-number">5.</span> <span class="nav-text">容易出现循环引用的场景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#解决方案"><span class="nav-number">6.</span> <span class="nav-text">解决方案</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#延伸阅读"><span class="nav-number">7.</span> <span class="nav-text">延伸阅读</span></a></li></ol></div>
             
 
           </div>
