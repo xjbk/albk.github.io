@@ -87,20 +87,20 @@
 <meta property="og:site_name" content="徐静的个人博客">
 <meta property="og:description" content="##前言  本篇讲一下各种GC之间的细微差异讲的清楚的，希望通过本篇文章，读者可以对GC的种类有更深刻的了解。对于GC算法的可参数文章JVM篇之 GC算法  一、串行收集器-SerialSerial收集器最古老的，最稳定的，历经考验，内部的BUG比较少的一个收集器，单个GC线程进行垃圾回收。  会作为CMS收集器降级处理时会使用此收集器。  JVM GC参数增加JVM参数  -XX:+UseSer">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://psqhc4tjv.bkt.clouddn.com/1.png">
-<meta property="og:image" content="http://psqhc4tjv.bkt.clouddn.com/2.png">
-<meta property="og:image" content="http://psqhc4tjv.bkt.clouddn.com/3.png">
-<meta property="og:image" content="http://psqhc4tjv.bkt.clouddn.com/4.png">
-<meta property="og:image" content="http://psqhc4tjv.bkt.clouddn.com/5.png">
-<meta property="og:image" content="http://psqhc4tjv.bkt.clouddn.com/6.png">
-<meta property="og:image" content="http://psqhc4tjv.bkt.clouddn.com/7.png">
-<meta property="og:image" content="http://psqhc4tjv.bkt.clouddn.com/8.png">
-<meta property="og:image" content="http://psqhc4tjv.bkt.clouddn.com/9.png">
-<meta property="og:updated_time" content="2019-06-07T17:06:34.626Z">
+<meta property="og:image" content="http://pic.albk.tech/1.png">
+<meta property="og:image" content="http://pic.albk.tech/2.png">
+<meta property="og:image" content="http://pic.albk.tech/3.png">
+<meta property="og:image" content="http://pic.albk.tech/4.png">
+<meta property="og:image" content="http://pic.albk.tech/5.png">
+<meta property="og:image" content="http://pic.albk.tech/6.png">
+<meta property="og:image" content="http://pic.albk.tech/7.png">
+<meta property="og:image" content="http://pic.albk.tech/8.png">
+<meta property="og:image" content="http://pic.albk.tech/9.png">
+<meta property="og:updated_time" content="2019-07-09T06:27:05.454Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JVM篇 之 垃圾收集器">
 <meta name="twitter:description" content="##前言  本篇讲一下各种GC之间的细微差异讲的清楚的，希望通过本篇文章，读者可以对GC的种类有更深刻的了解。对于GC算法的可参数文章JVM篇之 GC算法  一、串行收集器-SerialSerial收集器最古老的，最稳定的，历经考验，内部的BUG比较少的一个收集器，单个GC线程进行垃圾回收。  会作为CMS收集器降级处理时会使用此收集器。  JVM GC参数增加JVM参数  -XX:+UseSer">
-<meta name="twitter:image" content="http://psqhc4tjv.bkt.clouddn.com/1.png">
+<meta name="twitter:image" content="http://pic.albk.tech/1.png">
 
 
 
@@ -394,11 +394,11 @@
 <h4 id="JVM-GC参数"><a href="#JVM-GC参数" class="headerlink" title="JVM GC参数"></a>JVM GC参数</h4><pre><code>增加JVM参数  -XX:+UseSerialGC 使用串行收集器，启用此参数后
 - 新生代、老年代使用串行回收
 - 新生代使用复制算法
-- 老年代使用标记-压缩</code></pre><h4 id="回收过程如下图："><a href="#回收过程如下图：" class="headerlink" title="回收过程如下图："></a>回收过程如下图：</h4><p><img src="http://psqhc4tjv.bkt.clouddn.com/1.png" alt="串行收集器.png"><br>通过上图，可以看出在应用程序线程到达安全点后，会全部暂停，然后运行GC线程(单线程)，GC线程线程执行完成之后，再开始执行应用线程。</p>
+- 老年代使用标记-压缩</code></pre><h4 id="回收过程如下图："><a href="#回收过程如下图：" class="headerlink" title="回收过程如下图："></a>回收过程如下图：</h4><p><img src="http://pic.albk.tech/1.png" alt="串行收集器.png"><br>通过上图，可以看出在应用程序线程到达安全点后，会全部暂停，然后运行GC线程(单线程)，GC线程线程执行完成之后，再开始执行应用线程。</p>
 <blockquote>
 <p>缺点：因为是串行的，只使用一个线程进行回收，所以会产生较长的停顿时间，在多核的CPU上，是无法发挥CPU的性能</p>
 </blockquote>
-<h4 id="GC日志"><a href="#GC日志" class="headerlink" title="GC日志"></a>GC日志</h4><p><img src="http://psqhc4tjv.bkt.clouddn.com/2.png" alt="Serial收集器GC日志 .png"></p>
+<h4 id="GC日志"><a href="#GC日志" class="headerlink" title="GC日志"></a>GC日志</h4><p><img src="http://pic.albk.tech/2.png" alt="Serial收集器GC日志 .png"></p>
 <blockquote>
 <p>当看GC日志有红色加粗显示的标识时，说明当前使用的是Serial收集器GC</p>
 </blockquote>
@@ -411,8 +411,8 @@
 <h4 id><a href="#" class="headerlink" title=" "></a> </h4><pre><code>-XX:ParallelGCThreads 限制线程数量</code></pre><blockquote>
 <p>ParNew收集器与Serial收集器主要区别在于，新生代的回收，前者是多线程回收，后者是单线程回收</p>
 </blockquote>
-<h4 id="回收过程如下图：-1"><a href="#回收过程如下图：-1" class="headerlink" title="回收过程如下图："></a>回收过程如下图：</h4><p><img src="http://psqhc4tjv.bkt.clouddn.com/3.png" alt=" ParNew收集器.png"><br>通过上图，可以看出在应用程序线程到达安全点后，会全部暂停，然后运行<strong>多个GC线程</strong>去做垃圾回收，GC线程线程执行完成之后，再开始执行应用线程。</p>
-<h4 id="GC日志-1"><a href="#GC日志-1" class="headerlink" title="GC日志"></a>GC日志</h4><p> 在GC日志中出现上图中红色加粗显示的标识时，说明当前GC使用的是ParNew收集器,如下图显示<img src="http://psqhc4tjv.bkt.clouddn.com/4.png" alt="ParNew GC日志.png"></p>
+<h4 id="回收过程如下图：-1"><a href="#回收过程如下图：-1" class="headerlink" title="回收过程如下图："></a>回收过程如下图：</h4><p><img src="http://pic.albk.tech/3.png" alt=" ParNew收集器.png"><br>通过上图，可以看出在应用程序线程到达安全点后，会全部暂停，然后运行<strong>多个GC线程</strong>去做垃圾回收，GC线程线程执行完成之后，再开始执行应用线程。</p>
+<h4 id="GC日志-1"><a href="#GC日志-1" class="headerlink" title="GC日志"></a>GC日志</h4><p> 在GC日志中出现上图中红色加粗显示的标识时，说明当前GC使用的是ParNew收集器,如下图显示<img src="http://pic.albk.tech/4.png" alt="ParNew GC日志.png"></p>
 <h1 id="三、Parallel收集器"><a href="#三、Parallel收集器" class="headerlink" title="三、Parallel收集器"></a>三、Parallel收集器</h1><ul>
 <li>Serial收集器在新生代和老年代的多线程版收集器</li>
 <li>ParNew收集器，在老年代的并行版收集器<br># <ul>
@@ -426,7 +426,7 @@
 </li>
 <li>XX:+UseParallelOldGC<ul>
 <li>新生代使用Parallel收集器</li>
-<li>并行老年代<h4 id="回收过程如下图"><a href="#回收过程如下图" class="headerlink" title="回收过程如下图"></a>回收过程如下图</h4><img src="http://psqhc4tjv.bkt.clouddn.com/5.png" alt="图片.png"><h4 id="GC日志-2"><a href="#GC日志-2" class="headerlink" title="GC日志"></a>GC日志</h4>在GC日志中出现上图中红色加粗显示的标识时，说明当前GC使用的是Parallel收集器,如下图显示!<img src="http://psqhc4tjv.bkt.clouddn.com/6.png" alt="Parallel GC日志.png"><h4 id="其它JVM参数"><a href="#其它JVM参数" class="headerlink" title="其它JVM参数"></a>其它JVM参数</h4>由于Parallel收集器比较关注吞吐量，所以还提供了一些配套的参数来控制GC的时间和占比<br># </li>
+<li>并行老年代<h4 id="回收过程如下图"><a href="#回收过程如下图" class="headerlink" title="回收过程如下图"></a>回收过程如下图</h4><img src="http://pic.albk.tech/5.png" alt="图片.png"><h4 id="GC日志-2"><a href="#GC日志-2" class="headerlink" title="GC日志"></a>GC日志</h4>在GC日志中出现上图中红色加粗显示的标识时，说明当前GC使用的是Parallel收集器,如下图显示!<img src="http://pic.albk.tech/6.png" alt="Parallel GC日志.png"><h4 id="其它JVM参数"><a href="#其它JVM参数" class="headerlink" title="其它JVM参数"></a>其它JVM参数</h4>由于Parallel收集器比较关注吞吐量，所以还提供了一些配套的参数来控制GC的时间和占比<br># </li>
 </ul>
 </li>
 <li>XX:MaxGCPauseMills（停顿时间）<br>   设置GC的最大停顿时间，单位毫秒<br>   GC尽力保证回收时间不超过设定值<br>   作为一个GC的目标值</li>
@@ -466,12 +466,12 @@
 
 </li>
 </ul>
-<h5 id="回收过程如下"><a href="#回收过程如下" class="headerlink" title="回收过程如下"></a>回收过程如下</h5><p><img src="http://psqhc4tjv.bkt.clouddn.com/7.png" alt="cms回收过程.png"></p>
+<h5 id="回收过程如下"><a href="#回收过程如下" class="headerlink" title="回收过程如下"></a>回收过程如下</h5><p><img src="http://pic.albk.tech/7.png" alt="cms回收过程.png"></p>
 <h4 id="GC日志-3"><a href="#GC日志-3" class="headerlink" title="GC日志"></a>GC日志</h4><pre><code>CMS-initial-mark  初始标记
 CMS-concurrent-mark  并发标记
 CMS-remark   重新标记
 CMS-concurrent-sweep  并发清除
-CMS-concurrent-reset  并发重置</code></pre><p>具体的日志内容如下:<img src="http://psqhc4tjv.bkt.clouddn.com/8.png" alt="图片.png"></p>
+CMS-concurrent-reset  并发重置</code></pre><p>具体的日志内容如下:<img src="http://pic.albk.tech/8.png" alt="图片.png"></p>
 <h6 id="cms收集器的特点"><a href="#cms收集器的特点" class="headerlink" title="cms收集器的特点"></a>cms收集器的特点</h6><ul>
 <li>尽可能降低停顿</li>
 <li>会影响系统整体吞吐量和性能<br>  比如，在用户线程运行过程中，分一半CPU去做GC，系统性能在GC阶段，反应速度就下降一半</li>
@@ -481,7 +481,7 @@ CMS-concurrent-reset  并发重置</code></pre><p>具体的日志内容如下:<i
 </ul>
 <p>因为CMS收集器和用户线程一起运行，所以不能在空间快满时再清理，因为与用户线程同时进入，如果在快满的时候进行清理的话，很容易出两用户线程申请内存，出现concurrent mode failure的情况，所以JVM考虑到这点，提供相应的参数进行设置触发GC的阈值</p>
 <p># 
-        -XX:CMSInitiatingOccupancyFraction设置触发GC的阈值<br>        -XX:CMSInitiatingPermOccupancyFraction：当永久区占用率达到这一百分比时，启动CMS回收<br>        -XX:CMSInitiatingOccupancyFraction：设置CMS收集器在老年代空间被使用多少后触发<br> 即使设置了阈值也不能保证不会出现并发收集的错误 ，如果不幸内存预留空间不够，就会引起concurrent mode failure，当发生这种情况之后，CMS收集器会降级到Serial收集器进行垃圾回收，这时候会暂停用户线程，会产生一个长时间的停顿来回收垃圾。<br>下图是发生concurrent mode failure时的GC日志<img src="http://psqhc4tjv.bkt.clouddn.com/9.png" alt="concurrent mode failure.png"></p>
+        -XX:CMSInitiatingOccupancyFraction设置触发GC的阈值<br>        -XX:CMSInitiatingPermOccupancyFraction：当永久区占用率达到这一百分比时，启动CMS回收<br>        -XX:CMSInitiatingOccupancyFraction：设置CMS收集器在老年代空间被使用多少后触发<br> 即使设置了阈值也不能保证不会出现并发收集的错误 ，如果不幸内存预留空间不够，就会引起concurrent mode failure，当发生这种情况之后，CMS收集器会降级到Serial收集器进行垃圾回收，这时候会暂停用户线程，会产生一个长时间的停顿来回收垃圾。<br>下图是发生concurrent mode failure时的GC日志<img src="http://pic.albk.tech/9.png" alt="concurrent mode failure.png"></p>
 <h2 id="有关碎片"><a href="#有关碎片" class="headerlink" title="有关碎片"></a>有关碎片</h2><p>因为CMS采用标记清除算法，所以会产生大量的内存碎片，所以JVM提供了两个参数来对碎片进行整理<br>#
         -XX:+ UseCMSCompactAtFullCollection<br>            Full GC后，进行一次整理<br>            整理过程是独占的，会引起停顿时间变长（因为要移动大量的存活对象)<br>        -XX:+CMSFullGCsBeforeCompaction<br>            设置进行几次Full GC后，进行一次碎片整理<br>        -XX:ParallelCMSThreads<br>           设定CMS的线程数量</p>
 <h1 id="五、各GC收集器对比"><a href="#五、各GC收集器对比" class="headerlink" title="五、各GC收集器对比"></a>五、各GC收集器对比</h1><table>
@@ -534,7 +534,7 @@ CMS-concurrent-reset  并发重置</code></pre><p>具体的日志内容如下:<i
     
       <div>
         <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
-    <img id="wechat_subscriber_qcode" src="http://psqhc4tjv.bkt.clouddn.com/mb-qcode.png" alt="BK wechat" style="width: 200px; max-width: 100%;">
+    <img id="wechat_subscriber_qcode" src="http://pic.albk.tech/mb-qcode.png" alt="BK wechat" style="width: 200px; max-width: 100%;">
     <div>扫一扫，用手机访问本站</div>
 </div>
 
@@ -666,7 +666,7 @@ CMS-concurrent-reset  并发重置</code></pre><p>具体的日志内容如下:<i
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -677,7 +677,7 @@ CMS-concurrent-reset  并发重置</code></pre><p>具体的日志内容如下:<i
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -688,7 +688,7 @@ CMS-concurrent-reset  并发重置</code></pre><p>具体的日志内容如下:<i
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

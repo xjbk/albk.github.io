@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="JVM,statck,">
+  <meta name="keywords" content="循环引用,">
 
 
 
@@ -79,33 +79,18 @@
 
 
 
-<meta name="description" content="在JVM的运行时数据区包括：方法区、虚拟机栈、本地方法栈、堆、程序计数器。而虚拟机栈描述的是JAVA方法执行的内存模型：每个方法在执行的同时都会创建一个栈帧（Stack Frame),用于存储局部变量表、操作数栈、动态链接、方法出口等信息。  对于开头提到的信息相信每个对JVM有了解的人都明白，但是刚看到栈帧中的操作数栈，并不知道是做什么的？我不知道大家有没有这样的经历，知道有这么一个操作数栈">
-<meta name="keywords" content="JVM,statck">
+<meta name="description" content="血案现场回顾最近在做一个项目，项目中使用到了图形数据库，从图形数据库中查询数据时候，因为查询返回的图中存在在一个环，导致下列异常 12Servlet.service() for servlet [springDispatcherServlet] in context with path [/Shop] threw exception [Request processing failed; nest">
+<meta name="keywords" content="循环引用">
 <meta property="og:type" content="article">
-<meta property="og:title" content="JVM篇之栈的应用">
-<meta property="og:url" content="http://albk.tech/JVM篇之栈的应用.html">
+<meta property="og:title" content="对象循环引用引发的血案">
+<meta property="og:url" content="http://albk.tech/对象循环引用引发的血案.html">
 <meta property="og:site_name" content="徐静的个人博客">
-<meta property="og:description" content="在JVM的运行时数据区包括：方法区、虚拟机栈、本地方法栈、堆、程序计数器。而虚拟机栈描述的是JAVA方法执行的内存模型：每个方法在执行的同时都会创建一个栈帧（Stack Frame),用于存储局部变量表、操作数栈、动态链接、方法出口等信息。  对于开头提到的信息相信每个对JVM有了解的人都明白，但是刚看到栈帧中的操作数栈，并不知道是做什么的？我不知道大家有没有这样的经历，知道有这么一个操作数栈">
+<meta property="og:description" content="血案现场回顾最近在做一个项目，项目中使用到了图形数据库，从图形数据库中查询数据时候，因为查询返回的图中存在在一个环，导致下列异常 12Servlet.service() for servlet [springDispatcherServlet] in context with path [/Shop] threw exception [Request processing failed; nest">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://pic.albk.tech//stack1.png">
-<meta property="og:image" content="http://albk.tech/%C3%8F//stack2.png">
-<meta property="og:image" content="http://pic.albk.tech//stack3.png">
-<meta property="og:image" content="http://pic.albk.tech//stack4.png">
-<meta property="og:image" content="http://pic.albk.tech//stack5.png">
-<meta property="og:image" content="http://pic.albk.tech//stack6.png">
-<meta property="og:image" content="http://pic.albk.tech//stack7.png">
-<meta property="og:image" content="http://pic.albk.tech//stack8.png">
-<meta property="og:image" content="http://pic.albk.tech//stack9.png">
-<meta property="og:image" content="http://pic.albk.tech//stack10.png">
-<meta property="og:image" content="http://pic.albk.tech//stack11.png">
-<meta property="og:image" content="http://pic.albk.tech//stack-bce6979d3a70541d.png">
-<meta property="og:image" content="http://pic.albk.tech//stack12.png">
-<meta property="og:image" content="http://pic.albk.tech//stack13.png">
-<meta property="og:updated_time" content="2019-07-09T06:28:20.349Z">
+<meta property="og:updated_time" content="2019-07-10T07:16:37.004Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="JVM篇之栈的应用">
-<meta name="twitter:description" content="在JVM的运行时数据区包括：方法区、虚拟机栈、本地方法栈、堆、程序计数器。而虚拟机栈描述的是JAVA方法执行的内存模型：每个方法在执行的同时都会创建一个栈帧（Stack Frame),用于存储局部变量表、操作数栈、动态链接、方法出口等信息。  对于开头提到的信息相信每个对JVM有了解的人都明白，但是刚看到栈帧中的操作数栈，并不知道是做什么的？我不知道大家有没有这样的经历，知道有这么一个操作数栈">
-<meta name="twitter:image" content="http://pic.albk.tech//stack1.png">
+<meta name="twitter:title" content="对象循环引用引发的血案">
+<meta name="twitter:description" content="血案现场回顾最近在做一个项目，项目中使用到了图形数据库，从图形数据库中查询数据时候，因为查询返回的图中存在在一个环，导致下列异常 12Servlet.service() for servlet [springDispatcherServlet] in context with path [/Shop] threw exception [Request processing failed; nest">
 
 
 
@@ -135,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://albk.tech/JVM篇之栈的应用.html">
+  <link rel="canonical" href="http://albk.tech/对象循环引用引发的血案.html">
 
 
 
 
 
-  <title>JVM篇之栈的应用 | 徐静的个人博客</title>
+  <title>对象循环引用引发的血案 | 徐静的个人博客</title>
   
 
 
@@ -278,7 +263,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://albk.tech/JVM篇之栈的应用.html">
+    <link itemprop="mainEntityOfPage" href="http://albk.tech/对象循环引用引发的血案.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="BK">
@@ -295,7 +280,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">JVM篇之栈的应用</h2>
+          <h2 class="post-title" itemprop="name headline">对象循环引用引发的血案</h2>
         
 
         <div class="post-meta">
@@ -307,8 +292,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-07T23:29:22+08:00">
-                2019-06-07
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-09T10:49:53+08:00">
+                2019-07-09
               </time>
             
 
@@ -330,8 +315,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/JVM/" itemprop="url" rel="index">
-                    <span itemprop="name">JVM</span>
+                  <a href="/categories/总结/" itemprop="url" rel="index">
+                    <span itemprop="name">总结</span>
                   </a>
                 </span>
 
@@ -348,8 +333,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/JVM篇之栈的应用.html#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/JVM篇之栈的应用.html" itemprop="commentCount"></span>
+                <a href="/对象循环引用引发的血案.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/对象循环引用引发的血案.html" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -357,7 +342,7 @@
 
           
           
-             <span id="/JVM篇之栈的应用.html" class="leancloud_visitors" data-flag-title="JVM篇之栈的应用">
+             <span id="/对象循环引用引发的血案.html" class="leancloud_visitors" data-flag-title="对象循环引用引发的血案">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -388,36 +373,69 @@
       
 
       
-        <blockquote>
-<p> 在JVM的运行时数据区包括：方法区、虚拟机栈、本地方法栈、堆、程序计数器。而虚拟机栈描述的是JAVA方法执行的内存模型：每个方法在执行的同时都会创建一个栈帧（Stack Frame),用于存储局部变量表、操作数栈、动态链接、方法出口等信息。</p>
-</blockquote>
-<p>对于开头提到的信息相信每个对JVM有了解的人都明白，但是刚看到栈帧中的操作数栈，并不知道是做什么的？我不知道大家有没有这样的经历，知道有这么一个操作数栈，但是具体是做什么的，运行过程是什么样儿的，并不是很清楚</p>
-<p>下面我们看两个表达式</p>
+        <h1 id="血案现场回顾"><a href="#血案现场回顾" class="headerlink" title="血案现场回顾"></a>血案现场回顾</h1><p>最近在做一个项目，项目中使用到了图形数据库，从图形数据库中查询数据时候，因为查询返回的图中存在在一个环，导致下列异常</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Servlet.service() for servlet [springDispatcherServlet] in context with path [/Shop] threw exception [Request processing failed; </span><br><span class="line">nested exception is org.springframework.http.converter.HttpMessageNotWritableException: Could not write JSON: Infinite recursion (StackOverflowError) (through reference chain:</span><br></pre></td></tr></table></figure>
+
+<p>看异常内容是因为环导致循环依赖，导致jackson在序列化的时候产生了无限递归。</p>
+<h1 id="什么是循环引用"><a href="#什么是循环引用" class="headerlink" title="什么是循环引用"></a>什么是循环引用</h1><p>​        循环引用就是循环依赖，就是两个或多个bean相互之前间的持有对方，比如对象CycleA,CycleB两个对象，如果CycleA引用了CycleB实例，CycleB引用了CycleA实例，它们最终反应为一个环</p>
+<h2 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h2><ol>
+<li><p>使用<code>@JsonIgnore</code>标注在属性或对应的get、set方法上，在序列化的时候将该属性忽略,避免循环引用，但是这种方式在反序列化时，此属性同样会被忽略，不会自动注入。如果需要反序列化时注入该属性，则用下面的方法</p>
+</li>
+<li><p><code>@JsonBackReference</code>和<code>@JsonManagedReference</code>：这两个标注通常配对使用，通常用在父子关系中。</p>
+<ul>
+<li>序列化(serialization) </li>
+</ul>
+<p>@JsonBackReference标注的属性在序列化（serialization，即将对象转换为json数据）时，会被忽略（即结果中的json数据不包含该属性的内容）</p>
+<p>@JsonManagedReference标注的属性则会被序列化。在序列化时，@JsonBackReference的作用相当于@JsonIgnore，此时可以没有@JsonManagedReference。</p>
+<ul>
+<li>反序列化（deserialization）</li>
+</ul>
+<p>如果没有@JsonManagedReference，则不会自动注入@JsonBackReference标注的属性（被忽略的父或子）</p>
+<p>如果有@JsonManagedReference，则会自动注入自动注入@JsonBackReference标注的属性。 </p>
+</li>
+<li><p><code>@JsonIgnoreProperties(&quot;xxx&quot;)</code>标注在属性或对应的get、set方法上,忽略被标对象的某个属性</p>
+</li>
+<li><p>@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property=”id”)</p>
+</li>
+</ol>
+<ul>
+<li><p>generator:唯一标识的类型</p>
+</li>
+<li><p>Property 对象的唯一标识 ，无特殊需求的，一般都是对象的主键</p>
+</li>
+</ul>
+<p>​       jackson从2.0 增加注解<code>@JsonIdentityInfo</code>解决无限递归的问题,这种方法是，如果发现循环引用，在形成环的最后一步，会将被引用的对象置空，序列化后的结果可能会缺失一部分数据，导致数据不完整。如<strong>A-&gt;B-&gt;A</strong> , 最后返回的结果是中，<strong>A-B-&gt;null</strong></p>
+<h2 id="jakson解决循环依赖总结"><a href="#jakson解决循环依赖总结" class="headerlink" title="jakson解决循环依赖总结"></a>jakson解决循环依赖总结</h2><ul>
+<li>jackson提供的<code>1</code>，<code>2</code>，<code>3</code>方法，这种方式没有从根本上解决循环引用，只是避开了循环引用。</li>
+<li>第4种方法是将循环引用形成的环断开，来避免序列化失败，会导数据丢失</li>
+</ul>
+<h1 id="本文解决方案"><a href="#本文解决方案" class="headerlink" title="本文解决方案"></a>本文解决方案</h1><p> 因为我遇到的问题是，在查询图形数据库时候存在环，父级子级为同一个对象，数据结构，类似于 GraphNode嵌套GraphNode这样的结构，而且这些结构是接口返回接口的重要数据，无法使用，上述的方法1，2，3，又不允许数据有丢失，所以4的方法也无法使用。</p>
+<p>主要解决方法是在第4种方案的基础上，如果发生了A-&gt;B-A循环引用的时候，对返回结果整理成<u>A-&gt;B-&gt;A1</u>，A1是A对象的一个另一个实例，但是A1中保留了接口中必要的属性，引起循环引用的属性置为了空。</p>
 <blockquote>
-<p>波兰表达式法：标准四则运算表达式， 也称 中缀表达式<br>就是我们从小学习的四则运算的表达式。<br>例1：9+（3-1）*3+10/2 = ?</p>
+<p>查询图时候不使用spring-data-neo4j框架，使用Cypher查询，对查询结果和关系，自己生成一个图结构，然后，对图结果进行遍历，找出图中存在的环，在环最后闭合的时候 ，生成一个新对象A1，被当前对象引用，避开了循环引用。</p>
 </blockquote>
+<h1 id="容易出现循环引用的场景"><a href="#容易出现循环引用的场景" class="headerlink" title="容易出现循环引用的场景"></a>容易出现循环引用的场景</h1><ul>
+<li><input disabled type="checkbox"> ​    在一些表设计不合理的系统中存在多对多关系的场景，然后使用JPA、 hibernate去查询时</li>
+<li><input disabled type="checkbox"> ​    复杂的接口响应结果,对于一些接口响应结果不够精简，返回复杂的对象，也很容易出现</li>
+<li><input disabled type="checkbox"> ​    图形数据库查询，比如，使用spring-data-neo4j 查询结果中有存在环，导致数据返回前端时候序列化失败</li>
+</ul>
+<h1 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h1><ul>
+<li><p>fastjson解决循环引用，使用的特殊标识代替循环引用对象</p>
+</li>
+<li><p>Jackson循环依赖的解决方案不能从根本上解决问题，因为JAVA本身不是一个存在引用的语言，</p>
+</li>
+<li><p>考虑表设计上是否合理，是否存在问题</p>
+</li>
+<li><p>考虑接口的响应结构是否合理</p>
+<p>比如A依赖B，B依赖A中， 实际场景中，A中是不是可以只保留B的主键，B中保留A的主键。来避开循环引用</p>
+</li>
+</ul>
+<h1 id="延伸阅读"><a href="#延伸阅读" class="headerlink" title="延伸阅读"></a>延伸阅读</h1><p>java中引用无时无刻不在，在spring框架实例化对象的时候 ，也会出现循环依赖使容器抛出BeanCurrentlyCreationException,导致容器启动失败</p>
+<p>spring检测循环依赖</p>
 <blockquote>
-<p>逆波兰表达式法 -  后缀表达式<br>上述例1，转为后缀表达式为：9 3 1 - 3 * + 10 2 / + </p>
+<p>spring窗口将每一个正在创建的bean标识符放在一个“当前创建bean池“，对象在创建过程中一直存在 于这个池中，创建完毕从池中清除掉相应的标识符，如果发现要创建的对象已经在池里存在，则说明发生了循环依赖</p>
 </blockquote>
-<p>我们在计算例1的中缀表达式时，我们可以计算出结果是20，但是这样的描述，计算机无法实别，而计算机通过栈结构+后缀表达式，可以压栈出栈，得出表达式的结果。</p>
-<h2 id="操作数栈的执行过程"><a href="#操作数栈的执行过程" class="headerlink" title="操作数栈的执行过程"></a>操作数栈的执行过程</h2><blockquote>
-<p>数字入栈，操作符，从栈中弹出操作数，计算结果，结果入栈</p>
-</blockquote>
-<p>第一步：  将后缀表达式从头开始依次压入栈<br><img src="http://pic.albk.tech//stack1.png" alt="图片.png"><br>第二步：当遇到操作符“-”时，从栈中弹出两个操作数，第一个弹出的作为减数，第二个作为被减数，进行运算，计算出结果为2</p>
-<p><img src="%C3%8F//stack2.png" alt="图片.png"><br>第三步：将计算出的结果入栈：</p>
-<p><img src="http://pic.albk.tech//stack3.png" alt="图片.png"></p>
-<p>第四步：将3压入栈中<br><img src="http://pic.albk.tech//stack4.png" alt="图片.png"><br>第五步：处理”*”<br>从栈中弹出3 作为乘数  弹出2作为被乘数，并将结果6压入栈中，结果如下图</p>
-<p><img src="http://pic.albk.tech//stack5.png" alt="图片.png"><br>第六步：处理”+”<br>从栈中弹出6作为加数弹出9作为被加数，计算 9+6=15，将结果15入栈<br><img src="http://pic.albk.tech//stack6.png" alt="图片.png"></p>
-<p>第七步：10入栈，2 入栈<br><img src="http://pic.albk.tech//stack7.png" alt="图片.png"><br>第八步：处理 “/“<br>弹出操作数2作为除数，10作为被除数，10/2=5,将结果5入栈<br><img src="http://pic.albk.tech//stack8.png" alt="图片.png"><br>第九步：处理”+”<br>弹出操作数5作为加数，操作数15作为被加数，15+5=20，20即为结果<br>上述是整个操作数栈的执行过程。</p>
-<blockquote>
-<p>讲到这里，大家应该能明白JVM栈中的操作数栈的具体作用和执行过程了，但是有一个问题还没有解决，中缀表达式是怎么转换后后缀表达式？接下来我们看一下转换过程，其实在中缀转后缀的过程中，使用到的数据结构也是栈。</p>
-</blockquote>
-<h2 id="转换规则"><a href="#转换规则" class="headerlink" title="转换规则"></a>转换规则</h2><p>-　1、数字输出<br>-　2、运算符进栈<br>-　3、括号匹配出栈<br>-　4、如栈顶优先级高，则输出后一位数字，再出栈操作符</p>
-<h2 id="转换过程"><a href="#转换过程" class="headerlink" title="转换过程"></a>转换过程</h2><p>为了方便读者观看，我们把要转换的中缀表达式，在这里再显示一次，中缀表达式：9+（3-1）<em>3+10/2<br>第1步：根据上面的规则，数字9、3、1、输出，操作符+(-依次进栈，可以得到，栈中的内容如下图：<br><img src="http://pic.albk.tech//stack9.png" alt="图片.png"><br>第2步：这里需要注意一下，因为规则中，扩号匹配出栈，怎么理解呢，就是把左号到当前栈顶的符号依次弹出栈，加到输出结果中，<br><img src="http://pic.albk.tech//stack10.png" alt="图片.png"><br>第3步：处理”</em>“,这里要注意一个，这个符合规则 的第4条，“<em>”优先级要比现栈顶符号优先级高，所以先输出</em>后面的数字3，然后将*入栈，再依次将操作符出栈。</p>
-<p><img src="http://pic.albk.tech//stack11.png" alt="图片.png"></p>
-<p>第4步： “+ “入栈，输出10<br><img src="http://pic.albk.tech//stack-bce6979d3a70541d.png" alt="图片.png"><br>第5步：这时候和第三步情况一下，”/“优先级高于栈顶操作符“+”，所以先输出“/”后面的数字“2”，将”/“入栈， 依次将栈中操作符出栈，并输出<br><img src="http://pic.albk.tech//stack12.png" alt="图片.png"></p>
-<p>最终结果就是我们所需要的后缀表达式：<img src="http://pic.albk.tech//stack13.png" alt="图片.png"></p>
-<h1 id="使用java代码模拟jvm操作数栈的计算过程"><a href="#使用java代码模拟jvm操作数栈的计算过程" class="headerlink" title="使用java代码模拟jvm操作数栈的计算过程"></a>使用java代码模拟jvm操作数栈的计算过程</h1><p>相关代码传送门：<br><a href="https://github.com/18921569386/datastructure/blob/master/datastructure-base/src/main/java/com/albk/datastructure/base/statck/ext/OperateStack.java" target="_blank" rel="noopener">https://github.com/18921569386/datastructure/blob/master/datastructure-base/src/main/java/com/albk/datastructure/base/statck/ext/OperateStack.java</a></p>
+<p>spring中循环依赖包括，<code>构造器循环依赖</code>和<code>set方法循环依赖</code>，对于构造器循环依赖是无法解决的，对于 set方法循环依赖，只能解决作用域为单例的循环依赖，通过提前暴露一个刚完成构造器注入，但未完成其它步骤单例工厂方法，让其它bean可以引用到</p>
 
       
     </div>
@@ -451,9 +469,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/JVM/" rel="tag"># JVM</a>
-          
-            <a href="/tags/statck/" rel="tag"># statck</a>
+            <a href="/tags/循环引用/" rel="tag"># 循环引用</a>
           
         </div>
       
@@ -466,8 +482,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/JVM篇之类加载.html" rel="next" title="JVM篇之类加载">
-                <i class="fa fa-chevron-left"></i> JVM篇之类加载
+              <a href="/设计模式-建造者模式.html" rel="next" title="设计模式-建造者模式">
+                <i class="fa fa-chevron-left"></i> 设计模式-建造者模式
               </a>
             
           </div>
@@ -475,10 +491,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/从另一个角度了解JAVA的可见性.html" rel="prev" title="从另一个角度了解JAVA的可见性">
-                从另一个角度了解JAVA的可见性 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -633,7 +645,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#操作数栈的执行过程"><span class="nav-number">1.</span> <span class="nav-text">操作数栈的执行过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#转换规则"><span class="nav-number">2.</span> <span class="nav-text">转换规则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#转换过程"><span class="nav-number">3.</span> <span class="nav-text">转换过程</span></a></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#使用java代码模拟jvm操作数栈的计算过程"><span class="nav-number"></span> <span class="nav-text">使用java代码模拟jvm操作数栈的计算过程</span></a></li></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#血案现场回顾"><span class="nav-number">1.</span> <span class="nav-text">血案现场回顾</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是循环引用"><span class="nav-number">2.</span> <span class="nav-text">什么是循环引用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#解决办法"><span class="nav-number">2.1.</span> <span class="nav-text">解决办法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jakson解决循环依赖总结"><span class="nav-number">2.2.</span> <span class="nav-text">jakson解决循环依赖总结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#本文解决方案"><span class="nav-number">3.</span> <span class="nav-text">本文解决方案</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#容易出现循环引用的场景"><span class="nav-number">4.</span> <span class="nav-text">容易出现循环引用的场景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#解决方案"><span class="nav-number">5.</span> <span class="nav-text">解决方案</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#延伸阅读"><span class="nav-number">6.</span> <span class="nav-text">延伸阅读</span></a></li></ol></div>
             
 
           </div>
