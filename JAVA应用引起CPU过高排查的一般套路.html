@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="JVM,">
 
 
 
@@ -79,17 +79,18 @@
 
 
 
-<meta name="description" content="记录点滴">
-<meta name="keywords" content="后端">
-<meta property="og:type" content="website">
-<meta property="og:title" content="BK的网络日志">
-<meta property="og:url" content="http://albk.tech/categories/总结/index.html">
+<meta name="description" content="前言在日常工作中，因为编码不规范或者工具类使用不当，会导致cpu负载过高，响应时间变长，面对这样的情况，应该有一套自己的排查方法，下面分享下我个人的排查过程 过程分享第一步** 寻找病人 ​    通过 ps -ef|grep java 或者  jps -lm  先找出你需要排查的java应用，记录下PID 第二步 找出患病的部位 即找出该进程内最耗费CPU的线程 top -Hp pid （推荐使">
+<meta name="keywords" content="JVM">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JAVA应用引起CPU过高排查的一般套路">
+<meta property="og:url" content="http://albk.tech/JAVA应用引起CPU过高排查的一般套路.html">
 <meta property="og:site_name" content="BK的网络日志">
-<meta property="og:description" content="记录点滴">
+<meta property="og:description" content="前言在日常工作中，因为编码不规范或者工具类使用不当，会导致cpu负载过高，响应时间变长，面对这样的情况，应该有一套自己的排查方法，下面分享下我个人的排查过程 过程分享第一步** 寻找病人 ​    通过 ps -ef|grep java 或者  jps -lm  先找出你需要排查的java应用，记录下PID 第二步 找出患病的部位 即找出该进程内最耗费CPU的线程 top -Hp pid （推荐使">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-07-24T16:26:30.185Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="BK的网络日志">
-<meta name="twitter:description" content="记录点滴">
+<meta name="twitter:title" content="JAVA应用引起CPU过高排查的一般套路">
+<meta name="twitter:description" content="前言在日常工作中，因为编码不规范或者工具类使用不当，会导致cpu负载过高，响应时间变长，面对这样的情况，应该有一套自己的排查方法，下面分享下我个人的排查过程 过程分享第一步** 寻找病人 ​    通过 ps -ef|grep java 或者  jps -lm  先找出你需要排查的java应用，记录下PID 第二步 找出患病的部位 即找出该进程内最耗费CPU的线程 top -Hp pid （推荐使">
 
 
 
@@ -119,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://albk.tech/categories/总结/">
+  <link rel="canonical" href="http://albk.tech/JAVA应用引起CPU过高排查的一般套路.html">
 
 
 
 
 
-  <title>分类: 总结 | BK的网络日志</title>
+  <title>JAVA应用引起CPU过高排查的一般套路 | BK的网络日志</title>
   
 
 
@@ -144,7 +145,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -248,53 +249,236 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block category">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h2>总结<small>分类</small>
-        </h2>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://albk.tech/JAVA应用引起CPU过高排查的一般套路.html">
 
-      <h3 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="BK">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/head.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="BK的网络日志">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/对象循环引用引发的血案.html" itemprop="url">
-              
-                <span itemprop="name">对象循环引用引发的血案</span>
-              
-            </a>
         
-      </h3>
+          <h2 class="post-title" itemprop="name headline">JAVA应用引起CPU过高排查的一般套路</h2>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-07-09T10:49:53+08:00" content="2019-07-09">
-          07-09
-        </time>
-      </div>
-      <meta name="baidu-site-verification" content="qZnrddf9DT">
-    </header>
-  </article>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-22T14:38:16+08:00">
+                2019-07-22
+              </time>
+            
 
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/JAVA应用引起CPU过高排查的一般套路.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/JAVA应用引起CPU过高排查的一般套路.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/JAVA应用引起CPU过高排查的一般套路.html" class="leancloud_visitors" data-flag-title="JAVA应用引起CPU过高排查的一般套路">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>在日常工作中，因为编码不规范或者工具类使用不当，会导致cpu负载过高，响应时间变长，面对这样的情况，应该有一套自己的排查方法，下面分享下我个人的排查过程</p>
+<h4 id="过程分享"><a href="#过程分享" class="headerlink" title="过程分享"></a>过程分享</h4><p>第一步** 寻找病人</p>
+<p>​    通过 <code>ps -ef|grep java</code> 或者  <code>jps -lm</code>  先找出你需要排查的java应用，记录下PID</p>
+<p><strong>第二步</strong> 找出患病的部位</p>
+<p>即找出该进程内最耗费CPU的线程</p>
+<p><code>top -Hp pid</code> （<strong>推荐使用</strong>）  等价于 top -p pid 然后通过shift +h 切换到线程模式</p>
+<p><code>ps -Lfp pid</code></p>
+<p><code>ps -mp pid -o THREAD, tid, time</code></p>
+<p><strong>第三步</strong>  寻问患病部位的情况</p>
+<p>将找到的线程ID转成16进制（<code>printf &quot;%x\n&quot; 18888</code> //得到16进度的值）通过jstack打印出线程的日志</p>
+<p>打出进程相关线程的堆栈信息，进行分析，查看是因为什么原因导致CPU过高</p>
+<p><code>jstack -l 8888 | grep 49c8  -A 100</code> //得到线程18888相关的后100行日志</p>
+<p>*<em>第四步 *</em>分析病因</p>
+<p>仔细分析jstack日志，看是否可以定位到出现问题的代码，如果运气好的话， 我们去排查一下相关代码，具体问题具体分析，去解决掉引起问题的代码。</p>
+<ul>
+<li><p>在这一步，我一般会去排查一下wait 和 locked相关的日志，确认是不是线程死锁引起的，从JAVA5之后，线程Dump中可以直接报告出Java级别的死锁</p>
+</li>
+<li><p>如果在多线程的程序中，大量使用 synchronized，或者不适当的使用了它，会造成大量线程在临界区的入口等待，造成系统的性能大幅下降。如果在线程 DUMP中发现了这个情况，应该审查源码，改进程序。</p>
+<p>在分析jstack日志时，主要观察一下用户级别的线程，线程会处在不同的状态，主要关心以下几个状态</p>
+<p><strong>Wait on condition</strong></p>
+<p>常见情况是该线程在** <strong>sleep**</strong>，等待** <strong>sleep**</strong>的时间到了时候，将被唤醒。还有一种有可能是网络瓶颈，这需要介绍一些网络工具或网络相关的命令去排查一下</p>
+<p><strong>Waiting for monitor entry</strong></p>
+<p>对象以** <strong>“Entry Set”**</strong>中等待的线程状态是** <strong>“Waiting for monitor entry”**</strong></p>
+<p><strong>in Object.wait()</strong> </p>
+<p>对象在** <strong>“Wait Set”**</strong>中等待的线程状态是** <strong>“in Object.wait()”**</strong></p>
+</li>
+</ul>
+<p><strong>第五步</strong> 继续寻找原因</p>
+<ul>
+<li><p>jmap –heap 8888 打印堆的统计信息，分析JVM当前使用情况</p>
+</li>
+<li><p><code>jstat -gcutil 8888</code> 查看一下GC情况，看是不是因为频繁的GC引起，如果是因为GC引起我会通过命令 <code>jmap -histo:live 8888</code>，去看一下目前堆里在TOP-K存活对象的情况，如果发现在TOP-K中发现有一些项目中的类，我会去排查代码中，在使用该类的地方，是否因为使用不当，产生了一些强引用，导致频繁的GC。</p>
+</li>
+</ul>
+<p><strong>第六步</strong>  从其它方面寻找病因</p>
+<ul>
+<li>分析堆内存使用情况和YGC FULL GC频率，调优应用启动的JVM参数</li>
+</ul>
+<ul>
+<li><p>在应用启动时候增加相关的GC日志参数，输出更详细的日志,来帮忙我们更准确的找到问题。</p>
+</li>
+<li><p>dump 日志，使用MAT加载堆文件分析日志</p>
+</li>
+<li><p>当然引起应用响应缓慢的原因很多，除了从JVM方面排查 ，我们应该优先从应用层面排查，比如打印出每个方法的响应时间 ，如果线上应用，可以通过btrace来定位出现问题的地方，针对响应长的链路进行排查，有可能是因为程序编码不当，有可能是因为DB慢查询引起，这个对于不同的应用，可能会有不同的情况 ，具体问题具体分析了。</p>
+</li>
+</ul>
+<h4 id="常用的JVM命令"><a href="#常用的JVM命令" class="headerlink" title="常用的JVM命令"></a>常用的JVM命令</h4><h6 id="jmap"><a href="#jmap" class="headerlink" title="jmap"></a>jmap</h6><p>jmap -histo 88888 //查看对象创建的数量</p>
+<p>jmap -histo 8888  &gt;a.log</p>
+<p>jmap -histo:live 8888 查看内存中存活对象的数据和名称</p>
+<p>jmap -dump:format=b,file=outfile.bin 8888 //dump出堆内存</p>
+<p>jmap –heap 8888  //打印heap的概要信息</p>
+<h6 id="jstack"><a href="#jstack" class="headerlink" title="jstack"></a>jstack</h6><p>jstack  -l 8888</p>
+<h6 id="jstat"><a href="#jstat" class="headerlink" title="jstat"></a>jstat</h6><p>jstat -gc 8888 2000 20（每隔2秒监控一次GC情况，共做10）</p>
 
       
     </div>
+    
+    
+    
 
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="http://pic.albk.tech/mb-qcode.png" alt="BK wechat" style="width: 200px; max-width: 100%;">
+    <div>扫一扫，用手机访问本站</div>
+</div>
+
+      </div>
+    
+
+    
+
+    
+
+    <div>
+      
+        
+<div style="text-align:center;color: #ccc;font-size:14px;">
+---------------- 本文结束 ----------------<div>
+
+      
+    </div>
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JVM/" rel="tag"># JVM</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/我必须得告诉大家的MySQL优化原理.html" rel="next" title="【转】我必须得告诉大家的MySQL优化原理">
+                <i class="fa fa-chevron-left"></i> 【转】我必须得告诉大家的MySQL优化原理
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </div></div></article>
 
-  
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -302,6 +486,13 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
 
 
 
@@ -324,8 +515,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -403,6 +603,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#过程分享"><span class="nav-number">2.</span> <span class="nav-text">过程分享</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#常用的JVM命令"><span class="nav-number">3.</span> <span class="nav-text">常用的JVM命令</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#jmap"><span class="nav-number">3.0.1.</span> <span class="nav-text">jmap</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#jstack"><span class="nav-number">3.0.2.</span> <span class="nav-text">jstack</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#jstat"><span class="nav-number">3.0.3.</span> <span class="nav-text">jstat</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -542,6 +758,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   	
 
