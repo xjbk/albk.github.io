@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="BK的网络日志">
 <meta property="og:description" content="前言在日常工作中，因为编码不规范或者工具类使用不当，会导致cpu负载过高，响应时间变长，面对这样的情况，应该有一套自己的排查方法，下面分享下我个人的排查过程 过程分享第一步** 寻找病人 ​    通过 ps -ef|grep java 或者  jps -lm  先找出你需要排查的java应用，记录下PID 第二步 找出患病的部位 即找出该进程内最耗费CPU的线程 top -Hp pid （推荐使">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-07-24T16:26:30.185Z">
+<meta property="og:updated_time" content="2019-07-25T16:24:21.192Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JAVA应用引起CPU过高排查的一般套路">
 <meta name="twitter:description" content="前言在日常工作中，因为编码不规范或者工具类使用不当，会导致cpu负载过高，响应时间变长，面对这样的情况，应该有一套自己的排查方法，下面分享下我个人的排查过程 过程分享第一步** 寻找病人 ​    通过 ps -ef|grep java 或者  jps -lm  先找出你需要排查的java应用，记录下PID 第二步 找出患病的部位 即找出该进程内最耗费CPU的线程 top -Hp pid （推荐使">
@@ -371,11 +371,11 @@
 <li><p>如果在多线程的程序中，大量使用 synchronized，或者不适当的使用了它，会造成大量线程在临界区的入口等待，造成系统的性能大幅下降。如果在线程 DUMP中发现了这个情况，应该审查源码，改进程序。</p>
 <p>在分析jstack日志时，主要观察一下用户级别的线程，线程会处在不同的状态，主要关心以下几个状态</p>
 <p><strong>Wait on condition</strong></p>
-<p>常见情况是该线程在** <strong>sleep**</strong>，等待** <strong>sleep**</strong>的时间到了时候，将被唤醒。还有一种有可能是网络瓶颈，这需要介绍一些网络工具或网络相关的命令去排查一下</p>
+<p>常见情况是该线程在sleep，等待sleep的时间到了时候，将被唤醒。还有一种有可能是网络瓶颈，这需要介绍一些网络工具或网络相关的命令去排查一下</p>
 <p><strong>Waiting for monitor entry</strong></p>
-<p>对象以** <strong>“Entry Set”**</strong>中等待的线程状态是** <strong>“Waiting for monitor entry”**</strong></p>
+<p>对象以“Entry Set”中等待的线程状态是“Waiting for monitor entry”</p>
 <p><strong>in Object.wait()</strong> </p>
-<p>对象在** <strong>“Wait Set”**</strong>中等待的线程状态是** <strong>“in Object.wait()”**</strong></p>
+<p>对象在“Wait Set”中等待的线程状态是“in Object.wait()”</p>
 </li>
 </ul>
 <p><strong>第五步</strong> 继续寻找原因</p>
@@ -460,6 +460,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/java中synchronized与Lock的异同.html" rel="prev" title="java中synchronized与Lock的异同">
+                java中synchronized与Lock的异同 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -542,7 +546,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-count">12</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -564,7 +568,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

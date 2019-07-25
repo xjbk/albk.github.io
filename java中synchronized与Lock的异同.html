@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="JVM,">
+  <meta name="keywords" content="JAVA,总结,">
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="##上篇疑问  JVM篇 之 垃圾收集器中最后留一了一个问题为什么CSM不直接使用标记压缩算法？主要原因是，因为CMS垃圾回收是和用户线程一起运行的，如果使用标记压缩算法的话，就会导致大量在使用中的对象在堆中寻找不到，所以无法使用此算法。  #class装载验证流程 加载 此阶段是装载类的第一个阶段 ，负责通过各种方式获取类的二进制流，转为方法区数据结构，并在JAVA堆中生成对应的java.lan">
-<meta name="keywords" content="JVM">
+<meta name="description" content="前言synchronized和Lock通过互斥保障原子性，能够保护共享数据以实现线程安全，其作用包括保障原子性、可见性、有序性 常见问题在平时聊天或者面试过程中，可能会被问到，既然已经有了synchronized了，为什么JSR166小组花这么多时间来开发j.u.c的Lock框架呢，换句话说就是内部锁和显示锁之前有什么区别？ 分析synchronized（内部锁）java平台中的任何一个对象都有唯">
+<meta name="keywords" content="JAVA,总结">
 <meta property="og:type" content="article">
-<meta property="og:title" content="JVM篇之类加载">
-<meta property="og:url" content="http://albk.tech/JVM篇之类加载.html">
+<meta property="og:title" content="java中synchronized与Lock的异同">
+<meta property="og:url" content="http://albk.tech/java中synchronized与Lock的异同.html">
 <meta property="og:site_name" content="BK的网络日志">
-<meta property="og:description" content="##上篇疑问  JVM篇 之 垃圾收集器中最后留一了一个问题为什么CSM不直接使用标记压缩算法？主要原因是，因为CMS垃圾回收是和用户线程一起运行的，如果使用标记压缩算法的话，就会导致大量在使用中的对象在堆中寻找不到，所以无法使用此算法。  #class装载验证流程 加载 此阶段是装载类的第一个阶段 ，负责通过各种方式获取类的二进制流，转为方法区数据结构，并在JAVA堆中生成对应的java.lan">
+<meta property="og:description" content="前言synchronized和Lock通过互斥保障原子性，能够保护共享数据以实现线程安全，其作用包括保障原子性、可见性、有序性 常见问题在平时聊天或者面试过程中，可能会被问到，既然已经有了synchronized了，为什么JSR166小组花这么多时间来开发j.u.c的Lock框架呢，换句话说就是内部锁和显示锁之前有什么区别？ 分析synchronized（内部锁）java平台中的任何一个对象都有唯">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-06-07T17:05:16.911Z">
+<meta property="og:updated_time" content="2019-07-25T16:26:46.420Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="JVM篇之类加载">
-<meta name="twitter:description" content="##上篇疑问  JVM篇 之 垃圾收集器中最后留一了一个问题为什么CSM不直接使用标记压缩算法？主要原因是，因为CMS垃圾回收是和用户线程一起运行的，如果使用标记压缩算法的话，就会导致大量在使用中的对象在堆中寻找不到，所以无法使用此算法。  #class装载验证流程 加载 此阶段是装载类的第一个阶段 ，负责通过各种方式获取类的二进制流，转为方法区数据结构，并在JAVA堆中生成对应的java.lan">
+<meta name="twitter:title" content="java中synchronized与Lock的异同">
+<meta name="twitter:description" content="前言synchronized和Lock通过互斥保障原子性，能够保护共享数据以实现线程安全，其作用包括保障原子性、可见性、有序性 常见问题在平时聊天或者面试过程中，可能会被问到，既然已经有了synchronized了，为什么JSR166小组花这么多时间来开发j.u.c的Lock框架呢，换句话说就是内部锁和显示锁之前有什么区别？ 分析synchronized（内部锁）java平台中的任何一个对象都有唯">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://albk.tech/JVM篇之类加载.html">
+  <link rel="canonical" href="http://albk.tech/java中synchronized与Lock的异同.html">
 
 
 
 
 
-  <title>JVM篇之类加载 | BK的网络日志</title>
+  <title>java中synchronized与Lock的异同 | BK的网络日志</title>
   
 
 
@@ -263,7 +263,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://albk.tech/JVM篇之类加载.html">
+    <link itemprop="mainEntityOfPage" href="http://albk.tech/java中synchronized与Lock的异同.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="BK">
@@ -280,7 +280,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">JVM篇之类加载</h2>
+          <h2 class="post-title" itemprop="name headline">java中synchronized与Lock的异同</h2>
         
 
         <div class="post-meta">
@@ -292,8 +292,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-07T23:27:52+08:00">
-                2019-06-07
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-25T22:43:41+08:00">
+                2019-07-25
               </time>
             
 
@@ -315,8 +315,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/JVM/" itemprop="url" rel="index">
-                    <span itemprop="name">JVM</span>
+                  <a href="/categories/总结/" itemprop="url" rel="index">
+                    <span itemprop="name">总结</span>
                   </a>
                 </span>
 
@@ -333,8 +333,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/JVM篇之类加载.html#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/JVM篇之类加载.html" itemprop="commentCount"></span>
+                <a href="/java中synchronized与Lock的异同.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/java中synchronized与Lock的异同.html" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -342,7 +342,7 @@
 
           
           
-             <span id="/JVM篇之类加载.html" class="leancloud_visitors" data-flag-title="JVM篇之类加载">
+             <span id="/java中synchronized与Lock的异同.html" class="leancloud_visitors" data-flag-title="java中synchronized与Lock的异同">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -373,98 +373,33 @@
       
 
       
-        <p>##上篇疑问</p>
-<blockquote>
-<p><a href="http://connorlin.github.io" target="_blank" rel="noopener">JVM篇 之 垃圾收集器</a>中最后留一了一个问题<br>为什么CSM不直接使用标记压缩算法？<br>主要原因是，因为CMS垃圾回收是和用户线程一起运行的，如果使用标记压缩算法的话，就会导致大量在使用中的对象在堆中寻找不到，所以无法使用此算法。</p>
-</blockquote>
-<p>#class装载验证流程</p>
-<h2 id="加载"><a href="#加载" class="headerlink" title="加载"></a>加载</h2><p> 此阶段是装载类的第一个阶段 ，负责通过各种方式获取类的二进制流，转为方法区数据结构，并在JAVA堆中生成对应的java.lang.Class对象</p>
-<h2 id="连接"><a href="#连接" class="headerlink" title="连接"></a>连接</h2><p>连接过程又分为三个步骤，验证、准备、解析</p>
-<h4 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h4><blockquote>
-<p>验证目的是为了保证Class流的格式是正确的,一定类通过了字节码检查，并不代表它一定没有问题，但是如果一个类没有通过字节码查检，那它一定是有问题，不能运行的。</p>
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>synchronized和Lock通过互斥保障原子性，能够保护共享数据以实现线程安全，其作用包括保障原子性、可见性、有序性</p>
+<h2 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h2><p>在平时聊天或者面试过程中，可能会被问到，既然已经有了synchronized了，为什么JSR166小组花这么多时间来开发j.u.c的Lock框架呢，换句话说就是内部锁和显示锁之前有什么区别？</p>
+<h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><h3 id="synchronized（内部锁）"><a href="#synchronized（内部锁）" class="headerlink" title="synchronized（内部锁）"></a>synchronized（内部锁）</h3><p>java平台中的任何一个对象都有唯一一个与之关联的锁，这种锁称为监视器（Monitor)或者内部锁(Intrinsic Lock),内部锁是通过synchronized关键字实现的，可以用来修饰方法（同步方法、静态方法）、代码块（临界区）</p>
+<h3 id="Lock-显示锁"><a href="#Lock-显示锁" class="headerlink" title="Lock(显示锁)"></a>Lock(显示锁)</h3><p>JDK1.5开始引入的排他锁，默认实现是ReetrantLock，作为一种线程同步机制，其拥有和synchronized相同的语义，并且还提供了一些synchronized不具备的特性</p>
+<h2 id="差异"><a href="#差异" class="headerlink" title="差异"></a>差异</h2><h3 id="从本质上来讲"><a href="#从本质上来讲" class="headerlink" title="从本质上来讲"></a>从本质上来讲</h3><p>synchronized是在JVM层面实现的，</p>
+<p>ReetrantLock是java API层面实现的排它锁，系统无法自动释放锁，需要在代码中的finally子句中显示释放，否则会出现锁泄漏</p>
+<h3 id="从安全上来讲"><a href="#从安全上来讲" class="headerlink" title="从安全上来讲"></a>从安全上来讲</h3><p>内部锁在退出临界出时，会自动释放锁，不会导致锁泄漏</p>
+<p>外部锁如果未主动释放锁或者释放代码在finally子句中，容易导致锁泄漏</p>
+<h3 id="从使用上来讲"><a href="#从使用上来讲" class="headerlink" title="从使用上来讲"></a>从使用上来讲</h3><p>synchronized可以修饰方法，修饰代码块，但是内部锁的申请与释放只能在一个方法内进行，因为代码无法跨方法</p>
+<p>Lock，只能修饰代码块，但是它可以发挥面向对象编程的灵活性，显示锁的申请在一个方法，在另一个方法里释放锁</p>
+<h3 id="在锁的调度方面"><a href="#在锁的调度方面" class="headerlink" title="在锁的调度方面"></a>在锁的调度方面</h3><p>内部锁公公平锁，显示锁即支持非公平也支持公平锁</p>
+<h3 id="在问题定位方面"><a href="#在问题定位方面" class="headerlink" title="在问题定位方面"></a>在问题定位方面</h3><p>线程转储可能无法包含显示锁的相关信息，从而导致问题定位困难。比如果在JDK1.5下线程转储中会包含内部锁的相关信息，不包含显示锁的信息  </p>
+<h3 id="从性能方面方面"><a href="#从性能方面方面" class="headerlink" title="从性能方面方面"></a>从性能方面方面</h3><p>等待同一把内部锁的线程，都在同一个等待队列中，等待系统调度，而ReentrantLock锁，可以通过Condition条件变量，实现分组等待的效果，所以性能表现上更好一些</p>
+<h3 id="从其它特性方面"><a href="#从其它特性方面" class="headerlink" title="从其它特性方面"></a>从其它特性方面</h3><p>当一个线程在等待获取一个锁时，因为线程活性故障导致其永远无法获取得锁时，使用内部锁的线程会一直傻傻的等待一个无法获得的锁，换句话说，内部锁缺少可中断的特性，</p>
+<p>显示锁它拥有与内部锁相同的并发性和内存主义，但是添加了<code>轮询锁</code>、<code>定时锁等候</code>、<code>可中断锁等候</code>一些新特性，使其在激烈争用情况下表现出更好的性能，因为当多线程访问共享资源时，JVM可以将更多的时间用于执行线程上，而不是浪费时间在线程调度上。</p>
 <ul>
-<li>文件格式的验证<br>** 是否以0xCAFEBABE开头<br>** 版本号是否合理<ul>
-<li>元数据验证</li>
-<li><ul>
-<li>是否有父类</li>
-</ul>
+<li><p>轮询锁意味着，ReentrantLock支持公平锁，可以通过轮询的方式依次获取锁</p>
 </li>
-<li><ul>
-<li>继承了final类？</li>
-</ul>
+<li><p>定时锁等候意味着，线程在N长时间之内无法获取到锁，就会返回false ,表示获取锁失败，tryLock方法，不会像内部锁一样痴痴的等待一个没有结果的未来</p>
 </li>
-<li><ul>
-<li>非抽象类实现了所有的抽象方法</li>
-</ul>
-</li>
-<li>字节码验证 (很复杂)</li>
-<li><ul>
-<li>运行检查</li>
-</ul>
-</li>
-<li><ul>
-<li>栈数据类型和操作码数据参数吻合</li>
-</ul>
-</li>
-<li><ul>
-<li>跳转指令指定到合理的位置</li>
-</ul>
-</li>
-<li>符号引用验证</li>
-<li><ul>
-<li>常量池中描述类是否存在</li>
-</ul>
-</li>
-<li><ul>
-<li>访问的方法或字段是否存在且有足够的权限</li>
-</ul>
+<li><p>可中断锁等待，意味着ReentrantLock提供了一种能够中断等待锁的线程的机制，通过<code>lock.lockInterruptibly()</code>来实现这个机制。</p>
 </li>
 </ul>
-</li>
-</ul>
-</blockquote>
-<h4 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h4><blockquote>
-<p>分配内存，并为类设置初始值 （方法区中）</p>
-<ul>
-<li>public static int v=1;<br>在准备阶段中，v会被设置为0<br>在初始化的<clinit>中才会被设置为1</clinit></li>
-<li>对于static final类型，在准备阶段就会被赋上正确的值，因为static final类型被认为是常量，要保证在以后用到的过程中已经被赋于正确的值<br>public static final  int v=1;</li>
-</ul>
-</blockquote>
-<h4 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h4><blockquote>
-<p>符号引用替换为直接引用</p>
-</blockquote>
-<ul>
-<li><p>符号引用：以一组符号情迷描述所引用的目标，符号可以是任何形式的字面量，只要使用时，能无歧义地定位到目标即可。符号引用与JVM实现的内存布局无关，引用的目标并不一定已经加载到内存中。各JVM实现的内在布局可以是不相同，但是它们能接受的符号引用必须是一致的，因为符号引用的字面量形式明确定义在java虚拟机规范的Class文件格式中。比如 java.lang.Object， 存放在常量池中。</p>
-</li>
-<li><p>直接引用：是指直接指向常量池中目标的指针、相对偏移量或者是一个能够间接定位到目标的句柄。</p>
-<blockquote>
-<p>为什么要将符号引用为直接引用?<br>因为符号引用只是一种表示方式，无法直接使用，所以在解析阶段会被替换为直接引用，在使用时候需要知道，该字符串具体在内在中的哪个地址。<br>解析动作的解析范围如下：</p>
-</blockquote>
-</li>
-<li><p>类或接口的解析 </p>
-</li>
-<li><p>字段解析</p>
-</li>
-<li><p>类方法解析</p>
-</li>
-<li><p>接口方法解析</p>
-<h1 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h1><blockquote>
-<p> 在准备阶段，已经给变量赋于默认值，在初始化阶段主要是给类变量进行赋正确的值</p>
-</blockquote>
-</li>
-</ul>
-<p>执行类构造器<clinit></clinit></p>
-<ul>
-<li>对static变量赋于正确的值</li>
-<li>static{} 静态代码块语句<br>此阶段的一些约定：<ul>
-<li>子类的<clinit>调用前保证父类的<clinit>被调用 </clinit></clinit></li>
-<li><clinit>是线程安全的</clinit></li>
-</ul>
-</li>
-</ul>
-<h1 id="思考："><a href="#思考：" class="headerlink" title="思考："></a>思考：</h1><blockquote>
-<p>NoSuchMethodError, NoSuchFieldError,IllegalAccessError等错误发生在哪个阶段？</p>
-</blockquote>
+<h2 id="如何选择"><a href="#如何选择" class="headerlink" title="如何选择"></a>如何选择</h2><p>如果你使用的是JDK1.5的话，在争用不高的时候可以使用内部锁，在争用高的情况下，建议使用显示锁</p>
+<p>如果你使用的是JDK1.5+的版本，随着对内部锁的优化（锁消除、锁粗化、偏向锁、自适应锁），两都之间的性能差异已经缩小了很多，如果后期内部锁的这些优化可以应用到显示锁的话，那性能可能就会有很大差距了。</p>
+<p>总体上来说，在资源竞争不激烈的情形下，性能稍微比synchronized差点点。但是资源竞争非常激烈的时候，synchronized的性能会下降很多，而ReentrantLock的性能表现仍然比较稳定。</p>
+<h3 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h3><p>在工作中，为了保证线程安全我们不一定要使用锁，可以使用一些轻量级的同步工具或者无锁的框架和工具，来提升应用的性能。</p>
 
       
     </div>
@@ -498,7 +433,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/JVM/" rel="tag"># JVM</a>
+            <a href="/tags/JAVA/" rel="tag"># JAVA</a>
+          
+            <a href="/tags/总结/" rel="tag"># 总结</a>
           
         </div>
       
@@ -511,8 +448,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/JVM篇-之-垃圾收集器.html" rel="next" title="JVM篇 之 垃圾收集器">
-                <i class="fa fa-chevron-left"></i> JVM篇 之 垃圾收集器
+              <a href="/JAVA应用引起CPU过高排查的一般套路.html" rel="next" title="JAVA应用引起CPU过高排查的一般套路">
+                <i class="fa fa-chevron-left"></i> JAVA应用引起CPU过高排查的一般套路
               </a>
             
           </div>
@@ -520,10 +457,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/JVM篇之栈的应用.html" rel="prev" title="JVM篇之栈的应用">
-                JVM篇之栈的应用 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -678,7 +611,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#加载"><span class="nav-number">1.</span> <span class="nav-text">加载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#连接"><span class="nav-number">2.</span> <span class="nav-text">连接</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#验证"><span class="nav-number">2.0.1.</span> <span class="nav-text">验证</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#准备"><span class="nav-number">2.0.2.</span> <span class="nav-text">准备</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#解析"><span class="nav-number">2.0.3.</span> <span class="nav-text">解析</span></a></li></ol></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#初始化"><span class="nav-number"></span> <span class="nav-text">初始化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#思考："><span class="nav-number"></span> <span class="nav-text">思考：</span></a></li></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常见问题"><span class="nav-number">2.</span> <span class="nav-text">常见问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分析"><span class="nav-number">3.</span> <span class="nav-text">分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#synchronized（内部锁）"><span class="nav-number">3.1.</span> <span class="nav-text">synchronized（内部锁）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Lock-显示锁"><span class="nav-number">3.2.</span> <span class="nav-text">Lock(显示锁)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#差异"><span class="nav-number">4.</span> <span class="nav-text">差异</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#从本质上来讲"><span class="nav-number">4.1.</span> <span class="nav-text">从本质上来讲</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#从安全上来讲"><span class="nav-number">4.2.</span> <span class="nav-text">从安全上来讲</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#从使用上来讲"><span class="nav-number">4.3.</span> <span class="nav-text">从使用上来讲</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在锁的调度方面"><span class="nav-number">4.4.</span> <span class="nav-text">在锁的调度方面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在问题定位方面"><span class="nav-number">4.5.</span> <span class="nav-text">在问题定位方面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#从性能方面方面"><span class="nav-number">4.6.</span> <span class="nav-text">从性能方面方面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#从其它特性方面"><span class="nav-number">4.7.</span> <span class="nav-text">从其它特性方面</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何选择"><span class="nav-number">5.</span> <span class="nav-text">如何选择</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#结束语"><span class="nav-number">5.1.</span> <span class="nav-text">结束语</span></a></li></ol></li></ol></div>
             
 
           </div>
