@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="JVM,">
+  <meta name="keywords" content="Mysql,面试,">
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="什么是可见性问题在多线程环境下，一个线程对某个共享变量更新之后，其它线程访问该变量的线程，是否可以立刻读取到这个变量的更新结果，或者说，线程A对共享变量的修改，是否对线程B可见。这就是线程安全问题的另一个表现形式，可见性。 为什么出现这样的问题 线程是运行在处理器上，现在的计算机大多数都是多核的，计算机有主内存（RAM）、每个处理器有自己的写缓冲器（Store Buffer)、高速缓存，由于读取速">
-<meta name="keywords" content="JVM">
+<meta name="description" content="Mysql数据库事务的4个特性 原子性（Atomicity）原子性是指事务是一个不可分割的工作单位，事务中的操作要么都发生，要么都不发生。 一致性（Consistency）事务前后数据的完整性必须保持一致 隔离性（Isolation）事务的隔离性是多个用户并发访问数据库时，数据库为每一个用户开启的事务，不能被其他事务的操作数据所干扰，多个并发事务之间要相互隔离 持久性（Durability）持久性">
+<meta name="keywords" content="Mysql,面试">
 <meta property="og:type" content="article">
-<meta property="og:title" content="从另一个角度了解JAVA的可见性">
-<meta property="og:url" content="http://albk.tech/从另一个角度了解JAVA的可见性.html">
+<meta property="og:title" content="mysql常见问题 - 持续更新中">
+<meta property="og:url" content="http://albk.tech/mysql常见问题 - 持续更新中.html">
 <meta property="og:site_name" content="BK的网络日志">
-<meta property="og:description" content="什么是可见性问题在多线程环境下，一个线程对某个共享变量更新之后，其它线程访问该变量的线程，是否可以立刻读取到这个变量的更新结果，或者说，线程A对共享变量的修改，是否对线程B可见。这就是线程安全问题的另一个表现形式，可见性。 为什么出现这样的问题 线程是运行在处理器上，现在的计算机大多数都是多核的，计算机有主内存（RAM）、每个处理器有自己的写缓冲器（Store Buffer)、高速缓存，由于读取速">
+<meta property="og:description" content="Mysql数据库事务的4个特性 原子性（Atomicity）原子性是指事务是一个不可分割的工作单位，事务中的操作要么都发生，要么都不发生。 一致性（Consistency）事务前后数据的完整性必须保持一致 隔离性（Isolation）事务的隔离性是多个用户并发访问数据库时，数据库为每一个用户开启的事务，不能被其他事务的操作数据所干扰，多个并发事务之间要相互隔离 持久性（Durability）持久性">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-07-25T16:23:06.592Z">
+<meta property="og:updated_time" content="2019-07-29T17:01:21.374Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="从另一个角度了解JAVA的可见性">
-<meta name="twitter:description" content="什么是可见性问题在多线程环境下，一个线程对某个共享变量更新之后，其它线程访问该变量的线程，是否可以立刻读取到这个变量的更新结果，或者说，线程A对共享变量的修改，是否对线程B可见。这就是线程安全问题的另一个表现形式，可见性。 为什么出现这样的问题 线程是运行在处理器上，现在的计算机大多数都是多核的，计算机有主内存（RAM）、每个处理器有自己的写缓冲器（Store Buffer)、高速缓存，由于读取速">
+<meta name="twitter:title" content="mysql常见问题 - 持续更新中">
+<meta name="twitter:description" content="Mysql数据库事务的4个特性 原子性（Atomicity）原子性是指事务是一个不可分割的工作单位，事务中的操作要么都发生，要么都不发生。 一致性（Consistency）事务前后数据的完整性必须保持一致 隔离性（Isolation）事务的隔离性是多个用户并发访问数据库时，数据库为每一个用户开启的事务，不能被其他事务的操作数据所干扰，多个并发事务之间要相互隔离 持久性（Durability）持久性">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://albk.tech/从另一个角度了解JAVA的可见性.html">
+  <link rel="canonical" href="http://albk.tech/mysql常见问题 - 持续更新中.html">
 
 
 
 
 
-  <title>从另一个角度了解JAVA的可见性 | BK的网络日志</title>
+  <title>mysql常见问题 - 持续更新中 | BK的网络日志</title>
   
 
 
@@ -263,7 +263,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://albk.tech/从另一个角度了解JAVA的可见性.html">
+    <link itemprop="mainEntityOfPage" href="http://albk.tech/mysql常见问题 - 持续更新中.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="BK">
@@ -280,7 +280,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">从另一个角度了解JAVA的可见性</h2>
+          <h2 class="post-title" itemprop="name headline">mysql常见问题 - 持续更新中</h2>
         
 
         <div class="post-meta">
@@ -292,8 +292,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-07T23:30:46+08:00">
-                2019-06-07
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-29T23:00:01+08:00">
+                2019-07-29
               </time>
             
 
@@ -303,6 +303,28 @@
           </span>
 
           
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/mysql/" itemprop="url" rel="index">
+                    <span itemprop="name">mysql</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -311,8 +333,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/从另一个角度了解JAVA的可见性.html#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/从另一个角度了解JAVA的可见性.html" itemprop="commentCount"></span>
+                <a href="/mysql常见问题 - 持续更新中.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/mysql常见问题 - 持续更新中.html" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -320,7 +342,7 @@
 
           
           
-             <span id="/从另一个角度了解JAVA的可见性.html" class="leancloud_visitors" data-flag-title="从另一个角度了解JAVA的可见性">
+             <span id="/mysql常见问题 - 持续更新中.html" class="leancloud_visitors" data-flag-title="mysql常见问题 - 持续更新中">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -351,51 +373,54 @@
       
 
       
-        <h1 id="什么是可见性问题"><a href="#什么是可见性问题" class="headerlink" title="什么是可见性问题"></a>什么是可见性问题</h1><p>在多线程环境下，一个线程对某个共享变量更新之后，其它线程访问该变量的线程，是否可以立刻读取到这个变量的更新结果，或者说，线程A对共享变量的修改，是否对线程B可见。这就是线程安全问题的另一个表现形式，可见性。</p>
-<h1 id="为什么出现这样的问题"><a href="#为什么出现这样的问题" class="headerlink" title="为什么出现这样的问题"></a>为什么出现这样的问题</h1><p> 线程是运行在处理器上，现在的计算机大多数都是多核的，计算机有主内存（RAM）、每个处理器有自己的写缓冲器（Store Buffer)、高速缓存，由于读取速度不匹配，所以处理器并不是直接与主内存打交道，内存的读写操作都是通过寄存器、高速缓存、写缓冲器、无效化队列等部件执行内存读写的。这些部件相当于主内存数据的副本，副本存储的份数越多，数据一致性越难保证。多个处理器读写数据也是优先读写当前处理器的副本数据，这就可能导致多个副本之间数据不一致。</p>
+        <h2 id="Mysql数据库事务的4个特性"><a href="#Mysql数据库事务的4个特性" class="headerlink" title="Mysql数据库事务的4个特性"></a>Mysql数据库事务的4个特性</h2><ul>
+<li>原子性（Atomicity）<br>原子性是指事务是一个不可分割的工作单位，事务中的操作要么都发生，要么都不发生。</li>
+<li>一致性（Consistency）<br>事务前后数据的完整性必须保持一致</li>
+<li>隔离性（Isolation）<br>事务的隔离性是多个用户并发访问数据库时，数据库为每一个用户开启的事务，不能被其他事务的操作数据所干扰，多个并发事务之间要相互隔离</li>
+<li>持久性（Durability）<br>持久性是指一个事务一旦被提交，它对数据库中数据的改变就是永久性的，接下来即使数据库发生故障也不应该对其有任何影响</li>
+</ul>
+<h2 id="Mysql的事务隔离级别，以及每种级别下会产生的问题和对问题的理解"><a href="#Mysql的事务隔离级别，以及每种级别下会产生的问题和对问题的理解" class="headerlink" title="Mysql的事务隔离级别，以及每种级别下会产生的问题和对问题的理解"></a>Mysql的事务隔离级别，以及每种级别下会产生的问题和对问题的理解</h2><ul>
+<li><p>Read uncommitted：隔离性最差的一种方式，违反了为数据库事务的隔离性，事务A读取了事务B对数据C修改后但未提交的内容，即事务B还未提交，还在执行过程中；</p>
+<p>在这种级别下会出现脏读</p>
+</li>
+<li><p>Read Committed(读已提交/不可重复读)：违反了数据库事务的一致性，是指在同一个事务内，对同一个数据集合的连续读取两次，读 到的数据是不一样的。也就是说，Read Committed模式下，一个事务既可以感知另一个事务添加新数据，也能感知这个事务对数据的修改。</p>
+<p>RC模式，避免了脏读，但是可能会造成不可重复读。</p>
 <blockquote>
-<p>既然有这样的问题，处理器是如何屏蔽的呢，这就引入了缓存一致性协议，也就是俗称的缓存同步。缓存同步使得一个处理器上可以读取到另一个处理器对共享变量所做的更新。在这里缓存一致性读者可以下来看一下MESI协议。</p>
+<p> <strong>select</strong>时会受<strong>update</strong>的影响出现在同一个事务中两次读到数据不一致，主要体现在数据行的内容不一致,<br> Mysql使用了Record-Lock，同一时刻只允许一个事务对同一数据修改，解决了脏读</p>
 </blockquote>
-<p>所以，缓存同步的是可以保障可见性的。</p>
+</li>
+<li><p>Repeatable Read（可重读): MySQL默认级别，解决了不可重复读，但会出现幻读的情况。每个事务独立执行，如果一个事务添加了新数据，并已提交完毕；另外一个正在执行的事务能看到新加的数据。但如果一个事务是修改数据后提交完毕，另一个正在执行的事务是看不到这种修改的。在新增加数据的情况下，破环的事务了的隔离性。</p>
+<p>在RR这种隔离级别下会出一幻读</p>
 <blockquote>
-<p>对变量的更新缓存的层级关系如下：<br>      <strong>写缓冲器  -&gt;  高速缓存  -&gt;  主内存</strong></p>
+<p>幻读是select会受<strong>insert</strong>或<strong>delete</strong>的影响下会出现幻读行，体现在同事个事务中连续两次读到的<strong>数量</strong>不一致</p>
 </blockquote>
-<p>下面我们看两个定义</p>
-<blockquote>
-<ul>
-<li>处理器对<strong>共享变量</strong>所做的更新操作，从写缓冲器中写入处理器的高速缓存或者主内存中，这个动作被称为<strong>冲刷处理器缓存</strong></li>
-<li>处理器读取<strong>共享变量</strong>时，如果其它处理器更新了该值，那么处理器要从其它处理器的高速缓存或者主内存中进行同步相应的变量值到本缓存，这个动作被称为<strong>刷处理器缓存</strong></li>
+<p>但是mysql在RR级别下，通过Next-Key Lock（Rercord-Lock+ Gap-Lock）算法，避免了不可重复读的现象。所以InnoDB存储引擎在RR级别下就达到了3度的隔离。</p>
+</li>
+<li><p>Serializable（串行化执行）：最高隔离性级别。同时执行的两个事务完全隔离，每个事务有独立的运行空间。主要应用于InnoDB存储引擎的分布式事务，而且分布式事务中要求数据库的隔离级别必须为Serializable</p>
+<h2 id="Mysql的过引方法有哪些？"><a href="#Mysql的过引方法有哪些？" class="headerlink" title="Mysql的过引方法有哪些？"></a>Mysql的过引方法有哪些？</h2><p>B+树和HASH</p>
+<h2 id="为什么不使用B树，要使用B-树"><a href="#为什么不使用B树，要使用B-树" class="headerlink" title="为什么不使用B树，要使用B+树"></a>为什么不使用B树，要使用B+树</h2><p>B+树是二次查询树的优化，有自我调整平衡的能力和节点顺序能力，同时支持范围查询 </p>
+<h2 id="InnoDB和MyISAM区别"><a href="#InnoDB和MyISAM区别" class="headerlink" title="InnoDB和MyISAM区别"></a>InnoDB和MyISAM区别</h2></li>
 </ul>
 <ul>
-<li>对于上面两个定义，我们提取一下关键字：</li>
+<li>innodb支持事务MyISAM不支持事务</li>
+<li>MyISAM锁的粒度是表级，而InnoDB支持行级锁定</li>
+<li>InnoDB数据的存储使用了聚集的方式，表的数据存储是按主键的顺序进行存放，如果没有显示指定主键，引擎会为每一行生成一个6字节的ROWID作为主键，索引文件就是数据文件,</li>
+<li>MyISAM适合存储报表的数据，无事务，简单查询，InnoDB适用于有事务处理的情况</li>
+<li>主索引的区别，InnoDB是聚集索引数据文件本身就是索引文件。而MyISAM是非聚集索引，索引文件(MYI)和数据文件(MYD)是分离的，索引文件仅保存数据<strong>记录的地址</strong></li>
+<li>辅助索引的区别：InnoDB的辅助索引data域存储相应记录主键的值而不是地址。而MyISAM的辅助索引和主索引没有多大区别,只是主索引要求key是唯一的，而辅助索引的key可以重复<h2 id="数据库如何解决事务冲突"><a href="#数据库如何解决事务冲突" class="headerlink" title="数据库如何解决事务冲突"></a>数据库如何解决事务冲突</h2>​    大多数数据库使用加锁和数据版本管理两种策略,它们是两种不同的思想：<br>锁分为乐观锁（optimistic locking）与悲观锁（pessimistic locking）<br>​    悲观锁（读写互相阻塞）<br>​    乐观锁（写写阻塞）<br>数据版本管理<br>一种乐观锁的实现，所有的事务都可以同时修改相同的数据，每个事务都持有所有数据的一个拷贝，最终只会有一个事务的修改会提交成功持久化，其它事务将会回滚，这种方式因为读写不会相互阻塞，所以带来了性能上的提升，这处方式缺点就是相同的数据会存在多份，所以需要巨大的磁盘空间开销<h2 id="如何判断数据库进入了死锁"><a href="#如何判断数据库进入了死锁" class="headerlink" title="如何判断数据库进入了死锁"></a>如何判断数据库进入了死锁</h2>依据lock manager的哈希表，能画出一个依赖关系图(类似上面的截图)。如果在图中出现了环路，即意味着出现了死锁。检查是否出现环路是非常耗时的，<strong>因为依赖关系图的数据量通常很庞大；所以，一般采用更简单的方法：判断是否超时。如果事务申请的锁未在指定的超时时间内分配，则认为事务进入了死锁。</strong><h2 id="进入死锁之后如何处理？"><a href="#进入死锁之后如何处理？" class="headerlink" title="进入死锁之后如何处理？"></a>进入死锁之后如何处理？</h2>出现死锁时，Lock manger将选择其中一个事务回滚以解除死锁状态。选择哪一个事务回滚，这是个很复杂的问题，要考虑以下方面：</li>
 </ul>
-</blockquote>
-<hr>
-<pre><code>**共享变量**     **更新（写）**      **读取（读）** </code></pre><p> 看到这里，我们其实主要提到的关键字是共享变量，主要的操作是读写，也就是说对于共享变量的读写才会有可见性问题。</p>
-<blockquote>
-<p><em>处理器会在写共享变量的时候冲刷处理器，读取共享变量的时候刷新处理器缓存，<strong>保证对变量的更新已经同步到高速缓存或者主内存，然后通过MESI协议，保证共享变量在多线程的可见性。</strong></em></p>
-</blockquote>
-<p> 从这个角度来分析，只要我们告诉处理器，谁是共享变量，处理器就可以保证该变量的可见性了</p>
-<blockquote>
-<p>　但是遗憾的是，JAVA中的变量都是JVM堆中存储的，无法告诉处理器哪个变量是共享变量。但是既然已经知道了处理器是怎么保证可见性的， 那么我们是不是可以定义一个关键字，对于这个关键字做下面这样的处理，就可以保证可见性呢</p>
-</blockquote>
-<pre><code>读的时候去刷处理器缓存，写的时候去冲刷处理器缓存</code></pre><p>java中就是这样处理的，在java中，有一个关键字<strong>volatile</strong>大家一定都知道，怎么去理解它</p>
-<blockquote>
 <ul>
-<li>被volatile标识的变量，其实就是告诉处理器，该变量是共享变量，需要保证该变量的可见性</li>
-<li>另一方面，被volatile修饰的变量，可以告诉JIT编译器该变量可能会被共享，优化时悠着点儿。</li>
+<li>回滚涉及数据量最小的事务(造成混滚的代价最小)</li>
+<li>回滚最新提交的事务(因为其它事务等待的时间更长)</li>
+<li>回滚耗时更短的事务（避免长时间等待，线程饿死</li>
+<li>即使回滚，又有多少其它事务会受此回滚的影响？</li>
 </ul>
-</blockquote>
-<p>从CPU指令角度来看volatile关键字的实现 ，其实是使用到的<strong>内存屏障</strong>，通过内存屏障保证在<strong>共享变量写的时候冲刷处理器</strong>，<strong>共享变量读的时候刷新处理器缓存</strong>。volatile关键字的内存屏障具体是如何实现的， 后续会有文章更新，希望大家继续关注我。</p>
+<h2 id="索引为什么可以提高查询效率？"><a href="#索引为什么可以提高查询效率？" class="headerlink" title="索引为什么可以提高查询效率？"></a>索引为什么可以提高查询效率？</h2><p>Mysql存储是根据事务将依次次数据持久化在磁盘上，我们使用时候的不是按写入顺序读取，所以在我们使用数据时候，会产生很多随机IO磁盘，通过索引，将数据通过一定的规则整理，将随机读变成顺序度，从而减少磁盘IO,提升查询效率</p>
+<h2 id="MySQL为何将节点大小设置为页的整数倍？"><a href="#MySQL为何将节点大小设置为页的整数倍？" class="headerlink" title="MySQL为何将节点大小设置为页的整数倍？"></a>MySQL为何将节点大小设置为页的整数倍？</h2><p>局部预读性原理告诉我们，当计算机访问一个地址的数据的时候，与其相邻的数据也会很快被访问到。如果一次IO读取的数据我们称之为一页(page)。具体一页有多大数据跟操作系统有关，一般为4k或8k。</p>
+<p>MySQL巧妙利用了磁盘预读原理，将一个节点的大小设为等于一个页，这样每个节点只需要一次I/O就可以完全载入。为了达到这个目的，每次新建节点时，直接申请一个页的空间，这样就保证一个节点物理上也存储在一个页里，加之计算机存储分配都是按页对齐的，就实现了读取一个节点只需一次I/O。假设B+Tree的高度为h，一次检索最多需要h-1次I/O（根节点常驻内存），复杂度O(h) = O(logmN)。实际应用场景中，M通常较大，常常超过100，因此树的高度一般都比较小，通常不超过3。</p>
 <blockquote>
-<p>到这里，希望看到本文章的读者是，可以从另一个角度去认识JAVA中的volatile关键字。</p>
+<p> 当索引的KEY越小（字段越小），一页可以存储的索引越多，一次载入到内存中的索引也就越多，这解释了为什么B+树，要求把真实的数据放到叶子节点中，而不是内层节点，一旦放到内层节点，一次读到的索引会大幅度减少，导致频繁的IO，另一方面也会导致树的高度增加。</p>
 </blockquote>
-<p>##结尾再废话两句<br>在说起可见性的时候，我们说到了多线程，说到多线程我们一定会与多个处理器想到一起，<strong>其实并非在多个处理器下才会出现可见性问题， 在单核处理器也会出现可见性问题</strong></p>
-<blockquote>
-<p>单个处理器，在线程切换的时候 ，当前线程对共享变量的修改会作为线程的上下文保存起来，这就可能导致其它处理器无法看到该线程对共享变量的更新（无法看到该变量的相对新值）。</p>
-</blockquote>
-<pre><code>下面可能可能会写一篇关于JAVA中有序性的文章，请大家继续关注 </code></pre><hr>
-<p>希望大家可以继续关注我，一起成长，记录下成长路上的点点滴滴。</p>
 
       
     </div>
@@ -429,7 +454,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/JVM/" rel="tag"># JVM</a>
+            <a href="/tags/Mysql-面试/" rel="tag"># Mysql,面试</a>
           
         </div>
       
@@ -442,8 +467,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/JVM篇之栈的应用.html" rel="next" title="JVM篇之栈的应用">
-                <i class="fa fa-chevron-left"></i> JVM篇之栈的应用
+              <a href="/java中synchronized与Lock的异同.html" rel="next" title="java中synchronized与Lock的异同">
+                <i class="fa fa-chevron-left"></i> java中synchronized与Lock的异同
               </a>
             
           </div>
@@ -451,10 +476,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/设计模式-装饰模式.html" rel="prev" title="设计模式-装饰模式">
-                设计模式-装饰模式 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -609,7 +630,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是可见性问题"><span class="nav-number">1.</span> <span class="nav-text">什么是可见性问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#为什么出现这样的问题"><span class="nav-number">2.</span> <span class="nav-text">为什么出现这样的问题</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Mysql数据库事务的4个特性"><span class="nav-number">1.</span> <span class="nav-text">Mysql数据库事务的4个特性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mysql的事务隔离级别，以及每种级别下会产生的问题和对问题的理解"><span class="nav-number">2.</span> <span class="nav-text">Mysql的事务隔离级别，以及每种级别下会产生的问题和对问题的理解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mysql的过引方法有哪些？"><span class="nav-number">3.</span> <span class="nav-text">Mysql的过引方法有哪些？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么不使用B树，要使用B-树"><span class="nav-number">4.</span> <span class="nav-text">为什么不使用B树，要使用B+树</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#InnoDB和MyISAM区别"><span class="nav-number">5.</span> <span class="nav-text">InnoDB和MyISAM区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据库如何解决事务冲突"><span class="nav-number">6.</span> <span class="nav-text">数据库如何解决事务冲突</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何判断数据库进入了死锁"><span class="nav-number">7.</span> <span class="nav-text">如何判断数据库进入了死锁</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#进入死锁之后如何处理？"><span class="nav-number">8.</span> <span class="nav-text">进入死锁之后如何处理？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#索引为什么可以提高查询效率？"><span class="nav-number">9.</span> <span class="nav-text">索引为什么可以提高查询效率？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MySQL为何将节点大小设置为页的整数倍？"><span class="nav-number">10.</span> <span class="nav-text">MySQL为何将节点大小设置为页的整数倍？</span></a></li></ol></div>
             
 
           </div>

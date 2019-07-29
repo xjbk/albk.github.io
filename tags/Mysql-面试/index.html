@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="JVM,">
+  <meta name="keywords" content="Hexo, NexT">
 
 
 
@@ -79,18 +79,17 @@
 
 
 
-<meta name="description" content="什么是可见性问题在多线程环境下，一个线程对某个共享变量更新之后，其它线程访问该变量的线程，是否可以立刻读取到这个变量的更新结果，或者说，线程A对共享变量的修改，是否对线程B可见。这就是线程安全问题的另一个表现形式，可见性。 为什么出现这样的问题 线程是运行在处理器上，现在的计算机大多数都是多核的，计算机有主内存（RAM）、每个处理器有自己的写缓冲器（Store Buffer)、高速缓存，由于读取速">
-<meta name="keywords" content="JVM">
-<meta property="og:type" content="article">
-<meta property="og:title" content="从另一个角度了解JAVA的可见性">
-<meta property="og:url" content="http://albk.tech/从另一个角度了解JAVA的可见性.html">
+<meta name="description" content="记录点滴">
+<meta name="keywords" content="后端">
+<meta property="og:type" content="website">
+<meta property="og:title" content="BK的网络日志">
+<meta property="og:url" content="http://albk.tech/tags/Mysql-面试/index.html">
 <meta property="og:site_name" content="BK的网络日志">
-<meta property="og:description" content="什么是可见性问题在多线程环境下，一个线程对某个共享变量更新之后，其它线程访问该变量的线程，是否可以立刻读取到这个变量的更新结果，或者说，线程A对共享变量的修改，是否对线程B可见。这就是线程安全问题的另一个表现形式，可见性。 为什么出现这样的问题 线程是运行在处理器上，现在的计算机大多数都是多核的，计算机有主内存（RAM）、每个处理器有自己的写缓冲器（Store Buffer)、高速缓存，由于读取速">
+<meta property="og:description" content="记录点滴">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-07-25T16:23:06.592Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="从另一个角度了解JAVA的可见性">
-<meta name="twitter:description" content="什么是可见性问题在多线程环境下，一个线程对某个共享变量更新之后，其它线程访问该变量的线程，是否可以立刻读取到这个变量的更新结果，或者说，线程A对共享变量的修改，是否对线程B可见。这就是线程安全问题的另一个表现形式，可见性。 为什么出现这样的问题 线程是运行在处理器上，现在的计算机大多数都是多核的，计算机有主内存（RAM）、每个处理器有自己的写缓冲器（Store Buffer)、高速缓存，由于读取速">
+<meta name="twitter:title" content="BK的网络日志">
+<meta name="twitter:description" content="记录点滴">
 
 
 
@@ -120,13 +119,13 @@
 
 
 
-  <link rel="canonical" href="http://albk.tech/从另一个角度了解JAVA的可见性.html">
+  <link rel="canonical" href="http://albk.tech/tags/Mysql-面试/">
 
 
 
 
 
-  <title>从另一个角度了解JAVA的可见性 | BK的网络日志</title>
+  <title>标签: Mysql,面试 | BK的网络日志</title>
   
 
 
@@ -145,7 +144,7 @@
     
   
 
-  <div class="container sidebar-position-left page-post-detail">
+  <div class="container sidebar-position-left ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -249,232 +248,52 @@
           <div id="content" class="content">
             
 
-  <div id="posts" class="posts-expand">
-    
+  
+  
+  
+  <div class="post-block tag">
 
-  
+    <div id="posts" class="posts-collapse">
+      <div class="collection-title">
+        <h2>Mysql,面试<small>标签</small>
+        </h2>
+      </div>
 
-  
-  
-  
+      
+        
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://albk.tech/从另一个角度了解JAVA的可见性.html">
+    <header class="post-header">
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="BK">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/head.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="BK的网络日志">
-    </span>
-
-    
-      <header class="post-header">
-
+      <h3 class="post-title">
         
-        
-          <h2 class="post-title" itemprop="name headline">从另一个角度了解JAVA的可见性</h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
+            <a class="post-title-link" href="/mysql常见问题 - 持续更新中.html" itemprop="url">
               
-                <span class="post-meta-item-text">发表于</span>
+                <span itemprop="name">mysql常见问题 - 持续更新中</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-07T23:30:46+08:00">
-                2019-06-07
-              </time>
-            
+            </a>
+        
+      </h3>
 
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/从另一个角度了解JAVA的可见性.html#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/从另一个角度了解JAVA的可见性.html" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-             <span id="/从另一个角度了解JAVA的可见性.html" class="leancloud_visitors" data-flag-title="从另一个角度了解JAVA的可见性">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        <h1 id="什么是可见性问题"><a href="#什么是可见性问题" class="headerlink" title="什么是可见性问题"></a>什么是可见性问题</h1><p>在多线程环境下，一个线程对某个共享变量更新之后，其它线程访问该变量的线程，是否可以立刻读取到这个变量的更新结果，或者说，线程A对共享变量的修改，是否对线程B可见。这就是线程安全问题的另一个表现形式，可见性。</p>
-<h1 id="为什么出现这样的问题"><a href="#为什么出现这样的问题" class="headerlink" title="为什么出现这样的问题"></a>为什么出现这样的问题</h1><p> 线程是运行在处理器上，现在的计算机大多数都是多核的，计算机有主内存（RAM）、每个处理器有自己的写缓冲器（Store Buffer)、高速缓存，由于读取速度不匹配，所以处理器并不是直接与主内存打交道，内存的读写操作都是通过寄存器、高速缓存、写缓冲器、无效化队列等部件执行内存读写的。这些部件相当于主内存数据的副本，副本存储的份数越多，数据一致性越难保证。多个处理器读写数据也是优先读写当前处理器的副本数据，这就可能导致多个副本之间数据不一致。</p>
-<blockquote>
-<p>既然有这样的问题，处理器是如何屏蔽的呢，这就引入了缓存一致性协议，也就是俗称的缓存同步。缓存同步使得一个处理器上可以读取到另一个处理器对共享变量所做的更新。在这里缓存一致性读者可以下来看一下MESI协议。</p>
-</blockquote>
-<p>所以，缓存同步的是可以保障可见性的。</p>
-<blockquote>
-<p>对变量的更新缓存的层级关系如下：<br>      <strong>写缓冲器  -&gt;  高速缓存  -&gt;  主内存</strong></p>
-</blockquote>
-<p>下面我们看两个定义</p>
-<blockquote>
-<ul>
-<li>处理器对<strong>共享变量</strong>所做的更新操作，从写缓冲器中写入处理器的高速缓存或者主内存中，这个动作被称为<strong>冲刷处理器缓存</strong></li>
-<li>处理器读取<strong>共享变量</strong>时，如果其它处理器更新了该值，那么处理器要从其它处理器的高速缓存或者主内存中进行同步相应的变量值到本缓存，这个动作被称为<strong>刷处理器缓存</strong></li>
-</ul>
-<ul>
-<li>对于上面两个定义，我们提取一下关键字：</li>
-</ul>
-</blockquote>
-<hr>
-<pre><code>**共享变量**     **更新（写）**      **读取（读）** </code></pre><p> 看到这里，我们其实主要提到的关键字是共享变量，主要的操作是读写，也就是说对于共享变量的读写才会有可见性问题。</p>
-<blockquote>
-<p><em>处理器会在写共享变量的时候冲刷处理器，读取共享变量的时候刷新处理器缓存，<strong>保证对变量的更新已经同步到高速缓存或者主内存，然后通过MESI协议，保证共享变量在多线程的可见性。</strong></em></p>
-</blockquote>
-<p> 从这个角度来分析，只要我们告诉处理器，谁是共享变量，处理器就可以保证该变量的可见性了</p>
-<blockquote>
-<p>　但是遗憾的是，JAVA中的变量都是JVM堆中存储的，无法告诉处理器哪个变量是共享变量。但是既然已经知道了处理器是怎么保证可见性的， 那么我们是不是可以定义一个关键字，对于这个关键字做下面这样的处理，就可以保证可见性呢</p>
-</blockquote>
-<pre><code>读的时候去刷处理器缓存，写的时候去冲刷处理器缓存</code></pre><p>java中就是这样处理的，在java中，有一个关键字<strong>volatile</strong>大家一定都知道，怎么去理解它</p>
-<blockquote>
-<ul>
-<li>被volatile标识的变量，其实就是告诉处理器，该变量是共享变量，需要保证该变量的可见性</li>
-<li>另一方面，被volatile修饰的变量，可以告诉JIT编译器该变量可能会被共享，优化时悠着点儿。</li>
-</ul>
-</blockquote>
-<p>从CPU指令角度来看volatile关键字的实现 ，其实是使用到的<strong>内存屏障</strong>，通过内存屏障保证在<strong>共享变量写的时候冲刷处理器</strong>，<strong>共享变量读的时候刷新处理器缓存</strong>。volatile关键字的内存屏障具体是如何实现的， 后续会有文章更新，希望大家继续关注我。</p>
-<blockquote>
-<p>到这里，希望看到本文章的读者是，可以从另一个角度去认识JAVA中的volatile关键字。</p>
-</blockquote>
-<p>##结尾再废话两句<br>在说起可见性的时候，我们说到了多线程，说到多线程我们一定会与多个处理器想到一起，<strong>其实并非在多个处理器下才会出现可见性问题， 在单核处理器也会出现可见性问题</strong></p>
-<blockquote>
-<p>单个处理器，在线程切换的时候 ，当前线程对共享变量的修改会作为线程的上下文保存起来，这就可能导致其它处理器无法看到该线程对共享变量的更新（无法看到该变量的相对新值）。</p>
-</blockquote>
-<pre><code>下面可能可能会写一篇关于JAVA中有序性的文章，请大家继续关注 </code></pre><hr>
-<p>希望大家可以继续关注我，一起成长，记录下成长路上的点点滴滴。</p>
-
-      
-    </div>
-    
-    
-    
-
-    
-      <div>
-        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
-    <img id="wechat_subscriber_qcode" src="http://pic.albk.tech/mb-qcode.png" alt="BK wechat" style="width: 200px; max-width: 100%;">
-    <div>扫一扫，用手机访问本站</div>
-</div>
-
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated" datetime="2019-07-29T23:00:01+08:00" content="2019-07-29">
+          07-29
+        </time>
       </div>
-    
+      <meta name="baidu-site-verification" content="qZnrddf9DT">
+    </header>
+  </article>
 
-    
-
-    
-
-    <div>
-      
-        
-<div style="text-align:center;color: #ccc;font-size:14px;">
----------------- 本文结束 ----------------<div>
 
       
     </div>
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/JVM/" rel="tag"># JVM</a>
-          
-        </div>
-      
 
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/JVM篇之栈的应用.html" rel="next" title="JVM篇之栈的应用">
-                <i class="fa fa-chevron-left"></i> JVM篇之栈的应用
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/设计模式-装饰模式.html" rel="prev" title="设计模式-装饰模式">
-                设计模式-装饰模式 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
   </div>
   
   
   
-  </div></div></article>
 
-
-
-    <div class="post-spread">
-      
-    </div>
-  </div>
+  
 
 
           </div>
@@ -482,13 +301,6 @@
 
 
           
-
-  
-    <div class="comments" id="comments">
-    </div>
-  
-
-
 
 
 
@@ -511,17 +323,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -599,22 +402,6 @@
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是可见性问题"><span class="nav-number">1.</span> <span class="nav-text">什么是可见性问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#为什么出现这样的问题"><span class="nav-number">2.</span> <span class="nav-text">为什么出现这样的问题</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
@@ -754,10 +541,6 @@
 
 
   
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
-
-
 
   	
 
