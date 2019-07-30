@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="BK的网络日志">
 <meta property="og:description" content="http2优点 所有数据二进制传输 同一个连接里面发送多个请求不再需要按顺序发送 头信息压缩（有效减少带宽使用) server push(服务端主动推送消息至客户端) 信道复用 分帧传输   CORS ( Cross-Origin Resource Sharing )CORS,跨域资源共享，它允许浏览器向跨源服务，发出请求，从而克服AJAX只能同源使用的限制。跨域访问只会在浏览器访问时才才会出现，">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-07-30T17:13:34.356Z">
+<meta property="og:updated_time" content="2019-07-30T17:25:05.151Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="http知识点整理">
 <meta name="twitter:description" content="http2优点 所有数据二进制传输 同一个连接里面发送多个请求不再需要按顺序发送 头信息压缩（有效减少带宽使用) server push(服务端主动推送消息至客户端) 信道复用 分帧传输   CORS ( Cross-Origin Resource Sharing )CORS,跨域资源共享，它允许浏览器向跨源服务，发出请求，从而克服AJAX只能同源使用的限制。跨域访问只会在浏览器访问时才才会出现，">
@@ -400,60 +400,101 @@
 </ul>
 <h2 id="解决域中的方法"><a href="#解决域中的方法" class="headerlink" title="解决域中的方法"></a>解决域中的方法</h2><ul>
 <li>服务端通过header告诉浏览器支持跨域</li>
-<li>使用JSONP<h3 id="header"><a href="#header" class="headerlink" title="header"></a>header</h3>在服务端响应时候增加header信息如下<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&apos;Access-Control-Allow-Orign&apos;: &apos;*&apos;</span><br></pre></td></tr></table></figure>
-
-</li>
+<li>使用JSONP</li>
 </ul>
+<h3 id="header"><a href="#header" class="headerlink" title="header"></a>header</h3><p>在服务端响应时候增加header信息如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&apos;Access-Control-Allow-Orign&apos;: &apos;*&apos;</span><br></pre></td></tr></table></figure>
+
 <blockquote>
 <p>*代表，支持任何域名跨域访问</p>
 </blockquote>
-<p>但这样做是不安全的，我们可以限制只有固定域名可以跨域</p>
-<figure class="highlight plain"><figcaption><span>'http://domain.com'```</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">&gt; 这种方法只能设置一个域名，如果是多个域，可以在后端服务做判断，对于允许的域名响应时设置该响应头信息</span><br><span class="line"></span><br><span class="line">只有拿到响应的头信息浏览器才知道是否支持跨域。浏览器发起的真实请求已经被服务器处理，并已交内容返回至浏览器，只是浏览器会根据响应中的跨域设置，对请求返回内容进行了处理。</span><br><span class="line"></span><br><span class="line">其它头信息</span><br><span class="line">- &apos;Access-Control-Allow-Headers&apos;: &apos;X-TEST-CORS&apos; //允许跨域的头信息</span><br><span class="line">- &apos;Access-Control-Allow-Methods&apos;: &apos;PUT,DELETE&apos; //允许跨域的方法</span><br><span class="line">- &apos;Access-Control-Max-Age&apos;: &apos;1000&apos; //用一标识允许在1000秒不再发送OPTIONS预请求。时间单位是秒</span><br><span class="line">### jsonp实现方式 </span><br><span class="line"></span><br><span class="line">#### 原理</span><br><span class="line">其实在网页中，浏览器对于link,script,image标签中加载的请求，是允许跨越访问的,Jsonp就是利用这种方式，访问到服务器的内容，对内容进处理后，现返回的。</span><br><span class="line"></span><br><span class="line"># 缓存</span><br><span class="line">## Cache-control 可缓存性</span><br><span class="line">- public: 是指请求返回的过程中，所经过的路径中，包括中间的代理服务器，都可以对返回内容进行缓存</span><br><span class="line">- private: 只有发起请求的客户端才可以缓存</span><br><span class="line">- no-cache: 任何地方都不可以缓存，每次请求会经过服务器验证，是否可以使用缓存</span><br><span class="line">- no-store客户端不会发送任何和缓存的请求头，直接忽略缓存</span><br><span class="line">## 到期</span><br><span class="line">- max-age=&lt;seconds&gt; //客户端会使用max-age</span><br><span class="line">- s-maxage=&lt;seconds&gt; //只有在代理服务器中才生效</span><br><span class="line">- max-stale=&lt;seconds&gt; //发起请求主动携带此请求头，表示如果缓存已经过期了，客户端可以在max-stale这个时间内还可以使用过期的缓存，而不去请求新的内容</span><br><span class="line">## 重新验证</span><br><span class="line">- must-revalidate max-age缓存已过期 ，必须到源服务端验证获取数据</span><br><span class="line">- proxy-revalidate //使用在缓存服务器，指定缓存过期后，必须到尖服务器获取数据</span><br><span class="line">-其它</span><br><span class="line">no-store  永远到服务器端拿最新的数据</span><br><span class="line">no-trasform  禁止代理服务器，对返回的数据进行压缩或其它处理</span><br><span class="line">&gt; 对于代理服务器的请求头都是约定，只是一种规范，没有强制性限制，代理服务器可以遵守也可以不遵守</span><br><span class="line">- 示例</span><br></pre></td></tr></table></figure>
-
-<p>‘Cache-Control’: ‘max-age=10000 , no-cache’</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">- 使用技巧</span><br><span class="line"></span><br><span class="line">如果过期时间设置得不合理时，会导致客户端缓存的时间过长无法获取到最新的数据，这也是我们前端开发常见的问题</span><br><span class="line">&gt; 将打包完成的js,根据内容进行hash将hash码追回到js文件名中，页面中引用新的文件名，这样就可以达到一个更新缓存的目的，这也是一种常用的方案。</span><br><span class="line"># 数据验证</span><br><span class="line">## Last-Modified</span><br><span class="line">服务端返回头信息Last-Modified，告诉客户端资源的上次修改时间，客户端后续请求会带着请求头，```If-Modified-Since```或```If-Unmodified-Since```，对应的值是服务端 之前返回的```Last-Modified```的值,服务端会对比上次修改时间和头信息的时间，服务器会通知客户端是否可以直接使用缓存</span><br><span class="line">## Etag（数据签名）</span><br><span class="line"> 对资源的内容进行签名，如果数据有修改，数据签名就会发生变化，最简单的实现方法就是对资源内容进行HASH计算，得到一个唯一的标识，将hash值通过etag头返回给浏览器，</span><br><span class="line"> 浏览器器会在将etag的值，在请求时候通过</span><br><span class="line"> ```If-Match```或者```If-None-Match```请求头带上，服务器端对比头里面的etag和服务端真实的etag,告诉浏览器是否可以使用缓存</span><br><span class="line"># 重定向（Redirect）</span><br><span class="line">## 302（临时重定向）</span><br><span class="line">通过302，服务端告诉浏览器你需要的资源在哪里，去指定地址去加载，浏览器会再发送请求到重定向的地址获取资源</span><br><span class="line">服务端响应状态302 + 在头信息中增加```Location```告诉客户端所请求的资源临时重定向到的地址</span><br><span class="line">## 301（永久重定向）</span><br><span class="line"> 如果是永久跳转，可以使用301 + Location</span><br><span class="line"> 301指定资源永久跳转，浏览器下次访问的时候，会直接指向新的地址，浏览器会尽可能时间长的缓存301重定向的地址，除非主动清理缓存，下次访问会从disk cache直接获取</span><br><span class="line">&gt; 使用时候要谨慎，使用之服务端无法控制 </span><br><span class="line"></span><br><span class="line"># CSP ( Content-Security-Policy )</span><br><span class="line">1. 限制浏览器只能通过http和https来访问，无法通过inline script执行</span><br><span class="line"></span><br><span class="line">```nginx</span><br><span class="line">&apos;Content-Security-Policy&apos; : &apos;default-src http: https:&apos;</span><br></pre></td></tr></table></figure>
-
+<p>但这样做是不安全的，我们可以限制只有固定域名可以跨域<br><code>&#39;Access-Control-Allow-Orign&#39;: &#39;http://domain.com&#39;</code></p>
+<blockquote>
+<p>这种方法只能设置一个域名，如果是多个域，可以在后端服务做判断，对于允许的域名响应时设置该响应头信息</p>
+</blockquote>
+<p>只有拿到响应的头信息浏览器才知道是否支持跨域。浏览器发起的真实请求已经被服务器处理，并已交内容返回至浏览器，只是浏览器会根据响应中的跨域设置，对请求返回内容进行了处理。</p>
+<p>其它头信息</p>
+<ul>
+<li>‘Access-Control-Allow-Headers’: ‘X-TEST-CORS’ //允许跨域的头信息</li>
+<li>‘Access-Control-Allow-Methods’: ‘PUT,DELETE’ //允许跨域的方法</li>
+<li>‘Access-Control-Max-Age’: ‘1000’ //用一标识允许在1000秒不再发送OPTIONS预请求。时间单位是秒</li>
+</ul>
+<h3 id="jsonp实现方式"><a href="#jsonp实现方式" class="headerlink" title="jsonp实现方式"></a>jsonp实现方式</h3><h4 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h4><p>其实在网页中，浏览器对于link,script,image标签中加载的请求，是允许跨越访问的,Jsonp就是利用这种方式，访问到服务器的内容，对内容进处理后，现返回的。</p>
+<h1 id="缓存"><a href="#缓存" class="headerlink" title="缓存"></a>缓存</h1><h2 id="Cache-control-可缓存性"><a href="#Cache-control-可缓存性" class="headerlink" title="Cache-control 可缓存性"></a>Cache-control 可缓存性</h2><ul>
+<li><p>public: 是指请求返回的过程中，所经过的路径中，包括中间的代理服务器，都可以对返回内容进行缓存</p>
+</li>
+<li><p>private: 只有发起请求的客户端才可以缓存</p>
+</li>
+<li><p>no-cache: 任何地方都不可以缓存，每次请求会经过服务器验证，是否可以使用缓存</p>
+</li>
+<li><p>no-store客户端不会发送任何和缓存的请求头，直接忽略缓存</p>
+<h2 id="到期"><a href="#到期" class="headerlink" title="到期"></a>到期</h2></li>
+<li><p>max-age=<seconds> //客户端会使用max-age</seconds></p>
+</li>
+<li><p>s-maxage=<seconds> //只有在代理服务器中才生效</seconds></p>
+</li>
+<li><p>max-stale=<seconds> //发起请求主动携带此请求头，表示如果缓存已经过期了，客户端可以在max-stale这个时间内还可以使用过期的缓存，而不去请求新的内容</seconds></p>
+<h2 id="重新验证"><a href="#重新验证" class="headerlink" title="重新验证"></a>重新验证</h2></li>
+<li><p>must-revalidate max-age缓存已过期 ，必须到源服务端验证获取数据</p>
+</li>
+<li><p>proxy-revalidate //使用在缓存服务器，指定缓存过期后，必须到尖服务器获取数据</p>
+</li>
+<li><p>其它<br>no-store  永远到服务器端拿最新的数据<br>no-trasform  禁止代理服务器，对返回的数据进行压缩或其它处理</p>
+<blockquote>
+<p>对于代理服务器的请求头都是约定，只是一种规范，没有强制性限制，代理服务器可以遵守也可以不遵守</p>
+</blockquote>
+</li>
+<li><p>示例 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&apos;Cache-Control&apos;: &apos;max-age=10000 , no-cache&apos;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用技巧</p>
+</li>
+</ul>
+<p>如果过期时间设置得不合理时，会导致客户端缓存的时间过长无法获取到最新的数据，这也是我们前端开发常见的问题</p>
+<blockquote>
+<p>将打包完成的js,根据内容进行hash将hash码追回到js文件名中，页面中引用新的文件名，这样就可以达到一个更新缓存的目的，这也是一种常用的方案。</p>
+</blockquote>
+<h1 id="数据验证"><a href="#数据验证" class="headerlink" title="数据验证"></a>数据验证</h1><h2 id="Last-Modified"><a href="#Last-Modified" class="headerlink" title="Last-Modified"></a>Last-Modified</h2><p>服务端返回头信息Last-Modified，告诉客户端资源的上次修改时间，客户端后续请求会带着请求头，<code>If-Modified-Since</code>或<code>If-Unmodified-Since</code>，对应的值是服务端 之前返回的<code>Last-Modified</code>的值,服务端会对比上次修改时间和头信息的时间，服务器会通知客户端是否可以直接使用缓存</p>
+<h2 id="Etag（数据签名）"><a href="#Etag（数据签名）" class="headerlink" title="Etag（数据签名）"></a>Etag（数据签名）</h2><p> 对资源的内容进行签名，如果数据有修改，数据签名就会发生变化，最简单的实现方法就是对资源内容进行HASH计算，得到一个唯一的标识，将hash值通过etag头返回给浏览器，<br> 浏览器器会在将etag的值，在请求时候通过 <strong>If-Match</strong>或者<strong>If-None-Match</strong>请求头带上，服务器端对比头里面的etag和服务端真实的etag,告诉浏览器是否可以使用缓存</p>
+<h1 id="重定向（Redirect）"><a href="#重定向（Redirect）" class="headerlink" title="重定向（Redirect）"></a>重定向（Redirect）</h1><h2 id="302（临时重定向）"><a href="#302（临时重定向）" class="headerlink" title="302（临时重定向）"></a>302（临时重定向）</h2><p>通过302，服务端告诉浏览器你需要的资源在哪里，去指定地址去加载，浏览器会再发送请求到重定向的地址获取资源<br>服务端响应状态302 + 在头信息中增加<strong>Location</strong>告诉客户端所请求的资源临时重定向到的地址</p>
+<h2 id="301（永久重定向）"><a href="#301（永久重定向）" class="headerlink" title="301（永久重定向）"></a>301（永久重定向）</h2><p> 如果是永久跳转，可以使用301 + Location<br> 301指定资源永久跳转，浏览器下次访问的时候，会直接指向新的地址，浏览器会尽可能时间长的缓存301重定向的地址，除非主动清理缓存，下次访问会从disk cache直接获取</p>
+<blockquote>
+<p>使用时候要谨慎，使用之服务端无法控制 </p>
+</blockquote>
+<h1 id="CSP-Content-Security-Policy"><a href="#CSP-Content-Security-Policy" class="headerlink" title="CSP ( Content-Security-Policy )"></a>CSP ( Content-Security-Policy )</h1><ol>
+<li><p>限制浏览器只能通过http和https来访问，无法通过inline script执行</p>
+<p><code>&#39;Content-Security-Policy&#39; : &#39;default-src http: https:&#39;</code></p>
 <blockquote>
 <p>在html中写<script>xxxx</script> 这种方法称为inline script</p>
 </blockquote>
-<ol start="2">
-<li>限制只能加载本站的域名脚本<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">'Content-Security-Policy':'default-src \'self\''</span><br></pre></td></tr></table></figure>
-
 </li>
-</ol>
+<li><p>限制只能加载本站的域名脚本</p>
+<p><code>&#39;Content-Security-Policy&#39;:&#39;default-src \&#39;self\&#39;&#39;</code></p>
 <p>目的是为了防止被嵌入脚本后，执行外部有风险的脚本，这种方式也会影响图片不可以使用外链,只能加载本站脚本和图片</p>
-<ol start="3">
-<li>上一条中会影响图片加载，可以使用如下配置，只对脚本作限制</li>
-</ol>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">'Content-Security-Policy':'script-src \'self\''</span><br></pre></td></tr></table></figure>
-
-<ol start="4">
+</li>
+<li><p>上一条中会影响图片加载，可以使用如下配置，只对脚本作限制</p>
+<p><code>&#39;Content-Security-Policy&#39;:&#39;script-src \&#39;self\&#39;&#39;</code></p>
+</li>
 <li><p>限制只能访问本站和指定网站的资源</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">'Content-Security-Policy':'default-src \'self\'  http://albk.tech/'</span><br></pre></td></tr></table></figure>
+<p><code>&#39;Content-Security-Policy&#39;:&#39;default-src \&#39;self\&#39;  http://albk.tech/&#39;</code></p>
 </li>
 <li><p>限制FORM表单提交到其它域名</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">'Content-Security-Policy':'default-src \'self\'; from-action \'self\''</span><br></pre></td></tr></table></figure>
+<p><code>&#39;Content-Security-Policy&#39;:&#39;default-src \&#39;self\&#39;; from-action \&#39;self\&#39;&#39;</code></p>
 </li>
 <li><p>发生CPS设置的情况时候产生cps-report报告</p>
-</li>
-</ol>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">'Content-Security-Policy':'script-src \'self\'; from-action \'self\'; report-uri /xxx'</span><br></pre></td></tr></table></figure>
-
+<p><code>&#39;Content-Security-Policy&#39;:&#39;script-src \&#39;self\&#39;; from-action \&#39;self\&#39;; report-uri /xxx&#39;</code></p>
 <p>   xxx接收报告的本站路径 </p>
-<ol start="7">
-<li>设置只产cps-report不限制加载</li>
-</ol>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">'Content-Security-Policy-Report-Only':'script-serc \'self\'; from-action \'self\'; report-uri /xxx'</span><br></pre></td></tr></table></figure>
-
-<ol start="7">
-<li>除了header其它实现方式</li>
-</ol>
+</li>
+<li><p>设置只产cps-report不限制加载</p>
+<p><code>&#39;Content-Security-Policy-Report-Only&#39;:&#39;script-serc \&#39;self\&#39;; from-action \&#39;self\&#39;; report-uri /xxx&#39;</code></p>
+</li>
+<li><p>除了header其它实现方式</p>
 <p>可以在html中使用meta标签</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"Content-Security-Policy"</span> <span class="attr">content</span> = <span class="string">"script-serc 'self'; from-action 'self'"</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
+<p><code>&lt;meta http-equiv=&quot;Content-Security-Policy&quot; content = &quot;script-serc &#39;self&#39;; from-action &#39;self&#39;&quot;&gt;</code></p>
 <p>meta中无法使用; report-uri /xxx,如果要使用report-uri必须使用header</p>
-<ol start="8">
-<li>其它策略指定</li>
+</li>
+<li><p>其它策略指定</p>
+</li>
 </ol>
 <ul>
 <li>child-src</li>
@@ -707,7 +748,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#http2优点"><span class="nav-number">1.</span> <span class="nav-text">http2优点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CORS-Cross-Origin-Resource-Sharing"><span class="nav-number">2.</span> <span class="nav-text">CORS ( Cross-Origin Resource Sharing )</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#解决域中的方法"><span class="nav-number">2.1.</span> <span class="nav-text">解决域中的方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#header"><span class="nav-number">2.1.1.</span> <span class="nav-text">header</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数据协商"><span class="nav-number">3.</span> <span class="nav-text">数据协商</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#请示"><span class="nav-number">3.1.</span> <span class="nav-text">请示</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#返回"><span class="nav-number">3.2.</span> <span class="nav-text">返回</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#http长连接"><span class="nav-number">4.</span> <span class="nav-text">http长连接</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Cookie"><span class="nav-number">5.</span> <span class="nav-text">Cookie</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#http2优点"><span class="nav-number">1.</span> <span class="nav-text">http2优点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CORS-Cross-Origin-Resource-Sharing"><span class="nav-number">2.</span> <span class="nav-text">CORS ( Cross-Origin Resource Sharing )</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#解决域中的方法"><span class="nav-number">2.1.</span> <span class="nav-text">解决域中的方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#header"><span class="nav-number">2.1.1.</span> <span class="nav-text">header</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#jsonp实现方式"><span class="nav-number">2.1.2.</span> <span class="nav-text">jsonp实现方式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#原理"><span class="nav-number">2.1.2.1.</span> <span class="nav-text">原理</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#缓存"><span class="nav-number">3.</span> <span class="nav-text">缓存</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Cache-control-可缓存性"><span class="nav-number">3.1.</span> <span class="nav-text">Cache-control 可缓存性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#到期"><span class="nav-number">3.2.</span> <span class="nav-text">到期</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重新验证"><span class="nav-number">3.3.</span> <span class="nav-text">重新验证</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数据验证"><span class="nav-number">4.</span> <span class="nav-text">数据验证</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Last-Modified"><span class="nav-number">4.1.</span> <span class="nav-text">Last-Modified</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Etag（数据签名）"><span class="nav-number">4.2.</span> <span class="nav-text">Etag（数据签名）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#重定向（Redirect）"><span class="nav-number">5.</span> <span class="nav-text">重定向（Redirect）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#302（临时重定向）"><span class="nav-number">5.1.</span> <span class="nav-text">302（临时重定向）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#301（永久重定向）"><span class="nav-number">5.2.</span> <span class="nav-text">301（永久重定向）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CSP-Content-Security-Policy"><span class="nav-number">6.</span> <span class="nav-text">CSP ( Content-Security-Policy )</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数据协商"><span class="nav-number">7.</span> <span class="nav-text">数据协商</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#请示"><span class="nav-number">7.1.</span> <span class="nav-text">请示</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#返回"><span class="nav-number">7.2.</span> <span class="nav-text">返回</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#http长连接"><span class="nav-number">8.</span> <span class="nav-text">http长连接</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Cookie"><span class="nav-number">9.</span> <span class="nav-text">Cookie</span></a></li></ol></div>
             
 
           </div>
