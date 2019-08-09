@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="血案现场回顾最近在做一个项目，项目中使用到了图形数据库，从图形数据库中查询数据时候，因为查询返回的图中存在在一个环，导致下列异常 12Servlet.service() for servlet [springDispatcherServlet] in context with path [/Shop] threw exception [Request processing failed; nest">
+<meta name="description" content="什么是循环引用​        循环引用就是循环依赖，就是两个或多个bean相互之前间的持有对方，比如对象CycleA,CycleB两个对象，如果CycleA引用了CycleB实例，CycleB引用了CycleA实例，它们最终反应为一个环 解决办法 使用@JsonIgnore标注在属性或对应的get、set方法上，在序列化的时候将该属性忽略,避免循环引用，但是这种方式在反序列化时，此属性同样会被忽">
 <meta name="keywords" content="循环引用">
 <meta property="og:type" content="article">
 <meta property="og:title" content="对象循环引用引发的血案">
 <meta property="og:url" content="http://albk.tech/对象循环引用引发的血案.html">
 <meta property="og:site_name" content="BK的网络日志">
-<meta property="og:description" content="血案现场回顾最近在做一个项目，项目中使用到了图形数据库，从图形数据库中查询数据时候，因为查询返回的图中存在在一个环，导致下列异常 12Servlet.service() for servlet [springDispatcherServlet] in context with path [/Shop] threw exception [Request processing failed; nest">
+<meta property="og:description" content="什么是循环引用​        循环引用就是循环依赖，就是两个或多个bean相互之前间的持有对方，比如对象CycleA,CycleB两个对象，如果CycleA引用了CycleB实例，CycleB引用了CycleA实例，它们最终反应为一个环 解决办法 使用@JsonIgnore标注在属性或对应的get、set方法上，在序列化的时候将该属性忽略,避免循环引用，但是这种方式在反序列化时，此属性同样会被忽">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-07-10T07:23:15.554Z">
+<meta property="og:updated_time" content="2019-08-09T16:08:43.899Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="对象循环引用引发的血案">
-<meta name="twitter:description" content="血案现场回顾最近在做一个项目，项目中使用到了图形数据库，从图形数据库中查询数据时候，因为查询返回的图中存在在一个环，导致下列异常 12Servlet.service() for servlet [springDispatcherServlet] in context with path [/Shop] threw exception [Request processing failed; nest">
+<meta name="twitter:description" content="什么是循环引用​        循环引用就是循环依赖，就是两个或多个bean相互之前间的持有对方，比如对象CycleA,CycleB两个对象，如果CycleA引用了CycleB实例，CycleB引用了CycleA实例，它们最终反应为一个环 解决办法 使用@JsonIgnore标注在属性或对应的get、set方法上，在序列化的时候将该属性忽略,避免循环引用，但是这种方式在反序列化时，此属性同样会被忽">
 
 
 
@@ -373,11 +373,7 @@
       
 
       
-        <h1 id="血案现场回顾"><a href="#血案现场回顾" class="headerlink" title="血案现场回顾"></a>血案现场回顾</h1><p>最近在做一个项目，项目中使用到了图形数据库，从图形数据库中查询数据时候，因为查询返回的图中存在在一个环，导致下列异常</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Servlet.service() for servlet [springDispatcherServlet] in context with path [/Shop] threw exception [Request processing failed; </span><br><span class="line">nested exception is org.springframework.http.converter.HttpMessageNotWritableException: Could not write JSON: Infinite recursion (StackOverflowError) (through reference chain:</span><br></pre></td></tr></table></figure>
-
-<p>看异常内容是因为环导致循环依赖，导致jackson在序列化的时候产生了无限递归。</p>
-<h1 id="什么是循环引用"><a href="#什么是循环引用" class="headerlink" title="什么是循环引用"></a>什么是循环引用</h1><p>​        循环引用就是循环依赖，就是两个或多个bean相互之前间的持有对方，比如对象CycleA,CycleB两个对象，如果CycleA引用了CycleB实例，CycleB引用了CycleA实例，它们最终反应为一个环</p>
+        <h1 id="什么是循环引用"><a href="#什么是循环引用" class="headerlink" title="什么是循环引用"></a>什么是循环引用</h1><p>​        循环引用就是循环依赖，就是两个或多个bean相互之前间的持有对方，比如对象CycleA,CycleB两个对象，如果CycleA引用了CycleB实例，CycleB引用了CycleA实例，它们最终反应为一个环</p>
 <h1 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h1><ol>
 <li><p>使用<code>@JsonIgnore</code>标注在属性或对应的get、set方法上，在序列化的时候将该属性忽略,避免循环引用，但是这种方式在反序列化时，此属性同样会被忽略，不会自动注入。如果需要反序列化时注入该属性，则用下面的方法</p>
 </li>
@@ -409,6 +405,10 @@
 <li>jackson提供的<code>1</code>，<code>2</code>，<code>3</code>方法，这种方式没有从根本上解决循环引用，只是避开了循环引用。</li>
 <li>第4种方法是将循环引用形成的环断开，来避免序列化失败，会导数据丢失</li>
 </ul>
+<h1 id="血案现场回顾"><a href="#血案现场回顾" class="headerlink" title="血案现场回顾"></a>血案现场回顾</h1><p>最近在做一个项目，项目中使用到了图形数据库，从图形数据库中查询数据时候，因为查询返回的图中存在在一个环，导致下列异常</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Servlet.service() for servlet [springDispatcherServlet] in context with path [/Shop] threw exception [Request processing failed; </span><br><span class="line">nested exception is org.springframework.http.converter.HttpMessageNotWritableException: Could not write JSON: Infinite recursion (StackOverflowError) (through reference chain:</span><br></pre></td></tr></table></figure>
+
+<p>看异常内容是因为环导致循环依赖，导致jackson在序列化的时候产生了无限递归。</p>
 <h1 id="本文解决方案"><a href="#本文解决方案" class="headerlink" title="本文解决方案"></a>本文解决方案</h1><p> 因为我遇到的问题是，在查询图形数据库时候存在环，父级子级为同一个对象，数据结构，类似于 GraphNode嵌套GraphNode这样的结构，而且这些结构是接口返回接口的重要数据，无法使用，上述的方法1，2，3，又不允许数据有丢失，所以4的方法也无法使用。</p>
 <p>主要解决方法是在第4种方案的基础上，如果发生了A-&gt;B-A循环引用的时候，对返回结果整理成<u>A-&gt;B-&gt;A1</u>，A1是A对象的一个另一个实例，但是A1中保留了接口中必要的属性，引起循环引用的属性置为了空。</p>
 <blockquote>
@@ -419,10 +419,10 @@
 <li><input disabled type="checkbox"> ​    复杂的接口响应结果,对于一些接口响应结果不够精简，返回复杂的对象，也很容易出现</li>
 <li><input disabled type="checkbox"> ​    图形数据库查询，比如，使用spring-data-neo4j 查询结果中有存在环，导致数据返回前端时候序列化失败</li>
 </ul>
-<h1 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h1><ul>
+<h1 id="解决方案总结"><a href="#解决方案总结" class="headerlink" title="解决方案总结"></a>解决方案总结</h1><ul>
 <li><p>fastjson解决循环引用，使用的特殊标识代替循环引用对象</p>
 </li>
-<li><p>Jackson循环依赖的解决方案不能从根本上解决问题，因为JAVA本身不是一个存在引用的语言，</p>
+<li><p>Jackson循环依赖的解决方案不能从根本上解决问题，因为JAVA本身就是一个存在引用的语言，</p>
 </li>
 <li><p>考虑表设计上是否合理，是否存在问题</p>
 </li>
@@ -649,7 +649,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#血案现场回顾"><span class="nav-number">1.</span> <span class="nav-text">血案现场回顾</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是循环引用"><span class="nav-number">2.</span> <span class="nav-text">什么是循环引用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#解决办法"><span class="nav-number">3.</span> <span class="nav-text">解决办法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#jakson解决循环依赖总结"><span class="nav-number">3.1.</span> <span class="nav-text">jakson解决循环依赖总结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#本文解决方案"><span class="nav-number">4.</span> <span class="nav-text">本文解决方案</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#容易出现循环引用的场景"><span class="nav-number">5.</span> <span class="nav-text">容易出现循环引用的场景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#解决方案"><span class="nav-number">6.</span> <span class="nav-text">解决方案</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#延伸阅读"><span class="nav-number">7.</span> <span class="nav-text">延伸阅读</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是循环引用"><span class="nav-number">1.</span> <span class="nav-text">什么是循环引用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#解决办法"><span class="nav-number">2.</span> <span class="nav-text">解决办法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#jakson解决循环依赖总结"><span class="nav-number">2.1.</span> <span class="nav-text">jakson解决循环依赖总结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#血案现场回顾"><span class="nav-number">3.</span> <span class="nav-text">血案现场回顾</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#本文解决方案"><span class="nav-number">4.</span> <span class="nav-text">本文解决方案</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#容易出现循环引用的场景"><span class="nav-number">5.</span> <span class="nav-text">容易出现循环引用的场景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#解决方案总结"><span class="nav-number">6.</span> <span class="nav-text">解决方案总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#延伸阅读"><span class="nav-number">7.</span> <span class="nav-text">延伸阅读</span></a></li></ol></div>
             
 
           </div>

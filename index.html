@@ -1222,8 +1222,9 @@ CORS ( Cross-Origin Resource Sharing )CORS,跨域资源共享，它允许浏
       
         
           
-          血案现场回顾最近在做一个项目，项目中使用到了图形数据库，从图形数据库中查询数据时候，因为查询返回的图中存在在一个环，导致下列异常
-12Servlet.service() for servlet [springDispatcherServlet] in context with path [/Shop
+          什么是循环引用​        循环引用就是循环依赖，就是两个或多个bean相互之前间的持有对方，比如对象CycleA,CycleB两个对象，如果CycleA引用了CycleB实例，CycleB引用了CycleA实例，它们最终反应为一个环
+解决办法
+使用@JsonIgnore标注在属性或对应的get
           ...
           <!--noindex-->
           <div class="post-button text-center">

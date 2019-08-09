@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="BK的网络日志">
 <meta property="og:description" content="Mysql数据库事务的4个特性 原子性（Atomicity）原子性是指事务是一个不可分割的工作单位，事务中的操作要么都发生，要么都不发生。 一致性（Consistency）事务前后数据的完整性必须保持一致 隔离性（Isolation）事务的隔离性是多个用户并发访问数据库时，数据库为每一个用户开启的事务，不能被其他事务的操作数据所干扰，多个并发事务之间要相互隔离 持久性（Durability）持久性">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-07-29T17:03:16.300Z">
+<meta property="og:updated_time" content="2019-08-09T16:38:30.322Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="mysql常见问题 - 持续更新中">
 <meta name="twitter:description" content="Mysql数据库事务的4个特性 原子性（Atomicity）原子性是指事务是一个不可分割的工作单位，事务中的操作要么都发生，要么都不发生。 一致性（Consistency）事务前后数据的完整性必须保持一致 隔离性（Isolation）事务的隔离性是多个用户并发访问数据库时，数据库为每一个用户开启的事务，不能被其他事务的操作数据所干扰，多个并发事务之间要相互隔离 持久性（Durability）持久性">
@@ -422,6 +422,21 @@
 <p>磁盘块的大小也就是一个数据页的大小，是固定的，如果数据项占的空间越小，数据项的数量越多，树的高度越低。这就是为什么每个数据项，即索引字段要尽量的小，比如int占4字节，要比bigint8字节少一半。</p>
 <p>当索引的KEY越小（字段越小），一页可以存储的索引越多，一次载入到内存中的数据也就越多，这也解释了为什么B+树，要求把真实的数据放到叶子节点中，而不是内层节点，一旦放到内层节点，一次读到的索引会大幅度减少，导致频繁的IO，另一方面也会导致树的高度增加。</p>
 </blockquote>
+<h2 id="Mysql中的联合索引"><a href="#Mysql中的联合索引" class="headerlink" title="Mysql中的联合索引"></a>Mysql中的联合索引</h2><p>非统计查询时必须符合最左原则</p>
+<p>如果是统计操作，并且是覆盖索引的，则优化器会选择走联合索引，通过索引覆盖来优化count(*)</p>
+<h2 id="优化器选择不使用索引的情况"><a href="#优化器选择不使用索引的情况" class="headerlink" title="优化器选择不使用索引的情况?"></a>优化器选择不使用索引的情况?</h2><p>如果表字段X存在辅助索引，而在执行SQL, <code>select * from table1 where x&gt;400</code> 时，在查看扫行计划时如果未选择辅助索引，这种情况下多发生于范围查找、join连接操作，原因如下：</p>
+<ol>
+<li>如果被查询出来的数据量占整张表的20%左右时，可能会导致优化器放弃辅助索引，而改为聚集索引查询，因为如果使用辅助索引，会导致大量的随机读 ，改为聚集索引，使用顺序读性能远远高于随机读。</li>
+<li>如果查出来的数据量较少时，优化器是会选择辅助索引</li>
+</ol>
+<h2 id="Mysql5-6的几个优化"><a href="#Mysql5-6的几个优化" class="headerlink" title="Mysql5.6的几个优化"></a>Mysql5.6的几个优化</h2><p>MRR :目的就是减少磁盘的随机访问，并且将随机访问转化为较为顺序的数据访问，优化适合用于<code>range , ref ,eq-ref</code> </p>
+<blockquote>
+<p>主要原理就是，将辅助索引查询到的数据放于缓存中，对缓存中的数据根据RowID进行排序，然后用较为顺序的方式来访问数据，这样就减少了随机读 ，并且减少了缓冲页中被替换的次数.</p>
+</blockquote>
+<p>​    此外MRR还可以将某些范围查询拆分为键值对，来进行批量数据查询，这样的好处就是可以在拆分过程中，直接过滤掉一部分不符合条件的数据。</p>
+<p>​    执行计划的Extra中会看到<code>using MRR</code> </p>
+<p>ICP : 索引条件下压，就是将where部分的过滤操作，下沉到存储引擎层，在某些查询下，可以大大减少返回上层的数据，从而提高整体性能。 优化适用于<code>range , ref , eq_ref , ref_or_null</code>，执行计划Extra中会看到<code>Using index condition</code></p>
+<h2 id="mysql中的hash索引"><a href="#mysql中的hash索引" class="headerlink" title="mysql中的hash索引"></a>mysql中的hash索引</h2><p>innodb中冲突机制采用链表方式，哈希函数采用除法散列方式，Hash索引只能用来搜索等值查询，无法处理范围查询，所以使用场景比较少。</p>
 
       
     </div>
@@ -635,7 +650,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Mysql数据库事务的4个特性"><span class="nav-number">1.</span> <span class="nav-text">Mysql数据库事务的4个特性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mysql的事务隔离级别，以及每种级别下会产生的问题和对问题的理解"><span class="nav-number">2.</span> <span class="nav-text">Mysql的事务隔离级别，以及每种级别下会产生的问题和对问题的理解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mysql的过引方法有哪些？"><span class="nav-number">3.</span> <span class="nav-text">Mysql的过引方法有哪些？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么不使用B树，要使用B-树"><span class="nav-number">4.</span> <span class="nav-text">为什么不使用B树，要使用B+树</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#InnoDB和MyISAM区别"><span class="nav-number">5.</span> <span class="nav-text">InnoDB和MyISAM区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据库如何解决事务冲突"><span class="nav-number">6.</span> <span class="nav-text">数据库如何解决事务冲突</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何判断数据库进入了死锁"><span class="nav-number">7.</span> <span class="nav-text">如何判断数据库进入了死锁</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#进入死锁之后如何处理？"><span class="nav-number">8.</span> <span class="nav-text">进入死锁之后如何处理？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#索引为什么可以提高查询效率？"><span class="nav-number">9.</span> <span class="nav-text">索引为什么可以提高查询效率？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MySQL为何将节点大小设置为页的整数倍？"><span class="nav-number">10.</span> <span class="nav-text">MySQL为何将节点大小设置为页的整数倍？</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Mysql数据库事务的4个特性"><span class="nav-number">1.</span> <span class="nav-text">Mysql数据库事务的4个特性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mysql的事务隔离级别，以及每种级别下会产生的问题和对问题的理解"><span class="nav-number">2.</span> <span class="nav-text">Mysql的事务隔离级别，以及每种级别下会产生的问题和对问题的理解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mysql的过引方法有哪些？"><span class="nav-number">3.</span> <span class="nav-text">Mysql的过引方法有哪些？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么不使用B树，要使用B-树"><span class="nav-number">4.</span> <span class="nav-text">为什么不使用B树，要使用B+树</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#InnoDB和MyISAM区别"><span class="nav-number">5.</span> <span class="nav-text">InnoDB和MyISAM区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据库如何解决事务冲突"><span class="nav-number">6.</span> <span class="nav-text">数据库如何解决事务冲突</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何判断数据库进入了死锁"><span class="nav-number">7.</span> <span class="nav-text">如何判断数据库进入了死锁</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#进入死锁之后如何处理？"><span class="nav-number">8.</span> <span class="nav-text">进入死锁之后如何处理？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#索引为什么可以提高查询效率？"><span class="nav-number">9.</span> <span class="nav-text">索引为什么可以提高查询效率？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MySQL为何将节点大小设置为页的整数倍？"><span class="nav-number">10.</span> <span class="nav-text">MySQL为何将节点大小设置为页的整数倍？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mysql中的联合索引"><span class="nav-number">11.</span> <span class="nav-text">Mysql中的联合索引</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#优化器选择不使用索引的情况"><span class="nav-number">12.</span> <span class="nav-text">优化器选择不使用索引的情况?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mysql5-6的几个优化"><span class="nav-number">13.</span> <span class="nav-text">Mysql5.6的几个优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mysql中的hash索引"><span class="nav-number">14.</span> <span class="nav-text">mysql中的hash索引</span></a></li></ol></div>
             
 
           </div>
