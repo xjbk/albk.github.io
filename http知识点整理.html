@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="http2优点 所有数据二进制传输 同一个连接里面发送多个请求不再需要按顺序发送 头信息压缩（有效减少带宽使用) server push(服务端主动推送消息至客户端) 信道复用 分帧传输   CORS ( Cross-Origin Resource Sharing )CORS,跨域资源共享，它允许浏览器向跨源服务，发出请求，从而克服AJAX只能同源使用的限制。跨域访问只会在浏览器访问时才才会出现，">
+<meta name="description" content="目录[TOC] #谈谈http1.0 ,1.1 ,2.0 http1.0主要规定了浏览器与服务器只保持短暂的连接，浏览器每次请求都需要向服务器建立一个TCP连接，服务器处理完之后，断开TCP连接  http1.1协议是一个标准化的协议，针对http1.0的缺陷进行了改进   连接可复用，节省了三次握手和四次挥手的时间，在并发高的时候性能有很大的提升，可以通过设置connection:close在每">
 <meta name="keywords" content="总结,http">
 <meta property="og:type" content="article">
 <meta property="og:title" content="http知识点整理">
 <meta property="og:url" content="http://albk.tech/http知识点整理.html">
 <meta property="og:site_name" content="BK的网络日志">
-<meta property="og:description" content="http2优点 所有数据二进制传输 同一个连接里面发送多个请求不再需要按顺序发送 头信息压缩（有效减少带宽使用) server push(服务端主动推送消息至客户端) 信道复用 分帧传输   CORS ( Cross-Origin Resource Sharing )CORS,跨域资源共享，它允许浏览器向跨源服务，发出请求，从而克服AJAX只能同源使用的限制。跨域访问只会在浏览器访问时才才会出现，">
+<meta property="og:description" content="目录[TOC] #谈谈http1.0 ,1.1 ,2.0 http1.0主要规定了浏览器与服务器只保持短暂的连接，浏览器每次请求都需要向服务器建立一个TCP连接，服务器处理完之后，断开TCP连接  http1.1协议是一个标准化的协议，针对http1.0的缺陷进行了改进   连接可复用，节省了三次握手和四次挥手的时间，在并发高的时候性能有很大的提升，可以通过设置connection:close在每">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-07-30T17:25:05.151Z">
+<meta property="og:updated_time" content="2019-08-14T16:53:55.809Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="http知识点整理">
-<meta name="twitter:description" content="http2优点 所有数据二进制传输 同一个连接里面发送多个请求不再需要按顺序发送 头信息压缩（有效减少带宽使用) server push(服务端主动推送消息至客户端) 信道复用 分帧传输   CORS ( Cross-Origin Resource Sharing )CORS,跨域资源共享，它允许浏览器向跨源服务，发出请求，从而克服AJAX只能同源使用的限制。跨域访问只会在浏览器访问时才才会出现，">
+<meta name="twitter:description" content="目录[TOC] #谈谈http1.0 ,1.1 ,2.0 http1.0主要规定了浏览器与服务器只保持短暂的连接，浏览器每次请求都需要向服务器建立一个TCP连接，服务器处理完之后，断开TCP连接  http1.1协议是一个标准化的协议，针对http1.0的缺陷进行了改进   连接可复用，节省了三次握手和四次挥手的时间，在并发高的时候性能有很大的提升，可以通过设置connection:close在每">
 
 
 
@@ -384,15 +384,44 @@
       
 
       
-        <h1 id="http2优点"><a href="#http2优点" class="headerlink" title="http2优点"></a>http2优点</h1><ul>
-<li>所有数据二进制传输</li>
-<li>同一个连接里面发送多个请求不再需要按顺序发送</li>
-<li>头信息压缩（有效减少带宽使用)</li>
-<li>server push(服务端主动推送消息至客户端)</li>
-<li>信道复用</li>
-<li>分帧传输</li>
+        <h1 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h1><p>[TOC]</p>
+<h1 id="谈谈http1-0-1-1-2-0"><a href="#谈谈http1-0-1-1-2-0" class="headerlink" title="#谈谈http1.0 ,1.1 ,2.0"></a>#谈谈http1.0 ,1.1 ,2.0</h1><ul>
+<li><p>http1.0主要规定了浏览器与服务器只保持短暂的连接，浏览器每次请求都需要向服务器建立一个TCP连接，服务器处理完之后，断开TCP连接</p>
+</li>
+<li><p>http1.1协议是一个标准化的协议，针对http1.0的缺陷进行了改进</p>
+<ul>
+<li><input disabled type="checkbox"> 连接可复用，节省了三次握手和四次挥手的时间，在并发高的时候性能有很大的提升，可以通过设置connection:close在每次请示处理完之后关闭连接，http1.1默认请求头中connection:keepalive。</li>
+<li><input disabled type="checkbox"> 引入额外的缓存控制机制</li>
+<li><input disabled type="checkbox"> 引入内容协商</li>
+<li><input disabled type="checkbox"> 支持响应分块</li>
+<li><input disabled type="checkbox"> 允许在第一个应答被完全发送之前发送第二个请求，降低通信延迟</li>
+<li><input disabled type="checkbox"> 安全级别更高</li>
+</ul>
+</li>
+<li><p>http2.0 </p>
+<ul>
+<li><input disabled type="checkbox"> 所有数据二进制传输</li>
+<li><input disabled type="checkbox"> 赋予请求优先级：为请求分配优先级顺序，主要是为了在同一个连接里面发送多个请求时，解决因带宽低而导致响应变慢的问题，发送多个请求时不再需要按顺序发送</li>
+<li><input disabled type="checkbox"> 头信息压缩（有效减少带宽使用)</li>
+<li><input disabled type="checkbox"> server push(服务端主动推送消息至客户端)</li>
+<li><input disabled type="checkbox"> 信道复用：通过单一的TCP连接，无限制处理多个HTTP请求，所有请求都在一个TCP连接上完成，因此TCP的处理效率得到了提高</li>
+<li><input disabled type="checkbox"> 分帧传输</li>
+<li><input disabled type="checkbox"> 服务器提示功能：服务端主动提示客户端请求所需的资源，如果客户端提前知道所需要的资源，并且本地已经缓存的情况下，可以避免发送不必要的请求</li>
+</ul>
+</li>
 </ul>
 <hr>
+<h1 id="HTTPS"><a href="#HTTPS" class="headerlink" title="HTTPS"></a>HTTPS</h1><blockquote>
+<p>我们在电脑或者手机上打开网页时，有时候会看到一些很突兀的广告，这其实就是http的通信内容被第三方篡改了，强行插入的内容</p>
+</blockquote>
+<p>由于http协议传输的文本数据是没有加密的，都是明文传输，所以在网络传输过程中可能存在窃听风险、篡改风险、冒充风险，https主要通过对通信内容协商加密、对通信内容增加校验机制、配备证书，解决了http协议存在的三种风险</p>
+<p>https协议在http和TCP协议之间增了TLS/SSL加密层，使用<code>HTTPS</code> 时</p>
+<ul>
+<li>先用<code>非对称加密</code>传输密码，然后用这个密码对称<code>加密数据</code>，使得第三方无法获得通信内容</li>
+<li>发送方<code>将数据的</code>哈希结果<code>写到数据中，</code>接收方<code>解密后对比数据的</code>哈希结果<code>，如果不一致则说明被修改。由于传输数据加密，第三方无法修改哈希结果。</code></li>
+<li><code>由</code>权威机构颁发<code>证书，再加上</code>证书校验<code>机制，避免</code>第三方伪装`参与通信.</li>
+</ul>
+<h1 id="GET-和-POST-的区别"><a href="#GET-和-POST-的区别" class="headerlink" title="GET 和 POST 的区别"></a>GET 和 POST 的区别</h1><p>GET<code>请求通常用于</code>查询、获取数据<code>，而</code>POST<code>请求则用于</code>发送数据、<br>GET所有数据都显示在URL中，安全性较差，POST数据不会显示在URL中，在发送敏感数据时，要使用POST，因为POST请求不会被浏览器历史记录保存<br>GET后退按钮/刷新无害，POST数据会被重新提交（浏览器应该告知用户数据会被重新提交）。<br>GET书签可收藏，POST为书签不可收藏<br>GET能被缓存，POST不能缓存<br>GET发送数据时对数据长度有限制最大为2M，POST无限制<br>GET只允许 ASCII字符。POST没有限制。也允许二进制数据。</p>
 <h1 id="CORS-Cross-Origin-Resource-Sharing"><a href="#CORS-Cross-Origin-Resource-Sharing" class="headerlink" title="CORS ( Cross-Origin Resource Sharing )"></a>CORS ( Cross-Origin Resource Sharing )</h1><p>CORS,跨域资源共享，它允许浏览器向跨源服务，发出请求，从而克服AJAX只能同源使用的限制。<br>跨域访问只会在浏览器访问时才才会出现，使用curl访问时，是不会出现跨域问题的。</p>
 <ul>
 <li>跨域的时候允许的请求方式:get、head、post ,其它请求是不允许跨访问的，需要预请求判断是否支持跨域(OPTIONS)</li>
@@ -537,6 +566,48 @@
 <li>Secure只有在https的时候才发送</li>
 <li>HttpOnly无法通过document.cookie访问，可防止CSRS攻击</li>
 </ul>
+<h1 id="TCP和UDP的区别"><a href="#TCP和UDP的区别" class="headerlink" title="TCP和UDP的区别"></a>TCP和UDP的区别</h1><p>TCP协议是面向有连接的字符流传输，在使用TCP协议之前，需要客户端和服务端通过三次握手在双方之前建立连接，会有数据重传、流量控制等功能保证数据可以无差错、不丢失、不重复、按序传输。</p>
+<p>TCP连接是点到点的全双工可靠信道。</p>
+<p>TCP首部开销20字符</p>
+<p>UCP协议是面向无连接的报文传输，UDP尽最大努力交付，但是不保证可靠交付。</p>
+<p>UDP支持一对一、一对多、多对多、多对一的不可靠信道</p>
+<p>UDP首部开销只有8字节</p>
+<h1 id="再谈HTTPS"><a href="#再谈HTTPS" class="headerlink" title="再谈HTTPS"></a>再谈HTTPS</h1><blockquote>
+<p>共享密钥加密：加密和解密使用同一个密钥，但是如何在互联网上安全的转移密钥，这是共享密钥的一个困境</p>
+<p>公开密钥加密：加密和解密使用一对非对称的密钥，一把叫公钥，一把叫私钥，公钥任何人都可以获得，加密后的数据只有私钥可以解密</p>
+</blockquote>
+<ul>
+<li>HTTPS采用混合加密机制：使用公开密钥加密后安全的交换稍后在共享密码加密中要使用的密钥，在确保交换的密钥是安全的前提下，使用共享密钥加密方式进行通信</li>
+</ul>
+<h2 id="可能聪明的你已经发现，如何证明公开密钥是正确的？"><a href="#可能聪明的你已经发现，如何证明公开密钥是正确的？" class="headerlink" title="可能聪明的你已经发现，如何证明公开密钥是正确的？"></a>可能聪明的你已经发现，如何证明公开密钥是正确的？</h2><p>HTTPS协议引入了数字证书认证机构或相关机构办法的公开密钥证书,证书中包含两部分信息<code>服务器的公开密钥</code>、<code>数据证书认证机构的数据签名</code>,</p>
+<ol>
+<li><p>服务器将这份由数据证书认证机构办法的证书发送给客户端</p>
+</li>
+<li><p>客户端拿到证书后，使用公开密钥向数据证书认证机构确认证书上的数据签名正确，是确保服务器的真实性</p>
+</li>
+<li><p>认证通过可以说明公开密钥的是可信的</p>
+</li>
+</ol>
+<h2 id="如何将证书安全的转移至客户端"><a href="#如何将证书安全的转移至客户端" class="headerlink" title="如何将证书安全的转移至客户端"></a>如何将证书安全的转移至客户端</h2><p>大多数浏览器开发商发布版本时，会事先在内部植入常用认证机关的公开密钥，以确保公开密钥安全转移</p>
+<h2 id="服务端如何校验客户端的真实性"><a href="#服务端如何校验客户端的真实性" class="headerlink" title="服务端如何校验客户端的真实性"></a>服务端如何校验客户端的真实性</h2><p>HTTPS中可以使用客户端证书，客户端证书一秀是由安全性极高的认证机构颁发的证书，因为客户端证书是收费的， 一般用于特殊的业务，比如网上银行，确认使用的终端是授权的</p>
+<h2 id="HTTPS这么安全为不一直使用HTTPS呢"><a href="#HTTPS这么安全为不一直使用HTTPS呢" class="headerlink" title="HTTPS这么安全为不一直使用HTTPS呢"></a>HTTPS这么安全为不一直使用HTTPS呢</h2><ul>
+<li>因为HTTPS的每次通信都会加密，这会消耗更多的CPU、内存等资源及大影响了服务器性能</li>
+<li>并不是所有网站、所有业务的数据都是敏感数据，一般只在包含敏感数据时才使用HTTPS加密通信</li>
+<li>如果一直使用HTTPS，对于访问量较高的网站，会影响网站的性能</li>
+<li>HTTPS证书的开销也是需要考虑的因素</li>
+<li>HTTPS要比HTTP慢2-100倍</li>
+</ul>
+<h2 id="OSI七层模型"><a href="#OSI七层模型" class="headerlink" title="OSI七层模型"></a>OSI七层模型</h2><p>应用层：FTP,DNS,HTTP都属于该层</p>
+<p>表示层：数据的表现式，如加密</p>
+<p>会话层：对应用会话的管理同步</p>
+<p>传输层：提供处于网络连接中的两台计算机的数据传输，TCP,UDP都属于该层，主要解决了端口到端口的问题</p>
+<p>网络传输层：用来处理在网络上流动的数据包，作用不是在众多的选项内选择一条传输路线，路由器工作在该层，主要记录了，源IP，目标IP</p>
+<p>链路层：用来处理连接网络的硬件部分，硬件上的范畴都在链接层的作用范围内，交换机工作在该层，主要是基于源的自动学习 ，源MAC，目标MAC</p>
+<p>物理层：网线，网口</p>
+<blockquote>
+<p>交换机的记录了IP与端口</p>
+<p>路由器记录了网段与端口</p>
+</blockquote>
 
       
     </div>
@@ -594,6 +665,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/聊聊分布式事务.html" rel="prev" title="聊聊分布式事务">
+                聊聊分布式事务 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -677,7 +752,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-count">15</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -688,7 +763,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -699,7 +774,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -748,7 +823,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#http2优点"><span class="nav-number">1.</span> <span class="nav-text">http2优点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CORS-Cross-Origin-Resource-Sharing"><span class="nav-number">2.</span> <span class="nav-text">CORS ( Cross-Origin Resource Sharing )</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#解决域中的方法"><span class="nav-number">2.1.</span> <span class="nav-text">解决域中的方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#header"><span class="nav-number">2.1.1.</span> <span class="nav-text">header</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#jsonp实现方式"><span class="nav-number">2.1.2.</span> <span class="nav-text">jsonp实现方式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#原理"><span class="nav-number">2.1.2.1.</span> <span class="nav-text">原理</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#缓存"><span class="nav-number">3.</span> <span class="nav-text">缓存</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Cache-control-可缓存性"><span class="nav-number">3.1.</span> <span class="nav-text">Cache-control 可缓存性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#到期"><span class="nav-number">3.2.</span> <span class="nav-text">到期</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重新验证"><span class="nav-number">3.3.</span> <span class="nav-text">重新验证</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数据验证"><span class="nav-number">4.</span> <span class="nav-text">数据验证</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Last-Modified"><span class="nav-number">4.1.</span> <span class="nav-text">Last-Modified</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Etag（数据签名）"><span class="nav-number">4.2.</span> <span class="nav-text">Etag（数据签名）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#重定向（Redirect）"><span class="nav-number">5.</span> <span class="nav-text">重定向（Redirect）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#302（临时重定向）"><span class="nav-number">5.1.</span> <span class="nav-text">302（临时重定向）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#301（永久重定向）"><span class="nav-number">5.2.</span> <span class="nav-text">301（永久重定向）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CSP-Content-Security-Policy"><span class="nav-number">6.</span> <span class="nav-text">CSP ( Content-Security-Policy )</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数据协商"><span class="nav-number">7.</span> <span class="nav-text">数据协商</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#请示"><span class="nav-number">7.1.</span> <span class="nav-text">请示</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#返回"><span class="nav-number">7.2.</span> <span class="nav-text">返回</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#http长连接"><span class="nav-number">8.</span> <span class="nav-text">http长连接</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Cookie"><span class="nav-number">9.</span> <span class="nav-text">Cookie</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#目录"><span class="nav-number">1.</span> <span class="nav-text">目录</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#谈谈http1-0-1-1-2-0"><span class="nav-number">2.</span> <span class="nav-text">#谈谈http1.0 ,1.1 ,2.0</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#HTTPS"><span class="nav-number">3.</span> <span class="nav-text">HTTPS</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#GET-和-POST-的区别"><span class="nav-number">4.</span> <span class="nav-text">GET 和 POST 的区别</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CORS-Cross-Origin-Resource-Sharing"><span class="nav-number">5.</span> <span class="nav-text">CORS ( Cross-Origin Resource Sharing )</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#解决域中的方法"><span class="nav-number">5.1.</span> <span class="nav-text">解决域中的方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#header"><span class="nav-number">5.1.1.</span> <span class="nav-text">header</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#jsonp实现方式"><span class="nav-number">5.1.2.</span> <span class="nav-text">jsonp实现方式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#原理"><span class="nav-number">5.1.2.1.</span> <span class="nav-text">原理</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#缓存"><span class="nav-number">6.</span> <span class="nav-text">缓存</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Cache-control-可缓存性"><span class="nav-number">6.1.</span> <span class="nav-text">Cache-control 可缓存性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#到期"><span class="nav-number">6.2.</span> <span class="nav-text">到期</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重新验证"><span class="nav-number">6.3.</span> <span class="nav-text">重新验证</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数据验证"><span class="nav-number">7.</span> <span class="nav-text">数据验证</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Last-Modified"><span class="nav-number">7.1.</span> <span class="nav-text">Last-Modified</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Etag（数据签名）"><span class="nav-number">7.2.</span> <span class="nav-text">Etag（数据签名）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#重定向（Redirect）"><span class="nav-number">8.</span> <span class="nav-text">重定向（Redirect）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#302（临时重定向）"><span class="nav-number">8.1.</span> <span class="nav-text">302（临时重定向）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#301（永久重定向）"><span class="nav-number">8.2.</span> <span class="nav-text">301（永久重定向）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CSP-Content-Security-Policy"><span class="nav-number">9.</span> <span class="nav-text">CSP ( Content-Security-Policy )</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数据协商"><span class="nav-number">10.</span> <span class="nav-text">数据协商</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#请示"><span class="nav-number">10.1.</span> <span class="nav-text">请示</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#返回"><span class="nav-number">10.2.</span> <span class="nav-text">返回</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#http长连接"><span class="nav-number">11.</span> <span class="nav-text">http长连接</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Cookie"><span class="nav-number">12.</span> <span class="nav-text">Cookie</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TCP和UDP的区别"><span class="nav-number">13.</span> <span class="nav-text">TCP和UDP的区别</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#再谈HTTPS"><span class="nav-number">14.</span> <span class="nav-text">再谈HTTPS</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#可能聪明的你已经发现，如何证明公开密钥是正确的？"><span class="nav-number">14.1.</span> <span class="nav-text">可能聪明的你已经发现，如何证明公开密钥是正确的？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何将证书安全的转移至客户端"><span class="nav-number">14.2.</span> <span class="nav-text">如何将证书安全的转移至客户端</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#服务端如何校验客户端的真实性"><span class="nav-number">14.3.</span> <span class="nav-text">服务端如何校验客户端的真实性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTPS这么安全为不一直使用HTTPS呢"><span class="nav-number">14.4.</span> <span class="nav-text">HTTPS这么安全为不一直使用HTTPS呢</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#OSI七层模型"><span class="nav-number">14.5.</span> <span class="nav-text">OSI七层模型</span></a></li></ol></li></ol></div>
             
 
           </div>

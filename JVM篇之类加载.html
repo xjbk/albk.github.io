@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="##上篇疑问  JVM篇 之 垃圾收集器中最后留一了一个问题为什么CSM不直接使用标记压缩算法？主要原因是，因为CMS垃圾回收是和用户线程一起运行的，如果使用标记压缩算法的话，就会导致大量在使用中的对象在堆中寻找不到，所以无法使用此算法。  #class装载验证流程 加载 此阶段是装载类的第一个阶段 ，负责通过各种方式获取类的二进制流，转为方法区数据结构，并在JAVA堆中生成对应的java.lan">
+<meta name="description" content="上篇疑问 JVM篇 之 垃圾收集器中最后留一了一个问题为什么CSM不直接使用标记压缩算法？主要原因是，因为CMS垃圾回收是和用户线程一起运行的，如果使用标记压缩算法的话，就会导致大量在使用中的对象在堆中寻找不到，所以无法使用此算法。  class装载验证流程自底向上检查，自上向下尝试加载 加载 此阶段是装载类的第一个阶段 ，负责通过各种方式获取类的二进制流，转为方法区数据结构，并在JAVA堆中生成">
 <meta name="keywords" content="JVM">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JVM篇之类加载">
 <meta property="og:url" content="http://albk.tech/JVM篇之类加载.html">
 <meta property="og:site_name" content="BK的网络日志">
-<meta property="og:description" content="##上篇疑问  JVM篇 之 垃圾收集器中最后留一了一个问题为什么CSM不直接使用标记压缩算法？主要原因是，因为CMS垃圾回收是和用户线程一起运行的，如果使用标记压缩算法的话，就会导致大量在使用中的对象在堆中寻找不到，所以无法使用此算法。  #class装载验证流程 加载 此阶段是装载类的第一个阶段 ，负责通过各种方式获取类的二进制流，转为方法区数据结构，并在JAVA堆中生成对应的java.lan">
+<meta property="og:description" content="上篇疑问 JVM篇 之 垃圾收集器中最后留一了一个问题为什么CSM不直接使用标记压缩算法？主要原因是，因为CMS垃圾回收是和用户线程一起运行的，如果使用标记压缩算法的话，就会导致大量在使用中的对象在堆中寻找不到，所以无法使用此算法。  class装载验证流程自底向上检查，自上向下尝试加载 加载 此阶段是装载类的第一个阶段 ，负责通过各种方式获取类的二进制流，转为方法区数据结构，并在JAVA堆中生成">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-06-07T17:05:16.911Z">
+<meta property="og:updated_time" content="2019-08-14T16:55:54.914Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JVM篇之类加载">
-<meta name="twitter:description" content="##上篇疑问  JVM篇 之 垃圾收集器中最后留一了一个问题为什么CSM不直接使用标记压缩算法？主要原因是，因为CMS垃圾回收是和用户线程一起运行的，如果使用标记压缩算法的话，就会导致大量在使用中的对象在堆中寻找不到，所以无法使用此算法。  #class装载验证流程 加载 此阶段是装载类的第一个阶段 ，负责通过各种方式获取类的二进制流，转为方法区数据结构，并在JAVA堆中生成对应的java.lan">
+<meta name="twitter:description" content="上篇疑问 JVM篇 之 垃圾收集器中最后留一了一个问题为什么CSM不直接使用标记压缩算法？主要原因是，因为CMS垃圾回收是和用户线程一起运行的，如果使用标记压缩算法的话，就会导致大量在使用中的对象在堆中寻找不到，所以无法使用此算法。  class装载验证流程自底向上检查，自上向下尝试加载 加载 此阶段是装载类的第一个阶段 ，负责通过各种方式获取类的二进制流，转为方法区数据结构，并在JAVA堆中生成">
 
 
 
@@ -373,11 +373,10 @@
       
 
       
-        <p>##上篇疑问</p>
-<blockquote>
+        <h2 id="上篇疑问"><a href="#上篇疑问" class="headerlink" title="上篇疑问"></a>上篇疑问</h2><blockquote>
 <p><a href="http://connorlin.github.io" target="_blank" rel="noopener">JVM篇 之 垃圾收集器</a>中最后留一了一个问题<br>为什么CSM不直接使用标记压缩算法？<br>主要原因是，因为CMS垃圾回收是和用户线程一起运行的，如果使用标记压缩算法的话，就会导致大量在使用中的对象在堆中寻找不到，所以无法使用此算法。</p>
 </blockquote>
-<p>#class装载验证流程</p>
+<h1 id="class装载验证流程"><a href="#class装载验证流程" class="headerlink" title="class装载验证流程"></a>class装载验证流程</h1><p>自底向上检查，自上向下尝试加载</p>
 <h2 id="加载"><a href="#加载" class="headerlink" title="加载"></a>加载</h2><p> 此阶段是装载类的第一个阶段 ，负责通过各种方式获取类的二进制流，转为方法区数据结构，并在JAVA堆中生成对应的java.lang.Class对象</p>
 <h2 id="连接"><a href="#连接" class="headerlink" title="连接"></a>连接</h2><p>连接过程又分为三个步骤，验证、准备、解析</p>
 <h4 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h4><blockquote>
@@ -423,6 +422,7 @@
 </li>
 </ul>
 </blockquote>
+<p>​           </p>
 <h4 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h4><blockquote>
 <p>分配内存，并为类设置初始值 （方法区中）</p>
 <ul>
@@ -607,7 +607,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-count">15</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -618,7 +618,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -629,7 +629,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -678,7 +678,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#加载"><span class="nav-number">1.</span> <span class="nav-text">加载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#连接"><span class="nav-number">2.</span> <span class="nav-text">连接</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#验证"><span class="nav-number">2.0.1.</span> <span class="nav-text">验证</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#准备"><span class="nav-number">2.0.2.</span> <span class="nav-text">准备</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#解析"><span class="nav-number">2.0.3.</span> <span class="nav-text">解析</span></a></li></ol></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#初始化"><span class="nav-number"></span> <span class="nav-text">初始化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#思考："><span class="nav-number"></span> <span class="nav-text">思考：</span></a></li></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#上篇疑问"><span class="nav-number">1.</span> <span class="nav-text">上篇疑问</span></a></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#class装载验证流程"><span class="nav-number"></span> <span class="nav-text">class装载验证流程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#加载"><span class="nav-number">1.</span> <span class="nav-text">加载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#连接"><span class="nav-number">2.</span> <span class="nav-text">连接</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#验证"><span class="nav-number">2.0.1.</span> <span class="nav-text">验证</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#准备"><span class="nav-number">2.0.2.</span> <span class="nav-text">准备</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#解析"><span class="nav-number">2.0.3.</span> <span class="nav-text">解析</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#初始化"><span class="nav-number"></span> <span class="nav-text">初始化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#思考："><span class="nav-number"></span> <span class="nav-text">思考：</span></a></li></div>
             
 
           </div>

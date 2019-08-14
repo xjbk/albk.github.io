@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="设计模式,">
+  <meta name="keywords" content="分布式事务,">
 
 
 
@@ -79,20 +79,18 @@
 
 
 
-<meta name="description" content="设计模式是一套被在实际使用中，总结出来的一些代码设计经验的总结，学习设计模式有助于理解框架的结构。成熟的框架通常使用了多种设计模式，如果你熟悉这些设计模式，毫无疑问，对于快速掌握框架的结构有很大的帮助。  主要功能​        如其名，主要功能就是装饰，就是够在不改变原类文件、和不使用继承的情况下，动态扩展一个对象的功能和职责。装饰模式是通过将真实的对象包裹起来，然后对其进行装饰，并一层一层">
-<meta name="keywords" content="设计模式">
+<meta name="description" content="在当下随着系统规模变得越来越大，分布式的处理方式越来越受到业界的亲睐，大多数系统正在从集中式向分布式架构的变革，在分布式系统中，系统部署在不同的节点、数据分散在不同的数据库中，如果对这些数据进行分布式的事务处理具体非常大的挑战，分布事环境中，我们可以碰到 通信异常、网络分区、节点故障等故障，虽然存在着各种问题，但是在分布式领域，为了保证分布应用的可靠性，而分式式事务是无法回避的。  分布式事务在">
+<meta name="keywords" content="分布式事务">
 <meta property="og:type" content="article">
-<meta property="og:title" content="设计模式-装饰模式">
-<meta property="og:url" content="http://albk.tech/设计模式-装饰模式.html">
+<meta property="og:title" content="聊聊分布式事务">
+<meta property="og:url" content="http://albk.tech/聊聊分布式事务.html">
 <meta property="og:site_name" content="BK的网络日志">
-<meta property="og:description" content="设计模式是一套被在实际使用中，总结出来的一些代码设计经验的总结，学习设计模式有助于理解框架的结构。成熟的框架通常使用了多种设计模式，如果你熟悉这些设计模式，毫无疑问，对于快速掌握框架的结构有很大的帮助。  主要功能​        如其名，主要功能就是装饰，就是够在不改变原类文件、和不使用继承的情况下，动态扩展一个对象的功能和职责。装饰模式是通过将真实的对象包裹起来，然后对其进行装饰，并一层一层">
+<meta property="og:description" content="在当下随着系统规模变得越来越大，分布式的处理方式越来越受到业界的亲睐，大多数系统正在从集中式向分布式架构的变革，在分布式系统中，系统部署在不同的节点、数据分散在不同的数据库中，如果对这些数据进行分布式的事务处理具体非常大的挑战，分布事环境中，我们可以碰到 通信异常、网络分区、节点故障等故障，虽然存在着各种问题，但是在分布式领域，为了保证分布应用的可靠性，而分式式事务是无法回避的。  分布式事务在">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://pic.albk.tech/1.jpg">
-<meta property="og:updated_time" content="2019-07-09T06:28:41.305Z">
+<meta property="og:updated_time" content="2019-08-14T17:09:01.316Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="设计模式-装饰模式">
-<meta name="twitter:description" content="设计模式是一套被在实际使用中，总结出来的一些代码设计经验的总结，学习设计模式有助于理解框架的结构。成熟的框架通常使用了多种设计模式，如果你熟悉这些设计模式，毫无疑问，对于快速掌握框架的结构有很大的帮助。  主要功能​        如其名，主要功能就是装饰，就是够在不改变原类文件、和不使用继承的情况下，动态扩展一个对象的功能和职责。装饰模式是通过将真实的对象包裹起来，然后对其进行装饰，并一层一层">
-<meta name="twitter:image" content="http://pic.albk.tech/1.jpg">
+<meta name="twitter:title" content="聊聊分布式事务">
+<meta name="twitter:description" content="在当下随着系统规模变得越来越大，分布式的处理方式越来越受到业界的亲睐，大多数系统正在从集中式向分布式架构的变革，在分布式系统中，系统部署在不同的节点、数据分散在不同的数据库中，如果对这些数据进行分布式的事务处理具体非常大的挑战，分布事环境中，我们可以碰到 通信异常、网络分区、节点故障等故障，虽然存在着各种问题，但是在分布式领域，为了保证分布应用的可靠性，而分式式事务是无法回避的。  分布式事务在">
 
 
 
@@ -122,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://albk.tech/设计模式-装饰模式.html">
+  <link rel="canonical" href="http://albk.tech/聊聊分布式事务.html">
 
 
 
 
 
-  <title>设计模式-装饰模式 | BK的网络日志</title>
+  <title>聊聊分布式事务 | BK的网络日志</title>
   
 
 
@@ -265,7 +263,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://albk.tech/设计模式-装饰模式.html">
+    <link itemprop="mainEntityOfPage" href="http://albk.tech/聊聊分布式事务.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="BK">
@@ -282,7 +280,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">设计模式-装饰模式</h2>
+          <h2 class="post-title" itemprop="name headline">聊聊分布式事务</h2>
         
 
         <div class="post-meta">
@@ -294,8 +292,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-13T21:57:03+08:00">
-                2019-06-13
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-15T21:54:15+08:00">
+                2019-08-15
               </time>
             
 
@@ -305,6 +303,28 @@
           </span>
 
           
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/分布式事务/" itemprop="url" rel="index">
+                    <span itemprop="name">分布式事务</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -313,8 +333,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/设计模式-装饰模式.html#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/设计模式-装饰模式.html" itemprop="commentCount"></span>
+                <a href="/聊聊分布式事务.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/聊聊分布式事务.html" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -322,7 +342,7 @@
 
           
           
-             <span id="/设计模式-装饰模式.html" class="leancloud_visitors" data-flag-title="设计模式-装饰模式">
+             <span id="/聊聊分布式事务.html" class="leancloud_visitors" data-flag-title="聊聊分布式事务">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -354,48 +374,46 @@
 
       
         <blockquote>
-<p>设计模式是一套被在实际使用中，总结出来的一些代码设计经验的总结，学习设计模式有助于理解框架的结构。成熟的框架通常使用了多种设计模式，如果你熟悉这些设计模式，毫无疑问，对于快速掌握框架的结构有很大的帮助。</p>
+<p>在当下随着系统规模变得越来越大，分布式的处理方式越来越受到业界的亲睐，大多数系统正在从集中式向分布式架构的变革，在分布式系统中，系统部署在不同的节点、数据分散在不同的数据库中，如果对这些数据进行分布式的事务处理具体非常大的挑战，分布事环境中，我们可以碰到 <code>通信异常</code>、<code>网络分区</code>、<code>节点故障</code>等故障，虽然存在着各种问题，但是在分布式领域，为了保证分布应用的可靠性，而分式式事务是无法回避的。</p>
 </blockquote>
-<h2 id="主要功能"><a href="#主要功能" class="headerlink" title="主要功能"></a>主要功能</h2><p>​        如其名，主要功能就是装饰，就是够在不改变原类文件、和不使用继承的情况下，动态扩展一个对象的功能和职责。装饰模式是通过将真实的对象包裹起来，然后对其进行装饰，并一层一层的传递下去，逐层装饰，直到装饰完成。</p>
+<h1 id="分布式事务"><a href="#分布式事务" class="headerlink" title="分布式事务"></a>分布式事务</h1><p>在一个分布式应用中，一个业务操作由多个分式的操作序列（子事务）组成，如何使多个子事务能够保证ACID的特性就是分布式事务。</p>
+<h1 id="分布式中的经典理论"><a href="#分布式中的经典理论" class="headerlink" title="分布式中的经典理论"></a>分布式中的经典理论</h1><h2 id="CAP"><a href="#CAP" class="headerlink" title="CAP"></a>CAP</h2><ul>
+<li><p>(A)可用性：在分布式系统，如果想得到可用性，我们就是不允许数据有单点问题、应用存在单点故障，所以在分布式系统中数据副本、应用集群是保证可用性的关键，它给分布式系统带来 的巨大好处是不言而喻的</p>
+</li>
+<li><p>(C)一致性：在存在多个数据副本情况下，多个副本之间数据如何保证一致</p>
+</li>
+<li><p>(P)分区容错性：分布式系统所在的网络如果我们认为是一个大网络，网络分区就是这个大网络被划分成了多个子网络，而在多个子网络之前因为网络故障是无法互相通信的，这就是网络分区</p>
+</li>
+</ul>
 <blockquote>
-<p>简单的说就是，在不违背开放-封闭原则的情况下，动态为一个对象增加一系列功能和职责</p>
+<p>在出现网络分区时候，如果不是整个网络出现故障，分布式系统仍然需要保证对外提供满足一致性和可用性的服务，这就需要系统在可用性和一致性之间做出一个权衡</p>
+<blockquote>
+<p>要保证一致性，就需要将不一致的应用踢掉，停止提供服务，等数据同步之后再继续对外提供应用，这就会导致可用性的下降</p>
+<p>要保证可用性，就要接受出现数据不一致的情况</p>
 </blockquote>
-<h2 id="UML类图结构"><a href="#UML类图结构" class="headerlink" title="UML类图结构"></a>UML类图结构</h2><p><img src="http://pic.albk.tech/1.jpg" alt="装饰模式的UML的类图结构"></p>
-<h2 id="装饰模式中的角色"><a href="#装饰模式中的角色" class="headerlink" title="装饰模式中的角色"></a>装饰模式中的角色</h2><ul>
-<li><strong>抽象构件角色(Component)</strong>: 一个抽象的接口，用来规范被装饰对象。</li>
-<li><strong>具体构造角色(ConcreteComponent )</strong>:业务场景比较简单，Component和ConcreteComponent的角色可以合并成一个</li>
-<li><strong>装饰角色(Decoretor)</strong>：持有一个抽象构件角色的引用，并通过构造方法或者set方法，对其赋值</li>
-<li><strong>具体的装饰角色(ConcreteDecoretor)</strong>: 业务场景比较简单时，ConcreteDecoretor和Decoretor两个的角色可以合并为一个</li>
-</ul>
-<h2 id="对模式的理解"><a href="#对模式的理解" class="headerlink" title="对模式的理解"></a>对模式的理解</h2><blockquote>
-<p>装饰角色持有一个被装饰对象的引用，在转发请求前后增加附加的功能，实现对被装饰对象功能的扩展，并将当前装饰角色再依次传递给下一个具体的装饰角色，完成一系列的装饰，达到最终的效果</p>
 </blockquote>
-<h3 id="关键字"><a href="#关键字" class="headerlink" title="关键字"></a>关键字</h3><p>​        <strong><em>动态扩展</em>  、 <em>依次传递</em></strong></p>
-<ul>
-<li><p>因为需要对”你”进行<strong><code>动态扩展</code></strong>，不能使用继承（<em>继承是属于静态行为，无法做到动态改变，同时继承会违反开闭原则</em>），所以装饰角色需要持有一个被装饰对象的引用，可以通过<em>set方法</em>、<em>构造方法</em>对其初始化和对象的<strong><code>传递</code></strong>。</p>
-</li>
-<li><p>装饰角色为什么需要实现和被装饰对象相同的接口，因为需要<strong><code>依次传递</code></strong>到不同的具体装饰角色中，方法参数类型必须一致</p>
-<h3 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h3></li>
-<li><p>装饰模式的对装饰顺序敏感</p>
-</li>
-<li><p>装饰模式构造过程相比于建造者模式是不稳定的</p>
-</li>
-<li><p>可以分离对象的核心职责与装饰功能</p>
-</li>
-<li><p>更容易利用功能，把复杂的功能分散到每一个装饰器中，有利于利用利用，同样也会产生很多细粒度的对象</p>
-</li>
-</ul>
-<h2 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h2><ul>
-<li>​    装饰模式在JAVA中最典型的应用应该就是I/O流了</li>
-<li>​    通过装饰模式实现消息的加密解密</li>
-<li>​    通过装饰模式实现类似AOP的功能</li>
-<li>​    其它场景</li>
-</ul>
-<h2 id="结尾"><a href="#结尾" class="headerlink" title="结尾"></a>结尾</h2><blockquote>
-<p>作者：BK</p>
-<p>简书地址：<a href="https://www.jianshu.com/u/a5230c4f0b7a" target="_blank" rel="noopener">https://www.jianshu.com/u/a5230c4f0b7a</a></p>
-<p>鉴于本人才疏学浅,不足之处还望斧正,也欢迎关注我，无特殊说明的都是自己一字一句码出来的，尊重原创，如果转载请说明出处！</p>
-</blockquote>
+<p>在分布式系统中,系统中的组件必然会被部署在不同的机房、网络，否则就无所谓分布式了，所以分区是一个无法避免的问题，根据CAP理论，我们应该在C和A之间寻求平衡</p>
+<h2 id="BASE"><a href="#BASE" class="headerlink" title="BASE"></a>BASE</h2><p>基本可用（Basically Available）: 是在出现故障时，允许以一种有损的架构方式，继续对外提供服务，保证核心业务可用，有损可以体现在很多方面，比如损失响应时间、功能上的缺失、降级托底数据等</p>
+<p>软状态（Soft State)：软状态对应的就是硬状态，是指允许系统中的数据存在不影响系统整体可用性的中间状态，业务上的软状态以付款为例，付款状态分为已付款、未付款，软状态是允许存在一种付款中的状态</p>
+<p>最终一致（Eventually consistent）：强调系统中所有的数据，在经过时间周期T的同步后， 最终一定可以达到一致的状态，不要求实时保证强一致性。</p>
+<h1 id="如何保证分布式下的一致性"><a href="#如何保证分布式下的一致性" class="headerlink" title="如何保证分布式下的一致性"></a>如何保证分布式下的一致性</h1><h2 id="2PC（两阶段提交）"><a href="#2PC（两阶段提交）" class="headerlink" title="2PC（两阶段提交）"></a>2PC（两阶段提交）</h2><p>2PC是Two-Phase-Commit的缩写，即两阶段提交。2PC被认为是一种一致协议,该协议将事务分为两个阶段，角色分为，协调者和参与者,二阶段提交将一个事务的处理过程分为了投票和执行两个阶段，其核心是对每个事务都采用先尝试后提交的处理方式，因此也可以将二阶段提交看作一个强一致性的算法，</p>
+<p>阶段1：提交事务请求</p>
+<ol>
+<li>事务询问：协议者向所有参与发送事务内容，询问是否可以执行事务提交操作，并开始等待各参与者的响应</li>
+<li>执行事务：各参与者节点执行事务操作，并将undo和redo信息记录事务日志中，在这步已经锁定事务资源</li>
+<li>各参与者向协调者反馈事务询问的响应：如果参与者执行事务成功，就返回YES给协调者，标识事务可以执行，如果参者执行事务失败，则反馈NO给协调者，标识事务执行失败</li>
+</ol>
+<p>阶段2：执行事务提交<br>在该阶段协调者会根据各参与者的反馈情况，来决定如何处理该分布式事务<br>情况一：收到的反馈都是YES执行事务提交</p>
+<ol>
+<li>发送提交请求<br>协调者向所有参与者节点发出 Commit 请求。<br>2 ．事务提交。参与者接收到 Commit 请求后，会正式执行事务提交操作，井在完成提交之后释放在整个事务执行期间占用的事务资源。<br>3 ．反馈事务提交结果。参与者在完成事务提交之后，向协调者发送 Ack 消息。<br>4 ．完成事务。协调者接收到所有参与者反馈的 Ack 消息后，完成事务。<br>情况二：收到的反馈中包含NO或者在等待超时之后,中断事务<br>发送回滚请求。协调者向所有参与者节点发出Rollback 请求。<br>2 ．事务回滚。参与者接收到 Rollback 请求后，会利用其在阶段一中记录的 Undo 信息来执行事务回滚操作，并在完成回滚之后释放在整个事务执行期间占用的资源。<br>3 ．反馈事务回滚结果。参与者在完成事务回滚之后，向协调者发送 Ack 消息。<br>4 ．中断事务。协调者接收到所有参与者反馈的 Ack 消息后，完成事务中断。</li>
+</ol>
+<h3 id="2pc缺点"><a href="#2pc缺点" class="headerlink" title="2pc缺点"></a>2pc缺点</h3><p>同步阻塞<br>在阶段1的第二步，已经将事务资源锁定，一致到阶段2参与者在等待其它参与 者响应的过程中，得了处于一个阻塞状态，无法进行其它任何操作。极大限制了系统的性能<br>协调者单点问题<br>协调者在整个分布式事务中处于一个关键位置 ，如果协调者在第二阶段出现问题会导致事务无法完成，被锁定的事务资源将永远无法释放，<br>数据不一致<br>    协调者在向所有参与者发出Commit请求后或在发送请求前崩溃，导致只有部分参与者收到Commit请求然后进行事务提交，未收到请求的则在自身等待超时之后中断事务，就会导致整个分布式系统中出现数据不一致的情况<br>太过保守，容错机制缺陷<br>    在参与者与协调者失联的情况下， 参于者依靠自身的超时机制来决定是否中断事务，这种策略比较保守，没有一个比较完善的容错机制，任意一个节点的失败都会导致整个事务的失败。</p>
+<h2 id="3PC-三阶段提交"><a href="#3PC-三阶段提交" class="headerlink" title="3PC(三阶段提交)"></a>3PC(三阶段提交)</h2><p>3PC,是Three-Phase Commit缩写，即三阶段提交，是2PC的改进版，将整个事务处理分为CanCommit、PreCommit、doCommit3个阶段</p>
+<p>3PC将2PC的第一阶段一分为CanCommit、PreCommit两个阶段，来减少同不阻塞影响的范围<br>在参与者与协调者失联情况下，在等待超时之后仍会提交事务，这种容错机制，有一种赌概率的成分<br>这种赌概率的做法，同样会带来数据不一致的情况</p>
+<h2 id="TCC"><a href="#TCC" class="headerlink" title="TCC"></a>TCC</h2><p>TRYING 阶段主要是对业务系统做检测及资源预留<br>CONFIRMING 阶段主要是对业务系统做确认提交，TRYING阶段执行成功并开始执行CONFIRMING阶段时，默认CONFIRMING阶段是不会出错的。只要TRYING成功，CONFIRMING一定成功。<br>CANCELING 阶段主要是在业务执行错误，需要回滚的状态下执行的业务取消，预留资源释放。</p>
+<p>TCC的优点和限制<br> TCC事务的优点如下：<br>解决了跨应用业务操作的原子性问题，在诸如组合支付、账务拆分场景非常实用。<br>TCC实际上把数据库层的二阶段提交上提到了应用层来实现，对于数据库来说是一阶段提交，规避了数据库层的2PC性能低下问题。<br>       TCC事务的缺点，主要就一个：<br>TCC的Try、Confirm和Cancel操作功能需业务提供，开发成本高。<br>       当然，对TCC事务的这个缺点是否是缺点，是一个见仁见智的事情。<br>到底要不要使用TCC到底要不要使用TCC事务，取决于以下几点：<br>是否真正有保证跨应用业务操作的原子性需求。<br>研发上能否投入资源开发相对应的TCC接口。<br>当然还有最后一点，能否搞定一个稳定的、高可用的、扩展性强的TCC事务管理器。</p>
+<h2 id="Paxos"><a href="#Paxos" class="headerlink" title="Paxos"></a>Paxos</h2><p>待补充</p>
+<h2 id="ZAB"><a href="#ZAB" class="headerlink" title="ZAB"></a>ZAB</h2><p>待补充</p>
 
       
     </div>
@@ -429,7 +447,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/设计模式/" rel="tag"># 设计模式</a>
+            <a href="/tags/分布式事务/" rel="tag"># 分布式事务</a>
           
         </div>
       
@@ -442,8 +460,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/从另一个角度了解JAVA的可见性.html" rel="next" title="从另一个角度了解JAVA的可见性">
-                <i class="fa fa-chevron-left"></i> 从另一个角度了解JAVA的可见性
+              <a href="/http知识点整理.html" rel="next" title="http知识点整理">
+                <i class="fa fa-chevron-left"></i> http知识点整理
               </a>
             
           </div>
@@ -451,10 +469,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/设计模式-建造者模式.html" rel="prev" title="设计模式-建造者模式">
-                设计模式-建造者模式 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -609,7 +623,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#主要功能"><span class="nav-number">1.</span> <span class="nav-text">主要功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#UML类图结构"><span class="nav-number">2.</span> <span class="nav-text">UML类图结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#装饰模式中的角色"><span class="nav-number">3.</span> <span class="nav-text">装饰模式中的角色</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对模式的理解"><span class="nav-number">4.</span> <span class="nav-text">对模式的理解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#关键字"><span class="nav-number">4.1.</span> <span class="nav-text">关键字</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#特点"><span class="nav-number">4.2.</span> <span class="nav-text">特点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#应用场景"><span class="nav-number">5.</span> <span class="nav-text">应用场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结尾"><span class="nav-number">6.</span> <span class="nav-text">结尾</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#分布式事务"><span class="nav-number">1.</span> <span class="nav-text">分布式事务</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#分布式中的经典理论"><span class="nav-number">2.</span> <span class="nav-text">分布式中的经典理论</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#CAP"><span class="nav-number">2.1.</span> <span class="nav-text">CAP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BASE"><span class="nav-number">2.2.</span> <span class="nav-text">BASE</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#如何保证分布式下的一致性"><span class="nav-number">3.</span> <span class="nav-text">如何保证分布式下的一致性</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2PC（两阶段提交）"><span class="nav-number">3.1.</span> <span class="nav-text">2PC（两阶段提交）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2pc缺点"><span class="nav-number">3.1.1.</span> <span class="nav-text">2pc缺点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3PC-三阶段提交"><span class="nav-number">3.2.</span> <span class="nav-text">3PC(三阶段提交)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TCC"><span class="nav-number">3.3.</span> <span class="nav-text">TCC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Paxos"><span class="nav-number">3.4.</span> <span class="nav-text">Paxos</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ZAB"><span class="nav-number">3.5.</span> <span class="nav-text">ZAB</span></a></li></ol></li></ol></div>
             
 
           </div>
