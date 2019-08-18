@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="BK的网络日志">
 <meta property="og:description" content="上篇疑问 JVM篇 之 垃圾收集器中最后留一了一个问题为什么CSM不直接使用标记压缩算法？主要原因是，因为CMS垃圾回收是和用户线程一起运行的，如果使用标记压缩算法的话，就会导致大量在使用中的对象在堆中寻找不到，所以无法使用此算法。  class装载验证流程自底向上检查，自上向下尝试加载 加载 此阶段是装载类的第一个阶段 ，负责通过各种方式获取类的二进制流，转为方法区数据结构，并在JAVA堆中生成">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-08-14T16:55:54.914Z">
+<meta property="og:updated_time" content="2019-08-17T01:57:19.451Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JVM篇之类加载">
 <meta name="twitter:description" content="上篇疑问 JVM篇 之 垃圾收集器中最后留一了一个问题为什么CSM不直接使用标记压缩算法？主要原因是，因为CMS垃圾回收是和用户线程一起运行的，如果使用标记压缩算法的话，就会导致大量在使用中的对象在堆中寻找不到，所以无法使用此算法。  class装载验证流程自底向上检查，自上向下尝试加载 加载 此阶段是装载类的第一个阶段 ，负责通过各种方式获取类的二进制流，转为方法区数据结构，并在JAVA堆中生成">
@@ -381,48 +381,32 @@
 <h2 id="连接"><a href="#连接" class="headerlink" title="连接"></a>连接</h2><p>连接过程又分为三个步骤，验证、准备、解析</p>
 <h4 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h4><blockquote>
 <p>验证目的是为了保证Class流的格式是正确的,一定类通过了字节码检查，并不代表它一定没有问题，但是如果一个类没有通过字节码查检，那它一定是有问题，不能运行的。</p>
-<ul>
-<li>文件格式的验证<br>** 是否以0xCAFEBABE开头<br>** 版本号是否合理<ul>
-<li>元数据验证</li>
-<li><ul>
-<li>是否有父类</li>
-</ul>
-</li>
-<li><ul>
-<li>继承了final类？</li>
-</ul>
-</li>
-<li><ul>
-<li>非抽象类实现了所有的抽象方法</li>
-</ul>
-</li>
-<li>字节码验证 (很复杂)</li>
-<li><ul>
-<li>运行检查</li>
-</ul>
-</li>
-<li><ul>
-<li>栈数据类型和操作码数据参数吻合</li>
-</ul>
-</li>
-<li><ul>
-<li>跳转指令指定到合理的位置</li>
-</ul>
-</li>
-<li>符号引用验证</li>
-<li><ul>
-<li>常量池中描述类是否存在</li>
-</ul>
-</li>
-<li><ul>
-<li>访问的方法或字段是否存在且有足够的权限</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
 </blockquote>
-<p>​           </p>
+<ul>
+<li><p>文件格式的验证</p>
+<p><code>主要是保证输入的字符流能正确地解析并存储于方法区之内，格式上符合一个Java类型信息的要求</code></p>
+<p>** 是否以0xCAFEBABE开头<br>** 版本号是否合理</p>
+<p>** 检查常量TAG标志是否是被支持的常量类型</p>
+<p>…..</p>
+</li>
+<li><p>元数据验证</p>
+<p><code>目的是对类的元数据信息进行语义校验，保证不存在不符合Java语言规范的元数据信息，如果文件格式校验阶段是对文件结构的校验，那么该了阶段就是对文件内容在使用上是否满足约定的检查，有些像IDEA编译器的类一部分检测内容</code></p>
+<p>** 是否有父类，Object之外所有的类都应该有父类<br>** 这个类的父类是否被final修饰了？<br>** 如果当前类是非抽象类是否实现了所有的抽象方法？</p>
+<p>** 类中的字符、方法是否与父类产生了矛盾？</p>
+<p>….</p>
+</li>
+<li><p>字节码验证 </p>
+<p><code>在前面两个阶段，对类的的结构和使用规范上进行了校验，那么该阶段主要是对类的方法体进行校验分析，保证被校验类的方法在运行时不会做出危害JVM安全的行为，</code></p>
+<p>** 运行检查<br>** 栈数据类型和操作码数据参数吻合<br>** 跳转指令指定到合理的位置</p>
+<p>** 方法体中的类型转换是否有效</p>
+</li>
+<li><p>符号引用验证</p>
+</li>
+</ul>
+<p><code>前3步已经对类的内容进行了校验，该阶段的主要是对当前类自身以外的信息进行匹配性校验，目的是保证解析 动作能正常执行</code></p>
+<p>  ** 符号引用中通过字符串描述的<code>全限定名</code>是否能找到对应的类</p>
+<p>  ** 符号引用的类、字段 、方法的访问性，是否可以被当前类访问</p>
+<p>  ** 符号引用的类、字段、方法是否存在 </p>
 <h4 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h4><blockquote>
 <p>分配内存，并为类设置初始值 （方法区中）</p>
 <ul>
@@ -464,6 +448,7 @@
 </ul>
 <h1 id="思考："><a href="#思考：" class="headerlink" title="思考："></a>思考：</h1><blockquote>
 <p>NoSuchMethodError, NoSuchFieldError,IllegalAccessError等错误发生在哪个阶段？</p>
+<p><strong>验证阶段的符号引用验证</strong></p>
 </blockquote>
 
       
@@ -607,7 +592,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-count">17</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
