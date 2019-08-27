@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="在我们开发过程中，对于大的对象使用过后，为了help gc ,我们会手动将大对象置为null，前后的原理是什么，是不是最佳的实践。  案例一首先我们先看一段代码 1234567891011121314package com.bk.exercise.stack;/** * @author BK * @description: 栈变量槽 * 启动参数 ： -Xms20M -Xmx20M -verbo">
+<meta name="description" content="在我们开发过程中，对于大的对象使用过后，为了help gc ,我们会手动将大对象置为null，背后的原理是什么，是不是最佳的实践。  案例一首先我们先看一段代码 1234567891011121314package com.bk.exercise.stack;/** * @author BK * @description: 栈变量槽 * 启动参数 ： -Xms20M -Xmx20M -verbo">
 <meta name="keywords" content="总结">
 <meta property="og:type" content="article">
 <meta property="og:title" content="不使用的大对象为什么要手动设置null,真的有效吗?">
 <meta property="og:url" content="http://albk.tech/不使用的大对象为什么要手动设置null-真的有效吗.html">
 <meta property="og:site_name" content="BK的网络日志">
-<meta property="og:description" content="在我们开发过程中，对于大的对象使用过后，为了help gc ,我们会手动将大对象置为null，前后的原理是什么，是不是最佳的实践。  案例一首先我们先看一段代码 1234567891011121314package com.bk.exercise.stack;/** * @author BK * @description: 栈变量槽 * 启动参数 ： -Xms20M -Xmx20M -verbo">
+<meta property="og:description" content="在我们开发过程中，对于大的对象使用过后，为了help gc ,我们会手动将大对象置为null，背后的原理是什么，是不是最佳的实践。  案例一首先我们先看一段代码 1234567891011121314package com.bk.exercise.stack;/** * @author BK * @description: 栈变量槽 * 启动参数 ： -Xms20M -Xmx20M -verbo">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-08-18T16:44:40.905Z">
+<meta property="og:updated_time" content="2019-08-22T03:12:56.309Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="不使用的大对象为什么要手动设置null,真的有效吗?">
-<meta name="twitter:description" content="在我们开发过程中，对于大的对象使用过后，为了help gc ,我们会手动将大对象置为null，前后的原理是什么，是不是最佳的实践。  案例一首先我们先看一段代码 1234567891011121314package com.bk.exercise.stack;/** * @author BK * @description: 栈变量槽 * 启动参数 ： -Xms20M -Xmx20M -verbo">
+<meta name="twitter:description" content="在我们开发过程中，对于大的对象使用过后，为了help gc ,我们会手动将大对象置为null，背后的原理是什么，是不是最佳的实践。  案例一首先我们先看一段代码 1234567891011121314package com.bk.exercise.stack;/** * @author BK * @description: 栈变量槽 * 启动参数 ： -Xms20M -Xmx20M -verbo">
 
 
 
@@ -352,7 +352,7 @@
 
       
         <blockquote>
-<p>在我们开发过程中，对于大的对象使用过后，为了help gc ,我们会手动将大对象置为null，前后的原理是什么，是不是最佳的实践。</p>
+<p>在我们开发过程中，对于大的对象使用过后，为了help gc ,我们会手动将大对象置为null，背后的原理是什么，是不是最佳的实践。</p>
 </blockquote>
 <h1 id="案例一"><a href="#案例一" class="headerlink" title="案例一"></a>案例一</h1><p>首先我们先看一段代码</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.bk.exercise.stack;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> BK</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@description</span>: 栈变量槽</span></span><br><span class="line"><span class="comment"> * 启动参数 ： -Xms20M -Xmx20M -verbose:gc</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2019-08-18 23:22</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StackSlot</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">byte</span>[] byteArrays = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">5</span> * <span class="number">1024</span> * <span class="number">1024</span>];</span><br><span class="line">        byteArrays = <span class="keyword">null</span> ;</span><br><span class="line">        System.gc();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -533,7 +533,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-count">19</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -555,7 +555,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-count">12</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
