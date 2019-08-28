@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="在java中字符串是我们比较常用的一个类型，字符串是不可变的，类被声明为final , 存储字符的char[] value数据也被声明为final ,我们对String真的了解么？我们看一下String是有多么的疯狂。本文中是在JDK8下面测试，不同的JDK可能会有不一样的结果。  测试一下12345678910111213141516171819202122232425262728293031">
+<meta name="keywords" content="后端">
+<meta property="og:type" content="article">
+<meta property="og:title" content="疯狂的String">
+<meta property="og:url" content="http://albk.tech/疯狂的String.html">
+<meta property="og:site_name" content="BK的网络日志">
+<meta property="og:description" content="在java中字符串是我们比较常用的一个类型，字符串是不可变的，类被声明为final , 存储字符的char[] value数据也被声明为final ,我们对String真的了解么？我们看一下String是有多么的疯狂。本文中是在JDK8下面测试，不同的JDK可能会有不一样的结果。  测试一下12345678910111213141516171819202122232425262728293031">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://pic.albk.tech/why.png">
+<meta property="og:image" content="http://pic.albk.tech/strings1.png">
+<meta property="og:image" content="http://pic.albk.tech/gzhsm.png">
+<meta property="og:updated_time" content="2019-08-28T17:21:31.914Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="疯狂的String">
+<meta name="twitter:description" content="在java中字符串是我们比较常用的一个类型，字符串是不可变的，类被声明为final , 存储字符的char[] value数据也被声明为final ,我们对String真的了解么？我们看一下String是有多么的疯狂。本文中是在JDK8下面测试，不同的JDK可能会有不一样的结果。  测试一下12345678910111213141516171819202122232425262728293031">
+<meta name="twitter:image" content="http://pic.albk.tech/why.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://albk.tech/疯狂的String.html">
+
+
+
+
+
+  <title>疯狂的String | BK的网络日志</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">BK的网络日志</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">BK</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://albk.tech/疯狂的String.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="BK">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/head.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="BK的网络日志">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">疯狂的String</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-28T19:46:36+08:00">
+                2019-08-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/疯狂的String.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/疯狂的String.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/疯狂的String.html" class="leancloud_visitors" data-flag-title="疯狂的String">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>在java中字符串是我们比较常用的一个类型，字符串是不可变的，类被声明为final , 存储字符的char[] value数据也被声明为final ,我们对String真的了解么？我们看一下String是有多么的疯狂。本文中是在JDK8下面测试，不同的JDK可能会有不一样的结果。</p>
+</blockquote>
+<h1 id="测试一下"><a href="#测试一下" class="headerlink" title="测试一下"></a>测试一下</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> String B = <span class="string">"B"</span>;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> String K = <span class="string">"K"</span>;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String B1 = <span class="string">"B"</span>;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String K1 = <span class="string">"K"</span>;</span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">demo1</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      String s1 = <span class="string">"BK"</span>;</span><br><span class="line">      String s2 = <span class="string">"BK"</span>;</span><br><span class="line">      String emp = <span class="string">""</span>;</span><br><span class="line">      String s3 = <span class="string">"B"</span> + <span class="string">"K"</span>;</span><br><span class="line">      String s4 = <span class="string">"B"</span> + emp + <span class="string">"K"</span>;</span><br><span class="line">      String s5 = <span class="string">"B"</span> + <span class="keyword">new</span> String(<span class="string">"K"</span>);</span><br><span class="line">      String s6 = <span class="keyword">new</span> String(<span class="string">"BK"</span>);</span><br><span class="line">      String s7 = s6.intern();</span><br><span class="line">      String s8 = <span class="string">"B"</span>;</span><br><span class="line">      String s9 = <span class="string">"K"</span>;</span><br><span class="line">      String s10 = s8 + s9;</span><br><span class="line">      String s11 = B + K;</span><br><span class="line">      String s12 = B1 + K1;</span><br><span class="line">      System.out.println(<span class="string">"1 : s1 == s2 : "</span> + (s1 == s2));</span><br><span class="line">      System.out.println(<span class="string">"2 : s1 == s3 : "</span> + (s1 == s3));</span><br><span class="line">      System.out.println(<span class="string">"3 : s1 == s4 : "</span> + (s1 == s4));</span><br><span class="line">      System.out.println(<span class="string">"4 : s1.equals(s4): "</span> + s1.equals(s4));</span><br><span class="line">      System.out.println(<span class="string">"5 : s1 == s5 : "</span> + (s1 == s5));</span><br><span class="line">      System.out.println(<span class="string">"6 : s1 == s10 : "</span> + (s1 == s10));</span><br><span class="line">      System.out.println(<span class="string">"7 : s5 == s6 : "</span> + (s5 == s6));</span><br><span class="line">      System.out.println(<span class="string">"8 : s1 == s7 : "</span> + (s1 == s7));</span><br><span class="line">      System.out.println(<span class="string">"9 : s1 == s11 : "</span> + (s1 == s11));</span><br><span class="line">      System.out.println(<span class="string">"10: s1 == s12 : "</span> + (s1 == s12));</span><br><span class="line">  &#125;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">  		demo1();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>看到这里可以停下来想一下每一个输出的结果是什么？</p>
+<blockquote>
+<p>收藏一下本文，回家在电脑上亲自试一下结果，结果可能出乎你的意料。</p>
+</blockquote>
+<h2 id="输出结果"><a href="#输出结果" class="headerlink" title="输出结果"></a>输出结果</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">1 : s1 == s2 : true</span><br><span class="line">2 : s1 == s3 : true</span><br><span class="line">3 : s1 == s4 : false</span><br><span class="line">4 : s1.equals(s4): true</span><br><span class="line">5 : s1 == s5 : false</span><br><span class="line">6 : s1 == s10 : false</span><br><span class="line">7 : s5 == s6 : false</span><br><span class="line">8 : s1 == s7 : true</span><br><span class="line">9 : s1 == s11 : false</span><br><span class="line">10: s1 == s12 : true</span><br></pre></td></tr></table></figure>
+
+<p>看到结果可能中有些会和我们想象中的不一样，出乎你的意料，到现在头脑已经有些疯狂了，静下心来仔细想一下</p>
+<h2 id="为什么是这样的结果"><a href="#为什么是这样的结果" class="headerlink" title="为什么是这样的结果"></a>为什么是这样的结果</h2><blockquote>
+<ul>
+<li>常量池中一般存放.class文件中的常量，主要包含<code>字面量</code>（如文本字符串、声明为final的常量值等）和<br><code>符号引用量</code>（类和接口的全限定名、字段名称和描述符、方法名称和描述符）这些信息会存储在常量池中，这个常量池被称为静态常量池<ul>
+<li>在类完成装载操作之后，在运行阶段也可以将新的常量放到池中，比如String的intern()方法就是这样的，这时候操作的常量池被称为动态常量池</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<ul>
+<li>结果1. s1 == s2 : true<br>对于这条输出应该不会有问题，”BK”是一个字符串常量，在编译阶段就会存放到静态常量池中比如存放地址为<code>0x01</code>，所以两个变量都指向常量池的同一个对象，比较它们的地址相等，结果是true </li>
+<li>结果2 : s1 == s3 : true<br>  s1的指向常量池中”BK”的内存地址<code>0x01</code><br>  s3因为是两个常量相加，编译器会将其优化为<code>s3=&quot;BK&quot;</code>是终指向的也地址<code>0x01</code><br>所以两个对象的地址也是相同的，结果为true</li>
+<li>结果3 : s1 == s4 : false<br>  s4因为连接的字符中存在一个变量<code>emp</code>引用类型所以不编译器不会对其进行优化，产生的对象不会被加入到字符串池中，而是在运行时在堆上创建一个新的对象s4值为”BK”，并将s4指向堆上对象的引用地址 <code>0x02</code><br>  这时s1 的地址为<code>0x01</code> s4的地址为<code>0x02</code>两个变量指向了不同的地址，所以返回结果是false</li>
+<li>结果4 : s1.equals(s4): true<br>  因为使用的是equals方法比较，所以首先比较两个对象地址是还相同，如果不相同，再去比较两个地址里面的内容是还相等，很显然，两个对象引用的地址不同，内容相同所以结果是true</li>
+<li>结果5 : s1 == s5 : false<br><code>String s5 = &quot;B&quot; + new String(&quot;K&quot;);</code><br>  <code>B</code>是常量会在常量池，new操作这部分不是已知字面量，只能运行时才能确定结果，在编译器不优化的情况下，运行时会在堆上创建一个对象值为”BK”的对象， 同时让<code>s5</code>指各它的地址<code>0x03</code><br>  s1的地址是0x01，所以比较两个对象的地址不是同一个结果 为false</li>
+<li>结果6 : s1 == s10 : false<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;  String s8 = <span class="string">"B"</span>;</span><br><span class="line">&gt;  String s9 = <span class="string">"K"</span>;</span><br><span class="line">&gt;  String s10 = s8 + s9;</span><br></pre></td></tr></table></figure>
+
+
+</li>
+</ul>
+<pre><code>在编译时`s8`,`s9`的字面量是确定的，所以在常量池中会有`B`和`K`，`s8`,`s9` 分别指向常量池的两个地址</code></pre><p>  s10赋值时，使用的是s8,s9两个变量，<strong>变量初始化时候是指向常量池，但是在运行时候指向什么地址，鬼才知道，所以在编译期是不可预料的，编译器是不做优化的</strong>，只有在运行时才会在堆中拼接B和K生成新对象在堆中，并将引用赋给<code>s10</code>,比如这时候分配的地址是<code>0x04</code>，这时候对比s1的地址<code>0x01</code>的<code>s10</code>的地址<code>0x04</code>， 返回结果一定是false</p>
+<ul>
+<li>结果 7 : s5 == s6 : false<br>  s5和s6的赋值时，因为存在new对象，所以在编译其无法确定其字面量，只能在运行时才会确定，所以s5和s6都是堆上的两个对象，在比较两个对象的地址，一定是不相等的，所以结果一定是false</li>
+<li>结果8 : s1 == s7 : true<br>String s7 = s6.intern();<br>  在运行到该行代码时，<code>s6</code>的值是确定的，然后调用<code>intern</code>方法，发现常量池中已经存在BK，所以<code>s7</code>指向常量池中的地址，在比较<code>s1</code>和<code>s7</code>的值时，返回结果为 true</li>
+<li>结果9 : s1 == s11 : false<br>String s11 = B + K;<br><code>B</code>和<code>K</code>是静态变量,在编译期是无法确定字面量,所以只能在运行时才能确定其真实值,所以<code>s11</code>指向的是堆上的一个地址，在比较<code>s1</code>和<code>s11</code>时候，返回的结果为false</li>
+<li>结果10: s1 == s12 : true<br>String s12 = B1 + K1;<br>因为<code>B1</code>和<code>K1</code>被<code>static final</code>修饰<br>对于<code>static final</code>类型，在类加载的<code>准备阶段</code>就会被赋上正确的值，因为<code>static final</code>类型被认为是常量，两个常量相加之后的值也是常量，字面量是确定的，这时候<code>BK</code>在常量池中已经存在，所以<code>s12</code>也是指向常量池中的地址,在比较<code>s1</code>和<code>s12</code>的地址返回的结果是true<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2>按照下面的规则来判断，不会被String搞迷路<ul>
+<li>变量在定义时如果存在<code>new String()</code>与<code>非static final修饰的变量进行+运算</code>，都只能在运行时才能确定结果，所产生的对象一定是在堆上面</li>
+<li>如果一定变量在定义时字面量已经确定，会在常量池中创建，并且变量指向常量池中的地址</li>
+<li>在编译期可以确定的常量才会被放入常量池，在运行时的变量，如果不调用<code>intern</code>方法是不会把常量添加到常量池中的</li>
+<li><code>statci final</code>修饰的变量在准备阶段已经确定正确的值，会被认为是常量，存放在常量池中</li>
+</ul>
+</li>
+</ul>
+<h1 id="再来一发"><a href="#再来一发" class="headerlink" title="再来一发"></a>再来一发</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">   * 比如我们玩游戏时候经常用的QWER四个键，可以组合出不同的操作</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">demo2</span><span class="params">()</span> <span class="keyword">throws</span> NoSuchFieldException, IllegalAccessException </span>&#123;</span><br><span class="line">      <span class="comment">//定义操作A QWER</span></span><br><span class="line">      String operateA = <span class="string">"QWER"</span>;</span><br><span class="line">      <span class="comment">//获取字符串对象中存储字符的value字段  private final char value[];</span></span><br><span class="line">      Field valueFieldString = String.class.getDeclaredField(<span class="string">"value"</span>);</span><br><span class="line">      valueFieldString.setAccessible(<span class="keyword">true</span>);</span><br><span class="line">      <span class="comment">//获取value数组中的值 [Q,W,E,R]</span></span><br><span class="line">      <span class="keyword">char</span>[] value = (<span class="keyword">char</span>[]) valueFieldString.get(operateA);</span><br><span class="line">      <span class="comment">//将value数组的值改为 [Q,Q,Q,Q]</span></span><br><span class="line">      value[<span class="number">1</span>] = <span class="string">'Q'</span>;</span><br><span class="line">      value[<span class="number">2</span>] = <span class="string">'Q'</span>;</span><br><span class="line">      value[<span class="number">3</span>] = <span class="string">'Q'</span>;</span><br><span class="line">      <span class="comment">//定义操作B和操作A一样 QWER</span></span><br><span class="line">      String operateB = <span class="string">"QWER"</span>;</span><br><span class="line">      System.out.println(<span class="string">"1.operateA :"</span> + operateA);</span><br><span class="line">      System.out.println(<span class="string">"2.operateB :"</span> + operateB);</span><br><span class="line">      System.out.println(<span class="string">"3.operateA == operateB :"</span> + (operateA == operateB));</span><br><span class="line">      System.out.println(<span class="string">"4.\"QWER\" == operateB :"</span> + (<span class="string">"QWER"</span> == operateB));</span><br><span class="line">      System.out.println(<span class="string">"5.\"QQQQ\" == operateA : "</span> + (<span class="string">"QQQQ"</span> == operateA));</span><br><span class="line">      System.out.println(<span class="string">"6.operateA.equals(\"QQQQ\") : "</span> + operateA.equals(<span class="string">"QQQQ"</span>));</span><br><span class="line">      System.out.println(<span class="string">"7.operateA.equals(\"QWER\") : "</span> + operateA.equals(<span class="string">"QWER"</span>));</span><br><span class="line">      System.out.println(<span class="string">"8.\"QWER\".equals(\"QQQQ\") : "</span> + <span class="string">"QWER"</span>.equals(<span class="string">"QQQQ"</span>));</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="输出结果-1"><a href="#输出结果-1" class="headerlink" title="输出结果"></a>输出结果</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>.operateA :QQQQ</span><br><span class="line"><span class="number">2</span>.operateB :QQQQ</span><br><span class="line"><span class="number">3</span>.operateA == operateB :<span class="keyword">true</span></span><br><span class="line"><span class="number">4</span>.<span class="string">"QWER"</span> == operateB :<span class="keyword">true</span></span><br><span class="line"><span class="number">5</span>.<span class="string">"QQQQ"</span> == operateA : <span class="keyword">false</span></span><br><span class="line"><span class="number">6</span>.operateA.equals(<span class="string">"QQQQ"</span>) : <span class="keyword">true</span></span><br><span class="line"><span class="number">7</span>.operateA.equals(<span class="string">"QWER"</span>) : <span class="keyword">true</span></span><br><span class="line"><span class="number">8</span>.<span class="string">"QWER"</span>.equals(<span class="string">"QQQQ"</span>) : <span class="keyword">true</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="为什么会输出这样的结果"><a href="#为什么会输出这样的结果" class="headerlink" title="为什么会输出这样的结果"></a>为什么会输出这样的结果</h2><p><img src="http://pic.albk.tech/why.png" alt="图片.png"></p>
+<p>没错，这结果简直让人抓狂，太离谱了，</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">6</span>.skillA.equals(<span class="string">"QQQQ"</span>) : <span class="keyword">true</span></span><br><span class="line"><span class="number">7</span>.skillA.equals(<span class="string">"QWER"</span>) : <span class="keyword">true</span></span><br><span class="line"><span class="number">8</span>.<span class="string">"QWER"</span>.equals(<span class="string">"QQQQ"</span>) : <span class="keyword">true</span></span><br></pre></td></tr></table></figure>
+
+<p>凭直觉大多数人会认为6 和 7 应该是一个对一个错，8应该是false，可这结果结果倒底怎么了，刚看到这结果感觉很惊讶what a fuck !</p>
+<h2 id="代码逻辑"><a href="#代码逻辑" class="headerlink" title="代码逻辑"></a>代码逻辑</h2><ol>
+<li>首先我们先定义一个操作A QWER，</li>
+<li>对A底层的字符数组进行修改，修改为QQQQ（直接对底层数据修改，直接改的地址里面存放的内容，而不是通过String运算符修改）</li>
+<li>再定义一个操作B，同样为QWER</li>
+<li>然后进行各种比较，判断输出内容</li>
+</ol>
+<h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><h3 id="编译阶段搞的事情"><a href="#编译阶段搞的事情" class="headerlink" title="编译阶段搞的事情"></a>编译阶段搞的事情</h3><p>1、由于<code>QWER</code>在编译阶段是一个字面量，所以<code>QWER</code>在常量池中分配空间<code>0x01</code>，并存储</p>
+<p>2、<code>operateA</code>指向常量池中<code>QWER</code>所在的地址<code>0x01</code></p>
+<p>3、<code>operateB</code>的字面量也是<code>QWER</code>，这时候常量池中也存在，引用直接指向地址<code>0x01</code></p>
+<p>最终的结果是<code>operateA</code>和<code>operateB</code>指向了同一个地址<code>0x01</code> ，字面量为<code>QWER</code>的地址是<code>0x01</code></p>
+<p>字面量为<code>QQQQ</code>的变量指向了<code>0x05</code>的地址</p>
+<p><img src="http://pic.albk.tech/strings1.png" alt></p>
+<h3 id="运行阶段搞的事情"><a href="#运行阶段搞的事情" class="headerlink" title="运行阶段搞的事情"></a>运行阶段搞的事情</h3><ol>
+<li><p>读取operateA的值，然后通过反射获取到字符存储数据的char[]数组value</p>
+</li>
+<li><p>将value里面的内容个性为QQQQ</p>
+<h3 id="String类equals方法的代码"><a href="#String类equals方法的代码" class="headerlink" title="String类equals方法的代码"></a>String类equals方法的代码</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object anObject)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span> == anObject) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (anObject <span class="keyword">instanceof</span> String) &#123;</span><br><span class="line">        String anotherString = (String)anObject;</span><br><span class="line">        <span class="keyword">int</span> n = value.length;</span><br><span class="line">        <span class="keyword">if</span> (n == anotherString.value.length) &#123;</span><br><span class="line">            <span class="keyword">char</span> v1[] = value;</span><br><span class="line">            <span class="keyword">char</span> v2[] = anotherString.value;</span><br><span class="line">            <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">while</span> (n-- != <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="keyword">if</span> (v1[i] != v2[i])</span><br><span class="line">                    <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">                i++;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ol>
+<h3 id="结果分析"><a href="#结果分析" class="headerlink" title="结果分析"></a>结果分析</h3><p>接下来就是进行各种比较了，在看结果之间先看一下String equals方法的逻辑</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object anObject)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span> == anObject) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (anObject <span class="keyword">instanceof</span> String) &#123;</span><br><span class="line">        String anotherString = (String)anObject;</span><br><span class="line">        <span class="keyword">int</span> n = value.length;</span><br><span class="line">        <span class="keyword">if</span> (n == anotherString.value.length) &#123;</span><br><span class="line">            <span class="keyword">char</span> v1[] = value;</span><br><span class="line">            <span class="keyword">char</span> v2[] = anotherString.value;</span><br><span class="line">            <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">while</span> (n-- != <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="keyword">if</span> (v1[i] != v2[i])</span><br><span class="line">                    <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">                i++;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>先判断对象的地址是不是同一个，如果指向同一个地址，那么就认为两个对象相等</p>
+<p>如果指向的地址不相等,然后判断长度是还相等，如果长度不相等，则返回false </p>
+<p>如果地址不等，长度相等的话，就取出地址中的值，逐位进行比较，如果有一位不相等则返回false ，否则返回 true</p>
+</blockquote>
+<h3 id="接下来我们逐个看一下结果"><a href="#接下来我们逐个看一下结果" class="headerlink" title="接下来我们逐个看一下结果"></a>接下来我们逐个看一下结果</h3><ul>
+<li><p>1.operateA :QQQQ<br>  ​    在运行到该行代码时候，地址中的值已经被修改了，所以operateA的值为QQQQ</p>
+</li>
+<li><p>2.operateB :QQQQ<br>operateB和operateA指向了同一个引用，在运行到该行代码时候，地址中的值已经是QQQQ了 ，所以operateB的值为QQQQ</p>
+</li>
+<li><p>3.operateA == operateB :true<br>因为operateA和operateB的指向的地址都是0x01所以比较两个对象的地址值是true</p>
+</li>
+<li><p>4.”QWER” == operateB :true<br>“QWER”这个匿名变量的字面量是个常量，并且在常量池中已经存在，所以指向常量池的0x01地址,operateB的地址也是0x01所以比较两个对象的地址值是true</p>
+</li>
+<li><p>5.”QQQQ” == operateA : false<br>“QQQQ”这个匿名变量的字面量是个常量，在常量池中不存在，所以会被加入到常量池中地址为 0x05,operateA的地址也是0x01所以比较两个对象的地址值是false</p>
+</li>
+<li><p>6.operateA.equals(“QQQQ”) : true<br> operateA指向的内存地址是0x01，但是值是QQQQ<br> “QQQQ”指向的内存地址是0x05,值为QQQQ</p>
+<p> 在对比equals方法时，先比较两个对象的地址值是false，然后再去比较两个地址中的值是否相等，因为0x01地址中的值是QQQQ与0x05地址的值QQQQ的值相等，所以结果是 true</p>
+</li>
+<li><p>7.operateA.equals(“QWER”) : true<br>“QWER” 指向的内存地址是0x01，值是QQQQ<br>operateA指向的内存地址是0x01，值是QQQQ<br>在对比equals方法时，先比较两个对象的地址值是false，然后再去比较两个地址中的值是否相等，因为0x01地址中的值已经是QQQQ与0x05的值相等，所以结果是 true</p>
+</li>
+<li><p>8.”QWER”.equals(“QQQQ”) : true<br>“QWER”指向的内存地址是0x01，值是QQQQ<br>“QQQQ”指向的内存地址是0x05，值为QQQQ<br>在对比equals方法时，先比较两个对象的地址值是false，然后再去比较两个地址中的值是否相等，因为0x01地址中的值是QQQQ与0x05地址的值QQQQ的值相等，所以结果是 true</p>
+</li>
+</ul>
+<h3 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h3><p>其实这个示例中，主要是直接操作了底层的数组，破坏了字符串的不变性，才会出现这么奇怪的现象。</p>
+<h2 id="此文结束"><a href="#此文结束" class="headerlink" title="此文结束"></a>此文结束</h2><p>喜欢可以关注个人公众号albk<br><img src="http://pic.albk.tech/gzhsm.png" alt></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="http://pic.albk.tech/mb-qcode.png" alt="BK wechat" style="width: 200px; max-width: 100%;">
+    <div>扫一扫，用手机访问本站</div>
+</div>
+
+      </div>
+    
+
+    
+
+    
+
+    <div>
+      
+        
+<div style="text-align:center;color: #ccc;font-size:14px;">
+---------------- 本文结束 ----------------<div>
+
+      
+    </div>
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/学习视频分享.html" rel="next" title="学习视频分享">
+                <i class="fa fa-chevron-left"></i> 学习视频分享
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </div></div></article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/head.png" alt="BK">
+            
+              <p class="site-author-name" itemprop="name">BK</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="tsxy_xujing@163.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.jianshu.com/u/a5230c4f0b7a" target="_blank" title="JianShu">
+                      
+                        <i class="fa fa-fw fa-vk"></i>JianShu</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#测试一下"><span class="nav-number">1.</span> <span class="nav-text">测试一下</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#输出结果"><span class="nav-number">1.1.</span> <span class="nav-text">输出结果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么是这样的结果"><span class="nav-number">1.2.</span> <span class="nav-text">为什么是这样的结果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">1.3.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#再来一发"><span class="nav-number">2.</span> <span class="nav-text">再来一发</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#输出结果-1"><span class="nav-number">2.1.</span> <span class="nav-text">输出结果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么会输出这样的结果"><span class="nav-number">2.2.</span> <span class="nav-text">为什么会输出这样的结果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码逻辑"><span class="nav-number">2.3.</span> <span class="nav-text">代码逻辑</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分析"><span class="nav-number">2.4.</span> <span class="nav-text">分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#编译阶段搞的事情"><span class="nav-number">2.4.1.</span> <span class="nav-text">编译阶段搞的事情</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#运行阶段搞的事情"><span class="nav-number">2.4.2.</span> <span class="nav-text">运行阶段搞的事情</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#String类equals方法的代码"><span class="nav-number">2.4.3.</span> <span class="nav-text">String类equals方法的代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#结果分析"><span class="nav-number">2.4.4.</span> <span class="nav-text">结果分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#接下来我们逐个看一下结果"><span class="nav-number">2.4.5.</span> <span class="nav-text">接下来我们逐个看一下结果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结-1"><span class="nav-number">2.4.6.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#此文结束"><span class="nav-number">2.5.</span> <span class="nav-text">此文结束</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">BK</span>
+
+  
+</div>
+
+
+  <div class="powered-by">沪ICP备19020687号</div>
+ <span class="post-meta-divider">|</span>
+ <div class="powered-by">Copyright © 2019-2019 Blog 不会写BUG的猿</div>
+ 
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  	
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: true,
+        appId: '09BmaAn1gIqKhbSGicOpLrEw-gzGzoHsz',
+        appKey: 'o9PyahIaCR8MhXb8IrQ7Q2dN',
+        placeholder: '留下你想说的话,来个互动...',
+        avatar:'mp',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("BdExPoDeir7pcsbmzXAFoBU3-gzGzoHsz", "cWkHueKA8heTGngUXd7W7YfN");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
