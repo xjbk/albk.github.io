@@ -79,18 +79,17 @@
 
 
 
-<meta name="description" content="如何调用一个对象的方法？我们可以通过实例化对象直接调用、使用反射机制、通过代理对象等，本文介绍一种新的方法MethodHandle，这种方法在开发中很少会用到，但使用起来感觉很顺手。  什么是MethodHandle?MethodHandle是JDK1.7实现了JSR-292,新加入的java.lang.invoke包中的一个重要组成部分，这个包的主要是在单纯通过符号引用来确定调用的目标方法以">
+<meta name="description" content="记录点滴">
 <meta name="keywords" content="后端">
-<meta property="og:type" content="article">
-<meta property="og:title" content="不使用反射如何调用某个实例对象的方法">
-<meta property="og:url" content="http://albk.tech/不使用反射如何调用某个实例对象的方法.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="BK的网络日志">
+<meta property="og:url" content="http://albk.tech/page/3/index.html">
 <meta property="og:site_name" content="BK的网络日志">
-<meta property="og:description" content="如何调用一个对象的方法？我们可以通过实例化对象直接调用、使用反射机制、通过代理对象等，本文介绍一种新的方法MethodHandle，这种方法在开发中很少会用到，但使用起来感觉很顺手。  什么是MethodHandle?MethodHandle是JDK1.7实现了JSR-292,新加入的java.lang.invoke包中的一个重要组成部分，这个包的主要是在单纯通过符号引用来确定调用的目标方法以">
+<meta property="og:description" content="记录点滴">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-08-19T15:54:45.907Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="不使用反射如何调用某个实例对象的方法">
-<meta name="twitter:description" content="如何调用一个对象的方法？我们可以通过实例化对象直接调用、使用反射机制、通过代理对象等，本文介绍一种新的方法MethodHandle，这种方法在开发中很少会用到，但使用起来感觉很顺手。  什么是MethodHandle?MethodHandle是JDK1.7实现了JSR-292,新加入的java.lang.invoke包中的一个重要组成部分，这个包的主要是在单纯通过符号引用来确定调用的目标方法以">
+<meta name="twitter:title" content="BK的网络日志">
+<meta name="twitter:description" content="记录点滴">
 
 
 
@@ -120,13 +119,13 @@
 
 
 
-  <link rel="canonical" href="http://albk.tech/不使用反射如何调用某个实例对象的方法.html">
+  <link rel="canonical" href="http://albk.tech/page/3/">
 
 
 
 
 
-  <title>不使用反射如何调用某个实例对象的方法 | BK的网络日志</title>
+  <title>BK的网络日志</title>
   
 
 
@@ -145,7 +144,8 @@
     
   
 
-  <div class="container sidebar-position-left page-post-detail">
+  <div class="container sidebar-position-left 
+  page-home">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -248,9 +248,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-
-  <div id="posts" class="posts-expand">
+  <section id="posts" class="posts-expand">
     
+      
 
   
 
@@ -263,7 +263,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://albk.tech/不使用反射如何调用某个实例对象的方法.html">
+    <link itemprop="mainEntityOfPage" href="http://albk.tech/JVM篇之类加载.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="BK">
@@ -280,7 +280,9 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">不使用反射如何调用某个实例对象的方法</h2>
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/JVM篇之类加载.html" itemprop="url">JVM篇之类加载</a></h2>
         
 
         <div class="post-meta">
@@ -292,8 +294,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-19T22:47:41+08:00">
-                2019-08-19
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-07T23:27:52+08:00">
+                2019-06-07
               </time>
             
 
@@ -303,6 +305,28 @@
           </span>
 
           
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JVM/" itemprop="url" rel="index">
+                    <span itemprop="name">JVM</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -311,8 +335,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/不使用反射如何调用某个实例对象的方法.html#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/不使用反射如何调用某个实例对象的方法.html" itemprop="commentCount"></span>
+                <a href="/JVM篇之类加载.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/JVM篇之类加载.html" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -320,7 +344,7 @@
 
           
           
-             <span id="/不使用反射如何调用某个实例对象的方法.html" class="leancloud_visitors" data-flag-title="不使用反射如何调用某个实例对象的方法">
+             <span id="/JVM篇之类加载.html" class="leancloud_visitors" data-flag-title="JVM篇之类加载">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -351,40 +375,28 @@
       
 
       
-        <blockquote>
-<p> 如何调用一个对象的方法？我们可以通过实例化对象直接调用、使用反射机制、通过代理对象等，本文介绍一种新的方法MethodHandle，这种方法在开发中很少会用到，但使用起来感觉很顺手。</p>
-</blockquote>
-<h1 id="什么是MethodHandle"><a href="#什么是MethodHandle" class="headerlink" title="什么是MethodHandle?"></a>什么是MethodHandle?</h1><p>MethodHandle是JDK1.7实现了JSR-292,新加入的<code>java.lang.invoke</code>包中的一个重要组成部分，这个包的主要是在单纯通过符号引用来确定调用的目标方法以外，提供一种析的动态确定目标方法的机制。</p>
-<h1 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.bk.exercise;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.lang.invoke.MethodHandle;</span><br><span class="line"><span class="keyword">import</span> java.lang.invoke.MethodHandles;</span><br><span class="line"><span class="keyword">import</span> java.lang.invoke.MethodType;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> BK</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@description</span>:</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2019-08-19 22:34</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MethodHandlerTest</span> </span>&#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Person</span></span>&#123;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sing</span><span class="params">(String songName)</span></span>&#123;</span><br><span class="line">            System.out.println(<span class="string">"I'm sing "</span> + songName);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 实现调用Person类的sing方法</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> args</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">        Person zhangsan = <span class="keyword">new</span> Person();</span><br><span class="line">        <span class="comment">// void.class是方法返回的类型    String.class 是方法的入参类型</span></span><br><span class="line">        MethodType mt = MethodType.methodType(<span class="keyword">void</span>.class,String.class);</span><br><span class="line">        MethodHandle handler = MethodHandles.lookup()</span><br><span class="line">                <span class="comment">//找到zhangsan对象中签名和mt指定的签名是一致的sing方法</span></span><br><span class="line">                .findVirtual(zhangsan.getClass(), <span class="string">"sing"</span>, mt)</span><br><span class="line">                <span class="comment">//非静态方法的第一个参数隐藏的this指针，这步相当设置第一个参数this指针</span></span><br><span class="line">                .bindTo(zhangsan);</span><br><span class="line">        handler.invokeExact(<span class="string">"Summer train "</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        
+          
+          上篇疑问
+JVM篇 之 垃圾收集器中最后留一了一个问题为什么CSM不直接使用标记压缩算法？主要原因是，因为CMS垃圾回收是和用户线程一起运行的，如果使用标记压缩算法的话，就会导致大量在使用中的对象在堆中寻找不到，所以无法使用此算法。
 
-<p>运行结果如下显示 </p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">I<span class="string">'m sing Summer train</span></span><br></pre></td></tr></table></figure>
-
-<p>从示例可以看出来，使用MethodHandle并没有什么困难，可以实现方法的调用，可是很多人会问，反射不了可以做相同的事情么，我们经常会使用反射，而不会使用这种方法。</p>
-<h1 id="MethodHandle与Reflection的区别"><a href="#MethodHandle与Reflection的区别" class="headerlink" title="MethodHandle与Reflection的区别"></a>MethodHandle与Reflection的区别</h1><p>如果站在Java语言的角度来看，他们确实是有很多相似之处，但是他们其它角度来看，确有很大的区别</p>
-<ol>
-<li>从本质上来讲，<code>Reflection</code>和<code>MethodHandle</code>机构都是在模拟方法调用，但Reflection是模拟的Java代码层面的方法调用，而MethodHandle是在模拟字节码层面的方法调用。</li>
-<li><code>Reflection</code>中的Method是重量级的，<code>MethodHandle</code>对象是轻量级的，Reflection中包含了方法的签名、描述符以及方法属性表中各种属性、执行权限等，而<code>MethodHandle</code>仅仅包含与执行该方法相关的信息</li>
-<li><code>MethodHandle</code>是字符码的方法指令调用模拟，理论上可以模拟出和JVM上一样的优化如方法内联，但是<code>Reflection</code>去调用方法则不可以</li>
-<li><code>Reflection API</code>的设计目标是为<code>Java语言服务</code>的，而<code>MethodHandle</code>设计成可服务于<code>所有Java虚拟机之上</code>的语言</li>
-</ol>
-<h1 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h1><p>MethodHandles.lookup中的<code>findStatic()</code> 、<code>findVirtual()</code>、<code>findSpecia()</code>三个谅正是为了对应<code>invokestatic</code> 、<code>invokevirtual&amp;invokeinterface</code>、invokespecial这几条字节码指令的执行权限校验行为，本文中只讲到了findVirtual()方法，其它两个方法读者可以自行尝试一下。</p>
-<p><code>java.lang.invoke</code>包中的内容可以看一看，别有一番有洞天</p>
-
+class装载验证流程自底向上检查，自上向下尝试加载
+加载 此阶
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/JVM篇之类加载.html#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
       
     </div>
     
     
     
 
-    
-      <div>
-        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
-    <img id="wechat_subscriber_qcode" src="http://pic.albk.tech/mb-qcode.png" alt="BK wechat" style="width: 200px; max-width: 100%;">
-    <div>扫一扫，用手机访问本站</div>
-</div>
-
-      </div>
     
 
     
@@ -393,56 +405,558 @@
 
     <div>
       
-        
-<div style="text-align:center;color: #ccc;font-size:14px;">
----------------- 本文结束 ----------------<div>
-
-      
     </div>
     <footer class="post-footer">
       
 
       
-      
+
       
 
       
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/浅淡java中的重载重写.html" rel="next" title="浅淡java中的重载重写">
-                <i class="fa fa-chevron-left"></i> 浅淡java中的重载重写
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/学习视频分享.html" rel="prev" title="学习视频分享">
-                学习视频分享 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
       
-
-      
+        <div class="post-eof"></div>
       
     </footer>
   </div>
   
   
   
-  </div></div></article>
+  </article>
 
 
+    
+      
 
-    <div class="post-spread">
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://albk.tech/JVM篇-之-垃圾收集器.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="BK">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/head.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="BK的网络日志">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/JVM篇-之-垃圾收集器.html" itemprop="url">JVM篇 之 垃圾收集器</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-07T22:44:26+08:00">
+                2019-06-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JVM/" itemprop="url" rel="index">
+                    <span itemprop="name">JVM</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/JVM篇-之-垃圾收集器.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/JVM篇-之-垃圾收集器.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/JVM篇-之-垃圾收集器.html" class="leancloud_visitors" data-flag-title="JVM篇 之 垃圾收集器">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          ##前言
+
+本篇讲一下各种GC之间的细微差异讲的清楚的，希望通过本篇文章，读者可以对GC的种类有更深刻的了解。对于GC算法的可参数文章JVM篇之 GC算法
+
+一、串行收集器-SerialSerial收集器最古老的，最稳定的，历经考验，内部的BUG比较少的一个收集器，单个GC线程进行垃圾回收。
+
+会作
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/JVM篇-之-垃圾收集器.html#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
       
     </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <div>
+      
+    </div>
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
   </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://albk.tech/JVM篇之-GC算法.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="BK">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/head.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="BK的网络日志">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/JVM篇之-GC算法.html" itemprop="url">JVM篇之 GC算法</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-07T16:04:24+08:00">
+                2019-06-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JVM/" itemprop="url" rel="index">
+                    <span itemprop="name">JVM</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/JVM篇之-GC算法.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/JVM篇之-GC算法.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/JVM篇之-GC算法.html" class="leancloud_visitors" data-flag-title="JVM篇之 GC算法">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          –引用计数法
+是一个老牌垃圾回收算法，通过引用计算来标记，判断一个对象是不是垃圾，是不是要回收。
+基本思想 ： 为每一个对象都标记一个引用数量，引用计数器的实现很简单，对于一个对象A，只要有任何一个对象引用了A，则A的引用计数器就加1，当引用失效时，引用计数器就减1。只要对象A的引用计数器的值为0，
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/JVM篇之-GC算法.html#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <div>
+      
+    </div>
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://albk.tech/使用Logback脱敏-扩展篇.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="BK">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/head.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="BK的网络日志">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/使用Logback脱敏-扩展篇.html" itemprop="url">使用Logback脱敏-扩展篇</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-07T15:34:54+08:00">
+                2019-06-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/logback/" itemprop="url" rel="index">
+                    <span itemprop="name">logback</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/使用Logback脱敏-扩展篇.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/使用Logback脱敏-扩展篇.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/使用Logback脱敏-扩展篇.html" class="leancloud_visitors" data-flag-title="使用Logback脱敏-扩展篇">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          介绍本文是一次数据泄漏之后的一点儿思考，系统日志对于后端系统而言是非常重要的，但是大多数开发人员在打印日志时，是非常随意的，不会去想太多，觉得日志打印的越多，排查总是越是方便。但是一些关键信息在打印日志时一定要注意，如果这些信息被人利用，可能会存在很大的风险。下面我举例几个场景，想想这样的场景中存在
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/使用Logback脱敏-扩展篇.html#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <div>
+      
+    </div>
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+  </section>
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span>
+  </nav>
+
 
 
           </div>
@@ -450,13 +964,6 @@
 
 
           
-
-  
-    <div class="comments" id="comments">
-    </div>
-  
-
-
 
 
 
@@ -479,17 +986,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -567,22 +1065,6 @@
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是MethodHandle"><span class="nav-number">1.</span> <span class="nav-text">什么是MethodHandle?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#示例"><span class="nav-number">2.</span> <span class="nav-text">示例</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MethodHandle与Reflection的区别"><span class="nav-number">3.</span> <span class="nav-text">MethodHandle与Reflection的区别</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#写在最后"><span class="nav-number">4.</span> <span class="nav-text">写在最后</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
@@ -722,10 +1204,6 @@
 
 
   
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
-
-
 
   	
 

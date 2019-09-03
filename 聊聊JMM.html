@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="杂谈,">
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="如何调用一个对象的方法？我们可以通过实例化对象直接调用、使用反射机制、通过代理对象等，本文介绍一种新的方法MethodHandle，这种方法在开发中很少会用到，但使用起来感觉很顺手。  什么是MethodHandle?MethodHandle是JDK1.7实现了JSR-292,新加入的java.lang.invoke包中的一个重要组成部分，这个包的主要是在单纯通过符号引用来确定调用的目标方法以">
-<meta name="keywords" content="后端">
+<meta name="description" content="什么是JMMJMM （Java Memory Model ）Java内存模型是一个语言级别的内存模型抽象，它屏蔽了底层硬件实现内存一致性需求的差异，提供了对上层的统一的接口来提供保证内存一致性的编程能力。 Java作为一个跨平台的语言，Java内存模型作为一人中间层模型，它适配不同的底层硬件系统，设计一个中间层模型来屏蔽底层的硬件差异，给上层的开发者提供一个一致的使用接口，它为开发者屏蔽了底层的硬">
+<meta name="keywords" content="杂谈">
 <meta property="og:type" content="article">
-<meta property="og:title" content="不使用反射如何调用某个实例对象的方法">
-<meta property="og:url" content="http://albk.tech/不使用反射如何调用某个实例对象的方法.html">
+<meta property="og:title" content="聊聊JMM">
+<meta property="og:url" content="http://albk.tech/聊聊JMM.html">
 <meta property="og:site_name" content="BK的网络日志">
-<meta property="og:description" content="如何调用一个对象的方法？我们可以通过实例化对象直接调用、使用反射机制、通过代理对象等，本文介绍一种新的方法MethodHandle，这种方法在开发中很少会用到，但使用起来感觉很顺手。  什么是MethodHandle?MethodHandle是JDK1.7实现了JSR-292,新加入的java.lang.invoke包中的一个重要组成部分，这个包的主要是在单纯通过符号引用来确定调用的目标方法以">
+<meta property="og:description" content="什么是JMMJMM （Java Memory Model ）Java内存模型是一个语言级别的内存模型抽象，它屏蔽了底层硬件实现内存一致性需求的差异，提供了对上层的统一的接口来提供保证内存一致性的编程能力。 Java作为一个跨平台的语言，Java内存模型作为一人中间层模型，它适配不同的底层硬件系统，设计一个中间层模型来屏蔽底层的硬件差异，给上层的开发者提供一个一致的使用接口，它为开发者屏蔽了底层的硬">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-08-19T15:54:45.907Z">
+<meta property="og:updated_time" content="2019-09-03T17:44:10.438Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="不使用反射如何调用某个实例对象的方法">
-<meta name="twitter:description" content="如何调用一个对象的方法？我们可以通过实例化对象直接调用、使用反射机制、通过代理对象等，本文介绍一种新的方法MethodHandle，这种方法在开发中很少会用到，但使用起来感觉很顺手。  什么是MethodHandle?MethodHandle是JDK1.7实现了JSR-292,新加入的java.lang.invoke包中的一个重要组成部分，这个包的主要是在单纯通过符号引用来确定调用的目标方法以">
+<meta name="twitter:title" content="聊聊JMM">
+<meta name="twitter:description" content="什么是JMMJMM （Java Memory Model ）Java内存模型是一个语言级别的内存模型抽象，它屏蔽了底层硬件实现内存一致性需求的差异，提供了对上层的统一的接口来提供保证内存一致性的编程能力。 Java作为一个跨平台的语言，Java内存模型作为一人中间层模型，它适配不同的底层硬件系统，设计一个中间层模型来屏蔽底层的硬件差异，给上层的开发者提供一个一致的使用接口，它为开发者屏蔽了底层的硬">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://albk.tech/不使用反射如何调用某个实例对象的方法.html">
+  <link rel="canonical" href="http://albk.tech/聊聊JMM.html">
 
 
 
 
 
-  <title>不使用反射如何调用某个实例对象的方法 | BK的网络日志</title>
+  <title>聊聊JMM | BK的网络日志</title>
   
 
 
@@ -263,7 +263,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://albk.tech/不使用反射如何调用某个实例对象的方法.html">
+    <link itemprop="mainEntityOfPage" href="http://albk.tech/聊聊JMM.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="BK">
@@ -280,7 +280,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">不使用反射如何调用某个实例对象的方法</h2>
+          <h2 class="post-title" itemprop="name headline">聊聊JMM</h2>
         
 
         <div class="post-meta">
@@ -292,8 +292,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-08-19T22:47:41+08:00">
-                2019-08-19
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-03T00:49:24+08:00">
+                2019-09-03
               </time>
             
 
@@ -311,8 +311,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/不使用反射如何调用某个实例对象的方法.html#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/不使用反射如何调用某个实例对象的方法.html" itemprop="commentCount"></span>
+                <a href="/聊聊JMM.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/聊聊JMM.html" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -320,7 +320,7 @@
 
           
           
-             <span id="/不使用反射如何调用某个实例对象的方法.html" class="leancloud_visitors" data-flag-title="不使用反射如何调用某个实例对象的方法">
+             <span id="/聊聊JMM.html" class="leancloud_visitors" data-flag-title="聊聊JMM">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -351,25 +351,53 @@
       
 
       
-        <blockquote>
-<p> 如何调用一个对象的方法？我们可以通过实例化对象直接调用、使用反射机制、通过代理对象等，本文介绍一种新的方法MethodHandle，这种方法在开发中很少会用到，但使用起来感觉很顺手。</p>
+        <h1 id="什么是JMM"><a href="#什么是JMM" class="headerlink" title="什么是JMM"></a>什么是JMM</h1><p>JMM （Java Memory Model ）Java内存模型是一个语言级别的内存模型抽象，它屏蔽了底层硬件实现内存一致性需求的差异，提供了对上层的统一的接口来提供保证内存一致性的编程能力。</p>
+<p>Java作为一个跨平台的语言，Java内存模型作为一人中间层模型，它适配不同的底层硬件系统，设计一个中间层模型来屏蔽底层的硬件差异，给上层的开发者提供一个一致的使用接口，它为开发者屏蔽了底层的硬件实现细节，支持大部分的主流硬件平台。</p>
+<h1 id="一致性模型"><a href="#一致性模型" class="headerlink" title="一致性模型"></a>一致性模型</h1><p>任何语言编写出来的程序，最终都会转换为机器指令，按照一定的顺序去执行，所以在语言层面来讲，都是基于硬件层面提供的一致性模型基础上，来实现自身语言的功能和特性，如何保证语言层面的功能，在转换为硬件指令之后，根据语言的要求正确的运行，这就需要语言提供一种一致性模型的编程能力。Java内存模型就是java语言级别的内存模型抽象</p>
+<h1 id="模型一致性"><a href="#模型一致性" class="headerlink" title="模型一致性"></a>模型一致性</h1><p>模型一致性不止下面列的4种，根据概念的严格化，可以分为很多种，<code>严格一致、顺序一致、因果一致</code>等，在本文中我们只列4种，这4种对我们后期理解 Java内存模型有很大的帮助</p>
+<h2 id="顺序一致性-Sequential-Consistency"><a href="#顺序一致性-Sequential-Consistency" class="headerlink" title="顺序一致性 Sequential Consistency"></a>顺序一致性 Sequential Consistency</h2><p>​    也是常说的<code>串行语义</code>，它不要求全局的时钟顺序，只需要各个CPU局总的时钟顺序，</p>
+<p>​    对于每个CPU来说，它看到自己程序的执行顺序始终是和程序定义是一致的，</p>
+<p>​    从全局角度来看，相同的程序，在不同的CPU上运行，程序运行结果给人的<code>感知顺序</code>和是符合<code>串行语义</code>的，结果最终的视图是一致的</p>
+<h2 id="弱一致性-Weak-Consistency"><a href="#弱一致性-Weak-Consistency" class="headerlink" title="弱一致性 Weak Consistency"></a>弱一致性 Weak Consistency</h2><p>弱一致性是对被同步操保护的共享变量而言，系统中的某个数据被更新后，后续对该数据的读取操作可能得到更新后的值，也可能是更改前的值。它规定了只有对共享变量的同步操作完成之后，后续对该数据的读取都是更新后的值，同步操作这段时间被称为“<strong>不一致时间窗口</strong>”。</p>
+<h2 id="释放一致性-Release-Consistency"><a href="#释放一致性-Release-Consistency" class="headerlink" title="释放一致性 Release Consistency"></a>释放一致性 Release Consistency</h2><p>弱一致性的粒度太大，包含了进入同步操作和释放同步操作两部分，而只有同步操作整体完成后，其他处理器才有可能保持一致性。 释放一致性规定了对同步变量的释放操作后，就对同步变量的状态广播到其他处理器，保证后续对该数据的读取都是更新后的值</p>
+<h2 id="进入一致性-Entry-Consistency"><a href="#进入一致性-Entry-Consistency" class="headerlink" title="进入一致性 Entry Consistency"></a>进入一致性 Entry Consistency</h2><p>和释放一致性一样，也是为了减小弱一致性的粒度，进入同步变量时，获取同步变量的最新状态，保证可以拿到数据更新后的最新值</p>
+<h1 id="再看Java内存模型"><a href="#再看Java内存模型" class="headerlink" title="再看Java内存模型"></a>再看Java内存模型</h1><p>Java内存模型是一种比较松散的语言级内存模型，它通过加内存屏障(Memory Barrier)，实现对共享数据的弱一致性、释放一致性、进入一致性的支持。</p>
+<p>最终语言是以机器指令在运行，JMM适配不同硬件平台，操作硬件指令，来提供一种语言层面满足一致性模型的编程能力,使开发者不需要关心代码是以什么顺序执行，只要能够正确的使用JMM提供的同步原语，就可以保证程序最终表现出来的行为是正确的。</p>
+<p>JMM的这种一致性模型的编程能力，使程序员不需要关运行的代码在执行时候是乱成什么顺序，以什么顺序 执行，只要能够正确的使用JMM提供的同步原语，就可以保证程序最终表现出来的行为是正确的。</p>
+<blockquote>
+<p>主要功能就是屏蔽各硬件平台的差异，通过NATIVE方法，操作硬件指令组合，来实现JAVA中的语义，保证可见性，有序性，原子性。</p>
 </blockquote>
-<h1 id="什么是MethodHandle"><a href="#什么是MethodHandle" class="headerlink" title="什么是MethodHandle?"></a>什么是MethodHandle?</h1><p>MethodHandle是JDK1.7实现了JSR-292,新加入的<code>java.lang.invoke</code>包中的一个重要组成部分，这个包的主要是在单纯通过符号引用来确定调用的目标方法以外，提供一种析的动态确定目标方法的机制。</p>
-<h1 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.bk.exercise;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.lang.invoke.MethodHandle;</span><br><span class="line"><span class="keyword">import</span> java.lang.invoke.MethodHandles;</span><br><span class="line"><span class="keyword">import</span> java.lang.invoke.MethodType;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> BK</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@description</span>:</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2019-08-19 22:34</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MethodHandlerTest</span> </span>&#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Person</span></span>&#123;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sing</span><span class="params">(String songName)</span></span>&#123;</span><br><span class="line">            System.out.println(<span class="string">"I'm sing "</span> + songName);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 实现调用Person类的sing方法</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> args</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">        Person zhangsan = <span class="keyword">new</span> Person();</span><br><span class="line">        <span class="comment">// void.class是方法返回的类型    String.class 是方法的入参类型</span></span><br><span class="line">        MethodType mt = MethodType.methodType(<span class="keyword">void</span>.class,String.class);</span><br><span class="line">        MethodHandle handler = MethodHandles.lookup()</span><br><span class="line">                <span class="comment">//找到zhangsan对象中签名和mt指定的签名是一致的sing方法</span></span><br><span class="line">                .findVirtual(zhangsan.getClass(), <span class="string">"sing"</span>, mt)</span><br><span class="line">                <span class="comment">//非静态方法的第一个参数隐藏的this指针，这步相当设置第一个参数this指针</span></span><br><span class="line">                .bindTo(zhangsan);</span><br><span class="line">        handler.invokeExact(<span class="string">"Summer train "</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>运行结果如下显示 </p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">I<span class="string">'m sing Summer train</span></span><br></pre></td></tr></table></figure>
-
-<p>从示例可以看出来，使用MethodHandle并没有什么困难，可以实现方法的调用，可是很多人会问，反射不了可以做相同的事情么，我们经常会使用反射，而不会使用这种方法。</p>
-<h1 id="MethodHandle与Reflection的区别"><a href="#MethodHandle与Reflection的区别" class="headerlink" title="MethodHandle与Reflection的区别"></a>MethodHandle与Reflection的区别</h1><p>如果站在Java语言的角度来看，他们确实是有很多相似之处，但是他们其它角度来看，确有很大的区别</p>
 <ol>
-<li>从本质上来讲，<code>Reflection</code>和<code>MethodHandle</code>机构都是在模拟方法调用，但Reflection是模拟的Java代码层面的方法调用，而MethodHandle是在模拟字节码层面的方法调用。</li>
-<li><code>Reflection</code>中的Method是重量级的，<code>MethodHandle</code>对象是轻量级的，Reflection中包含了方法的签名、描述符以及方法属性表中各种属性、执行权限等，而<code>MethodHandle</code>仅仅包含与执行该方法相关的信息</li>
-<li><code>MethodHandle</code>是字符码的方法指令调用模拟，理论上可以模拟出和JVM上一样的优化如方法内联，但是<code>Reflection</code>去调用方法则不可以</li>
-<li><code>Reflection API</code>的设计目标是为<code>Java语言服务</code>的，而<code>MethodHandle</code>设计成可服务于<code>所有Java虚拟机之上</code>的语言</li>
+<li>JMM提供的语义</li>
 </ol>
-<h1 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h1><p>MethodHandles.lookup中的<code>findStatic()</code> 、<code>findVirtual()</code>、<code>findSpecia()</code>三个谅正是为了对应<code>invokestatic</code> 、<code>invokevirtual&amp;invokeinterface</code>、invokespecial这几条字节码指令的执行权限校验行为，本文中只讲到了findVirtual()方法，其它两个方法读者可以自行尝试一下。</p>
-<p><code>java.lang.invoke</code>包中的内容可以看一看，别有一番有洞天</p>
+<ul>
+<li>使用LOCK#信号、内存屏障实现语言层面的<code>synchronized</code>语义，保证复杂指令块的原子性 ，实现对共享变量的弱一致性保证</li>
+<li>对共享变量读之间插入<code>加载屏障</code>，在对共享变量写之后插入<code>存储屏障</code>，来实现<code>volatile</code>语义，实现对共享变量的释放一致性和进入一致性保证</li>
+<li>通过<code>存储屏障</code>，禁止初始化操作不重排到构造器结束之后，来实现<code>final</code>的语义</li>
+</ul>
+<ol start="2">
+<li><p>通过NATIVA方法屏蔽各硬件平台的差异</p>
+</li>
+<li><p>lazy write</p>
+</li>
+</ol>
+<ul>
+<li>通过<code>存储屏障</code>，将写缓冲区中的数据写回主存，保证可见性和有序性</li>
+<li>通过<code>加载屏障</code>，清空无效化队列，保证可见性和有序性</li>
+</ul>
+<ol start="4">
+<li>禁止重排</li>
+</ol>
+<ul>
+<li>通过内存屏障，禁止指令重排，实现<code>as-if -serial</code>语义</li>
+<li>锁临界区的指令不允许逸出到临界区外</li>
+<li>内部锁的释放要在内部锁的申请之后执行</li>
+<li>线程中的任何操作都在start方法之后执行</li>
+<li>线程中的任何操作都在join方法之前执行</li>
+<li>同一个volatile变量读和写之间禁止重排</li>
+</ul>
+<h1 id="结束"><a href="#结束" class="headerlink" title="结束"></a>结束</h1><p>文章的内容原于个人的理解，有可能和实际会有偏差，如果有发现请指正，以免误导他人。</p>
+<p>因为在JMM中大量提到了内存屏障，接下来准备写一篇关于内存屏障的文章</p>
 
       
     </div>
@@ -401,6 +429,12 @@
     </div>
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/杂谈/" rel="tag"># 杂谈</a>
+          
+        </div>
+      
 
       
       
@@ -410,8 +444,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/浅淡java中的重载重写.html" rel="next" title="浅淡java中的重载重写">
-                <i class="fa fa-chevron-left"></i> 浅淡java中的重载重写
+              <a href="/聊聊CacheLine.html" rel="next" title="聊聊CacheLine">
+                <i class="fa fa-chevron-left"></i> 聊聊CacheLine
               </a>
             
           </div>
@@ -419,10 +453,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/学习视频分享.html" rel="prev" title="学习视频分享">
-                学习视频分享 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -577,7 +607,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是MethodHandle"><span class="nav-number">1.</span> <span class="nav-text">什么是MethodHandle?</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#示例"><span class="nav-number">2.</span> <span class="nav-text">示例</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MethodHandle与Reflection的区别"><span class="nav-number">3.</span> <span class="nav-text">MethodHandle与Reflection的区别</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#写在最后"><span class="nav-number">4.</span> <span class="nav-text">写在最后</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是JMM"><span class="nav-number">1.</span> <span class="nav-text">什么是JMM</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#一致性模型"><span class="nav-number">2.</span> <span class="nav-text">一致性模型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#模型一致性"><span class="nav-number">3.</span> <span class="nav-text">模型一致性</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#顺序一致性-Sequential-Consistency"><span class="nav-number">3.1.</span> <span class="nav-text">顺序一致性 Sequential Consistency</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#弱一致性-Weak-Consistency"><span class="nav-number">3.2.</span> <span class="nav-text">弱一致性 Weak Consistency</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#释放一致性-Release-Consistency"><span class="nav-number">3.3.</span> <span class="nav-text">释放一致性 Release Consistency</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#进入一致性-Entry-Consistency"><span class="nav-number">3.4.</span> <span class="nav-text">进入一致性 Entry Consistency</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#再看Java内存模型"><span class="nav-number">4.</span> <span class="nav-text">再看Java内存模型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#结束"><span class="nav-number">5.</span> <span class="nav-text">结束</span></a></li></ol></div>
             
 
           </div>
