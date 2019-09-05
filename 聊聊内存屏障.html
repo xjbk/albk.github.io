@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="杂谈,">
 
 
 
@@ -79,17 +79,20 @@
 
 
 
-<meta name="description" content="记录点滴">
-<meta name="keywords" content="后端">
-<meta property="og:type" content="website">
-<meta property="og:title" content="BK的网络日志">
-<meta property="og:url" content="http://albk.tech/archives/page/2/index.html">
+<meta name="description" content="在之前文章聊聊JMM，说到了内存屏障，内存屏障在Java语言实现一致性内存模型上起到了重要的作用，本文我们一起聊一聊内存屏障  内存屏障是什么​        在cpu执行指令的过程中，对于同一个线程中没有数据依赖的指令可以重新排序优化，有数据依赖的指令按照顺序串行执行，来保证单线程程序运行的正确性，同时也提升了CPU的执行效率，合理的利用了CPU等待时间，​        在多核CPU的情况下">
+<meta name="keywords" content="杂谈">
+<meta property="og:type" content="article">
+<meta property="og:title" content="聊聊内存屏障">
+<meta property="og:url" content="http://albk.tech/聊聊内存屏障.html">
 <meta property="og:site_name" content="BK的网络日志">
-<meta property="og:description" content="记录点滴">
+<meta property="og:description" content="在之前文章聊聊JMM，说到了内存屏障，内存屏障在Java语言实现一致性内存模型上起到了重要的作用，本文我们一起聊一聊内存屏障  内存屏障是什么​        在cpu执行指令的过程中，对于同一个线程中没有数据依赖的指令可以重新排序优化，有数据依赖的指令按照顺序串行执行，来保证单线程程序运行的正确性，同时也提升了CPU的执行效率，合理的利用了CPU等待时间，​        在多核CPU的情况下">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://pic.albk.tech/mb.png">
+<meta property="og:updated_time" content="2019-09-05T17:35:29.221Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="BK的网络日志">
-<meta name="twitter:description" content="记录点滴">
+<meta name="twitter:title" content="聊聊内存屏障">
+<meta name="twitter:description" content="在之前文章聊聊JMM，说到了内存屏障，内存屏障在Java语言实现一致性内存模型上起到了重要的作用，本文我们一起聊一聊内存屏障  内存屏障是什么​        在cpu执行指令的过程中，对于同一个线程中没有数据依赖的指令可以重新排序优化，有数据依赖的指令按照顺序串行执行，来保证单线程程序运行的正确性，同时也提升了CPU的执行效率，合理的利用了CPU等待时间，​        在多核CPU的情况下">
+<meta name="twitter:image" content="http://pic.albk.tech/mb.png">
 
 
 
@@ -119,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="http://albk.tech/archives/page/2/">
+  <link rel="canonical" href="http://albk.tech/聊聊内存屏障.html">
 
 
 
 
 
-  <title>归档 | BK的网络日志</title>
+  <title>聊聊内存屏障 | BK的网络日志</title>
   
 
 
@@ -144,7 +147,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -248,391 +251,229 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
+  <div id="posts" class="posts-expand">
+    
 
-      <span class="archive-page-counter">
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://albk.tech/聊聊内存屏障.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="BK">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/head.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="BK的网络日志">
+    </span>
+
+    
+      <header class="post-header">
+
         
         
+          <h2 class="post-title" itemprop="name headline">聊聊内存屏障</h2>
         
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-09-05T16:16:52+08:00">
+                2019-09-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
           
-        
-        嗯..! 目前共计 25 篇日志。 继续努力。
-      </span>
 
-      
-
-        
-        
-        
-
-        
           
-          <div class="collection-title">
-            <h2 class="archive-year" id="archive-year-2019">2019</h2>
-          </div>
-        
-        
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/聊聊内存屏障.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/聊聊内存屏障.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
 
-        
+          
+          
+             <span id="/聊聊内存屏障.html" class="leancloud_visitors" data-flag-title="聊聊内存屏障">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+          
 
-      <h3 class="post-title">
-        
-            <a class="post-title-link" href="/聊聊分布式事务.html" itemprop="url">
-              
-                <span itemprop="name">聊聊分布式事务</span>
-              
-            </a>
-        
-      </h3>
+          
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-08-15T21:54:15+08:00" content="2019-08-15">
-          08-15
-        </time>
-      </div>
-      <meta name="baidu-site-verification" content="qZnrddf9DT">
-    </header>
-  </article>
+          
 
+        </div>
+      </header>
+    
 
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-            <a class="post-title-link" href="/http知识点整理.html" itemprop="url">
-              
-                <span itemprop="name">http知识点整理</span>
-              
-            </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-07-31T00:57:22+08:00" content="2019-07-31">
-          07-31
-        </time>
-      </div>
-      <meta name="baidu-site-verification" content="qZnrddf9DT">
-    </header>
-  </article>
-
-
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-            <a class="post-title-link" href="/mysql常见问题 - 持续更新中.html" itemprop="url">
-              
-                <span itemprop="name">mysql常见问题 - 持续更新中</span>
-              
-            </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-07-29T23:00:01+08:00" content="2019-07-29">
-          07-29
-        </time>
-      </div>
-      <meta name="baidu-site-verification" content="qZnrddf9DT">
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-            <a class="post-title-link" href="/java中synchronized与Lock的异同.html" itemprop="url">
-              
-                <span itemprop="name">java中synchronized与Lock的异同</span>
-              
-            </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-07-25T22:43:41+08:00" content="2019-07-25">
-          07-25
-        </time>
-      </div>
-      <meta name="baidu-site-verification" content="qZnrddf9DT">
-    </header>
-  </article>
-
-
+      
+        <blockquote>
+<p>在之前文章<a href="./聊聊JMM.html">聊聊JMM</a>，说到了内存屏障，内存屏障在Java语言实现一致性内存模型上起到了重要的作用，本文我们一起聊一聊内存屏障</p>
+</blockquote>
+<h1 id="内存屏障是什么"><a href="#内存屏障是什么" class="headerlink" title="内存屏障是什么"></a>内存屏障是什么</h1><p>​        在cpu执行指令的过程中，对于同一个线程中没有<code>数据依赖</code>的指令可以重新排序优化，有数据依赖的指令按照顺序串行执行，来保证单线程程序运行的正确性，同时也提升了CPU的执行效率，合理的利用了CPU等待时间，<br>​        在多核CPU的情况下，因为多核CPU上的指令同时执行，如果涉及到共享变量的修改，这种优化会影响多线程运行的正确性,而<code>内存屏障</code>（memory barrier/memory fence）是硬件层面提供的一系列特殊指令，当CPU处理到这些指定时，会做一些特殊的处理，可以使处理器内的内存状态对其它处理器可见，在不同的平台上支持的内存屏障也会有差异。</p>
+<h1 id="解答之前的疑问"><a href="#解答之前的疑问" class="headerlink" title="解答之前的疑问"></a>解答之前的疑问</h1><p>在之间的文章<a href="./聊聊缓存一致性协议.html">聊聊缓存一致性协议</a>中，结尾提到一个问题：MESI频繁的消息请求与响应带来的性能问题如何解决?</p>
+<p>MESI协议解决了缓存一致性问题，但是频繁的请求与响应，会产生大量的等待时间，请求等待响应的返回之后才能将数据写入高速缓存中，为了避免减少这种性能问题，硬件层面引入了写缓存（store/write buffer）和无效化队列（invalidate queue), 结构如下图</p>
+<p><img src="http://pic.albk.tech/mb.png" alt></p>
+<p><strong>写缓冲器（store buffer也称为 write buffer）</strong>是处理器内部的一个容量比高速缓存还小的私有高速缓存部件，每个处理器都有自己的写缓冲器，写缓冲器内部包含若干个条目，并且写缓冲器之间是无法直接访问的。引入写缓冲器，使得处理器在执行写操作的时候，写入写缓冲器中，而不需要等待response响应，来减少写操作的延时，在节省的时间内可以执行更多其它指令，从而提高处理器的执行效率。</p>
+<p><strong>无效化队列</strong>是用处理<code>Invalidate</code>消息的，当该消息被广播到总线上，其它的CPU都在监听此消息，同其它的CPU都要回复一个<code>Invalidate Response</code>消息，这会产生大量的广播事件，所以在引入无效化队列之后，处理器在收到<code>Invalidate</code>消息之后，并不立马删除地址中对应的副本数据（其实是更新缓存行的状态为无效）,而是将消息存入无效化队列之后就直接响应<code>Invalidate Response</code>消息了，从而减少了写操作执行处理器的等待时间。</p>
+<p>通过<code>写缓冲器</code>和无效化队列的，将消息累积起来，立马响应请求，提高处理器执行效率，然后在特定的时间（写缓冲满之后或者执行到内存屏障 ），批量将写缓冲中的数据写回主存，将无效化队列应用到高速缓存中，但是他们的引入，又带来了内存重排序和可见性问题。</p>
+<h1 id="写缓冲器和无效化队列带来的问题"><a href="#写缓冲器和无效化队列带来的问题" class="headerlink" title="写缓冲器和无效化队列带来的问题"></a>写缓冲器和无效化队列带来的问题</h1><ul>
+<li><p>写缓冲器导致StoreLoad重排</p>
+</li>
+<li><p>写缓冲器导致StoreStore重排</p>
+</li>
+<li><p>无效化队列导致LoadLoad重排</p>
+</li>
+<li><p>CPU对共享变量的更新，到达写缓冲器中就返回了，这就可能导致其它CPU无法读到共享变量的最新值，因为共享变量的修改还在前一个CPU的写缓冲器中，连高速缓存都没到了， 无法通过MESI协议保证一致性，这个现象就是可见性问题</p>
+</li>
+<li><p>CPU对于Invalidate的请求，到达无效化队列之后就返回了，还没有将高速缓存中的相关副本数据删除，这就可能导致该处理器读了的数据是过时的数据 ，从而导致更新丢失 ，这个现象也可以理解为是可见性问题</p>
+<p>对于上面的问题，用到的就是我们今天的主角，内存屏障</p>
+</li>
+</ul>
+<h1 id="内存屏障分类与作用"><a href="#内存屏障分类与作用" class="headerlink" title="内存屏障分类与作用"></a>内存屏障分类与作用</h1><p>在X86平台提供了几种主要的内存屏障</p>
+<ol>
+<li>lfence - 加载屏障</li>
+</ol>
+<ul>
+<li>清空无效化队列，根据无效化队列中内容的内存地址，将相应处理器上高速缓存中的缓存条件状态置为I，使后续对该地址的读取时，必须发送Read消息，具体过程可参考 <a href="./聊聊缓存一致性协议.html">聊聊缓存一致性协议</a></li>
+<li>用在读指令前，阻止屏障两边的读指令重排</li>
+</ul>
+<ol start="2">
+<li>sfence - 存储屏障：</li>
+</ol>
+<ul>
+<li>冲刷写缓冲器中的内容，将写缓冲器中内容的更新应用于高速缓存</li>
+<li>用在写指令之后，阻止屏障两边的写指令重排（执行到该屏障时，将定缓存中的条目打标记，标识这些条目需要在该屏障之前提交，当执行到写操作时，检测到写缓冲器中存在被标记的条目，不管写操作对应的条目状态，即使是E,M也不将写操作的数据回写高速缓存，而是写入写缓冲器的方式，使得屏障之间和屏障之后的指令修改都串行在写缓冲器中，来保证其顺序）</li>
+</ul>
+<ol start="3">
+<li>mfence - 全能屏障</li>
+</ol>
+<ul>
+<li>具备ifence和sfence的能力, 实现是通过加载屏障和存储屏障的成对使用，可以保证写缓冲的内容同步到高速缓存，无效化队列的内容应用到高速缓存，然后再根据缓存一致性协议保证共享数据的一致性</li>
+<li>阻止指令重排</li>
+</ul>
+<h1 id="结束"><a href="#结束" class="headerlink" title="结束"></a>结束</h1><p>下一篇可能会写一篇java中使用内存屏障实现的语义</p>
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-            <a class="post-title-link" href="/JAVA应用引起CPU过高排查的一般套路.html" itemprop="url">
-              
-                <span itemprop="name">JAVA应用引起CPU过高排查的一般套路</span>
-              
-            </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-07-22T14:38:16+08:00" content="2019-07-22">
-          07-22
-        </time>
-      </div>
-      <meta name="baidu-site-verification" content="qZnrddf9DT">
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-            <a class="post-title-link" href="/我必须得告诉大家的MySQL优化原理.html" itemprop="url">
-              
-                <span itemprop="name">【转】我必须得告诉大家的MySQL优化原理</span>
-              
-            </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-07-19T17:00:39+08:00" content="2019-07-19">
-          07-19
-        </time>
-      </div>
-      <meta name="baidu-site-verification" content="qZnrddf9DT">
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-            <a class="post-title-link" href="/对象循环引用引发的血案.html" itemprop="url">
-              
-                <span itemprop="name">对象循环引用引发的血案</span>
-              
-            </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-07-09T10:49:53+08:00" content="2019-07-09">
-          07-09
-        </time>
-      </div>
-      <meta name="baidu-site-verification" content="qZnrddf9DT">
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-            <a class="post-title-link" href="/设计模式-建造者模式.html" itemprop="url">
-              
-                <span itemprop="name">设计模式-建造者模式</span>
-              
-            </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-06-15T23:07:15+08:00" content="2019-06-15">
-          06-15
-        </time>
-      </div>
-      <meta name="baidu-site-verification" content="qZnrddf9DT">
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-            <a class="post-title-link" href="/设计模式-装饰模式.html" itemprop="url">
-              
-                <span itemprop="name">设计模式-装饰模式</span>
-              
-            </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-06-13T21:57:03+08:00" content="2019-06-13">
-          06-13
-        </time>
-      </div>
-      <meta name="baidu-site-verification" content="qZnrddf9DT">
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-            <a class="post-title-link" href="/从另一个角度了解JAVA的可见性.html" itemprop="url">
-              
-                <span itemprop="name">从另一个角度了解JAVA的可见性</span>
-              
-            </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-06-07T23:30:46+08:00" content="2019-06-07">
-          06-07
-        </time>
-      </div>
-      <meta name="baidu-site-verification" content="qZnrddf9DT">
-    </header>
-  </article>
-
-
-
-      
-
     </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="http://pic.albk.tech/mb-qcode.png" alt="BK wechat" style="width: 200px; max-width: 100%;">
+    <div>扫一扫，用手机访问本站</div>
+</div>
+
+      </div>
+    
+
+    
+
+    
+
+    <div>
+      
+        
+<div style="text-align:center;color: #ccc;font-size:14px;">
+---------------- 本文结束 ----------------<div>
+
+      
+    </div>
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/杂谈/" rel="tag"># 杂谈</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/聊聊JMM.html" rel="next" title="聊聊JMM">
+                <i class="fa fa-chevron-left"></i> 聊聊JMM
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
-
-  
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/archives/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/archives/">1</a><span class="page-number current">2</span><a class="page-number" href="/archives/page/3/">3</a><a class="extend next" rel="next" href="/archives/page/3/"><i class="fa fa-angle-right"></i></a>
-  </nav>
+  </div></div></article>
 
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -640,6 +481,13 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
 
 
 
@@ -662,8 +510,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -741,6 +598,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#内存屏障是什么"><span class="nav-number">1.</span> <span class="nav-text">内存屏障是什么</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#解答之前的疑问"><span class="nav-number">2.</span> <span class="nav-text">解答之前的疑问</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#写缓冲器和无效化队列带来的问题"><span class="nav-number">3.</span> <span class="nav-text">写缓冲器和无效化队列带来的问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#内存屏障分类与作用"><span class="nav-number">4.</span> <span class="nav-text">内存屏障分类与作用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#结束"><span class="nav-number">5.</span> <span class="nav-text">结束</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -880,6 +753,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   	
 
