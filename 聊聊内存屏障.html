@@ -88,7 +88,7 @@
 <meta property="og:description" content="在之前文章聊聊JMM，说到了内存屏障，内存屏障在Java语言实现一致性内存模型上起到了重要的作用，本文我们一起聊一聊内存屏障  内存屏障是什么​        在cpu执行指令的过程中，对于同一个线程中没有数据依赖的指令可以重新排序优化，有数据依赖的指令按照顺序串行执行，来保证单线程程序运行的正确性，同时也提升了CPU的执行效率，合理的利用了CPU等待时间，​        在多核CPU的情况下">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://pic.albk.tech/mb.png">
-<meta property="og:updated_time" content="2019-09-05T17:35:29.221Z">
+<meta property="og:updated_time" content="2019-10-25T08:54:35.204Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="聊聊内存屏障">
 <meta name="twitter:description" content="在之前文章聊聊JMM，说到了内存屏障，内存屏障在Java语言实现一致性内存模型上起到了重要的作用，本文我们一起聊一聊内存屏障  内存屏障是什么​        在cpu执行指令的过程中，对于同一个线程中没有数据依赖的指令可以重新排序优化，有数据依赖的指令按照顺序串行执行，来保证单线程程序运行的正确性，同时也提升了CPU的执行效率，合理的利用了CPU等待时间，​        在多核CPU的情况下">
@@ -389,7 +389,7 @@
 </ol>
 <ul>
 <li>冲刷写缓冲器中的内容，将写缓冲器中内容的更新应用于高速缓存</li>
-<li>用在写指令之后，阻止屏障两边的写指令重排（执行到该屏障时，将定缓存中的条目打标记，标识这些条目需要在该屏障之前提交，当执行到写操作时，检测到写缓冲器中存在被标记的条目，不管写操作对应的条目状态，即使是E,M也不将写操作的数据回写高速缓存，而是写入写缓冲器的方式，使得屏障之间和屏障之后的指令修改都串行在写缓冲器中，来保证其顺序）</li>
+<li>用在写指令之后，阻止屏障两边的写指令重排（执行到该屏障时，将对缓存中的条目打标记，标识这些条目需要在该屏障之前提交，当执行到写操作时，检测到写缓冲器中存在被标记的条目，不管写操作对应的条目状态，即使是E,M也不将写操作的数据回写高速缓存，而是写入写缓冲器的方式，使得屏障之间和屏障之后的指令修改都串行在写缓冲器中，来保证其顺序）</li>
 </ul>
 <ol start="3">
 <li>mfence - 全能屏障</li>
@@ -454,6 +454,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/聊聊内存屏障在java中的应用（一）volatile语义.html" rel="prev" title="聊聊内存屏障在java中的应用（一）volatile语义">
+                聊聊内存屏障在java中的应用（一）volatile语义 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -537,7 +541,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-count">26</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

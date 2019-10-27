@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="BK的网络日志">
 <meta property="og:description" content="如何调用一个对象的方法？我们可以通过实例化对象直接调用、使用反射机制、通过代理对象等，本文介绍一种新的方法MethodHandle，这种方法在开发中很少会用到，但使用起来感觉很顺手。  什么是MethodHandle?MethodHandle是JDK1.7实现了JSR-292,新加入的java.lang.invoke包中的一个重要组成部分，这个包的主要是在单纯通过符号引用来确定调用的目标方法以">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-08-19T15:54:45.907Z">
+<meta property="og:updated_time" content="2019-10-24T02:40:49.754Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="不使用反射如何调用某个实例对象的方法">
 <meta name="twitter:description" content="如何调用一个对象的方法？我们可以通过实例化对象直接调用、使用反射机制、通过代理对象等，本文介绍一种新的方法MethodHandle，这种方法在开发中很少会用到，但使用起来感觉很顺手。  什么是MethodHandle?MethodHandle是JDK1.7实现了JSR-292,新加入的java.lang.invoke包中的一个重要组成部分，这个包的主要是在单纯通过符号引用来确定调用的目标方法以">
@@ -360,8 +360,8 @@
 <p>运行结果如下显示 </p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">I<span class="string">'m sing Summer train</span></span><br></pre></td></tr></table></figure>
 
-<p>从示例可以看出来，使用MethodHandle并没有什么困难，可以实现方法的调用，可是很多人会问，反射不了可以做相同的事情么，我们经常会使用反射，而不会使用这种方法。</p>
-<h1 id="MethodHandle与Reflection的区别"><a href="#MethodHandle与Reflection的区别" class="headerlink" title="MethodHandle与Reflection的区别"></a>MethodHandle与Reflection的区别</h1><p>如果站在Java语言的角度来看，他们确实是有很多相似之处，但是他们其它角度来看，确有很大的区别</p>
+<p>从示例可以看出来，使用MethodHandle并没有什么困难，可以实现方法的调用，可是很多人会问，反射不也可以做相同的事情么，我们经常会使用反射，而不会使用这种方法。</p>
+<h1 id="MethodHandle与Reflection的区别"><a href="#MethodHandle与Reflection的区别" class="headerlink" title="MethodHandle与Reflection的区别"></a>MethodHandle与Reflection的区别</h1><p>如果站在Java语言的角度来看，他们确实是有很多相似之处，但是从他们其它角度来看，确有很大的区别</p>
 <ol>
 <li>从本质上来讲，<code>Reflection</code>和<code>MethodHandle</code>机构都是在模拟方法调用，但Reflection是模拟的Java代码层面的方法调用，而MethodHandle是在模拟字节码层面的方法调用。</li>
 <li><code>Reflection</code>中的Method是重量级的，<code>MethodHandle</code>对象是轻量级的，Reflection中包含了方法的签名、描述符以及方法属性表中各种属性、执行权限等，而<code>MethodHandle</code>仅仅包含与执行该方法相关的信息</li>
@@ -506,7 +506,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-count">26</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

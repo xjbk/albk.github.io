@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="BK的网络日志">
 <meta property="og:description" content="前言synchronized和Lock通过互斥保障原子性，能够保护共享数据以实现线程安全，其作用包括保障原子性、可见性、有序性 常见问题在平时聊天或者面试过程中，可能会被问到，既然已经有了synchronized了，为什么JSR166小组花这么多时间来开发j.u.c的Lock框架呢，换句话说就是内部锁和显示锁之前有什么区别？ 分析synchronized（内部锁）java平台中的任何一个对象都有唯">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-07-25T16:26:46.420Z">
+<meta property="og:updated_time" content="2019-10-23T14:31:02.063Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="java中synchronized与Lock的异同">
 <meta name="twitter:description" content="前言synchronized和Lock通过互斥保障原子性，能够保护共享数据以实现线程安全，其作用包括保障原子性、可见性、有序性 常见问题在平时聊天或者面试过程中，可能会被问到，既然已经有了synchronized了，为什么JSR166小组花这么多时间来开发j.u.c的Lock框架呢，换句话说就是内部锁和显示锁之前有什么区别？ 分析synchronized（内部锁）java平台中的任何一个对象都有唯">
@@ -383,7 +383,7 @@
 <p>外部锁如果未主动释放锁或者释放代码在finally子句中，容易导致锁泄漏</p>
 <h3 id="从使用上来讲"><a href="#从使用上来讲" class="headerlink" title="从使用上来讲"></a>从使用上来讲</h3><p>synchronized可以修饰方法，修饰代码块，但是内部锁的申请与释放只能在一个方法内进行，因为代码无法跨方法</p>
 <p>Lock，只能修饰代码块，但是它可以发挥面向对象编程的灵活性，显示锁的申请在一个方法，在另一个方法里释放锁</p>
-<h3 id="在锁的调度方面"><a href="#在锁的调度方面" class="headerlink" title="在锁的调度方面"></a>在锁的调度方面</h3><p>内部锁公公平锁，显示锁即支持非公平也支持公平锁</p>
+<h3 id="在锁的调度方面"><a href="#在锁的调度方面" class="headerlink" title="在锁的调度方面"></a>在锁的调度方面</h3><p>内部锁公平锁，显示锁即支持非公平也支持公平锁</p>
 <h3 id="在问题定位方面"><a href="#在问题定位方面" class="headerlink" title="在问题定位方面"></a>在问题定位方面</h3><p>线程转储可能无法包含显示锁的相关信息，从而导致问题定位困难。比如果在JDK1.5下线程转储中会包含内部锁的相关信息，不包含显示锁的信息  </p>
 <h3 id="从性能方面方面"><a href="#从性能方面方面" class="headerlink" title="从性能方面方面"></a>从性能方面方面</h3><p>等待同一把内部锁的线程，都在同一个等待队列中，等待系统调度，而ReentrantLock锁，可以通过Condition条件变量，实现分组等待的效果，所以性能表现上更好一些</p>
 <h3 id="从其它特性方面"><a href="#从其它特性方面" class="headerlink" title="从其它特性方面"></a>从其它特性方面</h3><p>当一个线程在等待获取一个锁时，因为线程活性故障导致其永远无法获取得锁时，使用内部锁的线程会一直傻傻的等待一个无法获得的锁，换句话说，内部锁缺少可中断的特性，</p>
@@ -544,7 +544,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-count">26</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

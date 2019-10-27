@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="BK的网络日志">
 <meta property="og:description" content="前言在日常工作中，因为编码不规范或者工具类使用不当，会导致cpu负载过高，响应时间变长，面对这样的情况，应该有一套自己的排查方法，下面分享下我个人的排查过程 过程分享第一步** 寻找病人 ​    通过 ps -ef|grep java 或者  jps -lm  先找出你需要排查的java应用，记录下PID 第二步 找出患病的部位 即找出该进程内最耗费CPU的线程 top -Hp pid （推荐使">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-07-25T16:24:21.192Z">
+<meta property="og:updated_time" content="2019-09-11T14:24:31.652Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JAVA应用引起CPU过高排查的一般套路">
 <meta name="twitter:description" content="前言在日常工作中，因为编码不规范或者工具类使用不当，会导致cpu负载过高，响应时间变长，面对这样的情况，应该有一套自己的排查方法，下面分享下我个人的排查过程 过程分享第一步** 寻找病人 ​    通过 ps -ef|grep java 或者  jps -lm  先找出你需要排查的java应用，记录下PID 第二步 找出患病的部位 即找出该进程内最耗费CPU的线程 top -Hp pid （推荐使">
@@ -387,7 +387,9 @@
 </ul>
 <p><strong>第六步</strong>  从其它方面寻找病因</p>
 <ul>
-<li>分析堆内存使用情况和YGC FULL GC频率，调优应用启动的JVM参数</li>
+<li><p>分析堆内存使用情况和YGC FULL GC频率，调优应用启动的JVM参数</p>
+<p>Jstat -gc pid /. Stat -gccapacity pid / jmap -heap pid  推荐使用前两个，第三个可能会导致进程状态变为T</p>
+</li>
 </ul>
 <ul>
 <li><p>在应用启动时候增加相关的GC日志参数，输出更详细的日志,来帮忙我们更准确的找到问题。</p>
@@ -546,7 +548,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-count">26</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

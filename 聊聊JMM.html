@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="什么是JMMJMM （Java Memory Model ）Java内存模型是一个语言级别的内存模型抽象，它屏蔽了底层硬件实现内存一致性需求的差异，提供了对上层的统一的接口来提供保证内存一致性的编程能力。 Java作为一个跨平台的语言，Java内存模型作为一人中间层模型，它适配不同的底层硬件系统，设计一个中间层模型来屏蔽底层的硬件差异，给上层的开发者提供一个一致的使用接口，它为开发者屏蔽了底层的硬">
+<meta name="description" content="什么是JMMJMM （Java Memory Model ）Java内存模型是一个语言级别的内存模型抽象，它屏蔽了底层硬件实现内存一致性需求的差异，提供了对上层的统一的接口来提供保证内存一致性的编程能力。 Java作为一个跨平台的语言，Java内存模型作为一个中间层模型，它适配不同的底层硬件系统，设计一个中间层模型来屏蔽底层的硬件差异，给上层的开发者提供一个一致的使用接口，它为开发者屏蔽了底层的硬">
 <meta name="keywords" content="杂谈">
 <meta property="og:type" content="article">
 <meta property="og:title" content="聊聊JMM">
 <meta property="og:url" content="http://albk.tech/聊聊JMM.html">
 <meta property="og:site_name" content="BK的网络日志">
-<meta property="og:description" content="什么是JMMJMM （Java Memory Model ）Java内存模型是一个语言级别的内存模型抽象，它屏蔽了底层硬件实现内存一致性需求的差异，提供了对上层的统一的接口来提供保证内存一致性的编程能力。 Java作为一个跨平台的语言，Java内存模型作为一人中间层模型，它适配不同的底层硬件系统，设计一个中间层模型来屏蔽底层的硬件差异，给上层的开发者提供一个一致的使用接口，它为开发者屏蔽了底层的硬">
+<meta property="og:description" content="什么是JMMJMM （Java Memory Model ）Java内存模型是一个语言级别的内存模型抽象，它屏蔽了底层硬件实现内存一致性需求的差异，提供了对上层的统一的接口来提供保证内存一致性的编程能力。 Java作为一个跨平台的语言，Java内存模型作为一个中间层模型，它适配不同的底层硬件系统，设计一个中间层模型来屏蔽底层的硬件差异，给上层的开发者提供一个一致的使用接口，它为开发者屏蔽了底层的硬">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-09-04T14:29:30.328Z">
+<meta property="og:updated_time" content="2019-10-24T09:48:26.507Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="聊聊JMM">
-<meta name="twitter:description" content="什么是JMMJMM （Java Memory Model ）Java内存模型是一个语言级别的内存模型抽象，它屏蔽了底层硬件实现内存一致性需求的差异，提供了对上层的统一的接口来提供保证内存一致性的编程能力。 Java作为一个跨平台的语言，Java内存模型作为一人中间层模型，它适配不同的底层硬件系统，设计一个中间层模型来屏蔽底层的硬件差异，给上层的开发者提供一个一致的使用接口，它为开发者屏蔽了底层的硬">
+<meta name="twitter:description" content="什么是JMMJMM （Java Memory Model ）Java内存模型是一个语言级别的内存模型抽象，它屏蔽了底层硬件实现内存一致性需求的差异，提供了对上层的统一的接口来提供保证内存一致性的编程能力。 Java作为一个跨平台的语言，Java内存模型作为一个中间层模型，它适配不同的底层硬件系统，设计一个中间层模型来屏蔽底层的硬件差异，给上层的开发者提供一个一致的使用接口，它为开发者屏蔽了底层的硬">
 
 
 
@@ -352,7 +352,7 @@
 
       
         <h1 id="什么是JMM"><a href="#什么是JMM" class="headerlink" title="什么是JMM"></a>什么是JMM</h1><p>JMM （Java Memory Model ）Java内存模型是一个语言级别的内存模型抽象，它屏蔽了底层硬件实现内存一致性需求的差异，提供了对上层的统一的接口来提供保证内存一致性的编程能力。</p>
-<p>Java作为一个跨平台的语言，Java内存模型作为一人中间层模型，它适配不同的底层硬件系统，设计一个中间层模型来屏蔽底层的硬件差异，给上层的开发者提供一个一致的使用接口，它为开发者屏蔽了底层的硬件实现细节，支持大部分的主流硬件平台。</p>
+<p>Java作为一个跨平台的语言，Java内存模型作为一个中间层模型，它适配不同的底层硬件系统，设计一个中间层模型来屏蔽底层的硬件差异，给上层的开发者提供一个一致的使用接口，它为开发者屏蔽了底层的硬件实现细节，支持大部分的主流硬件平台。</p>
 <h1 id="一致性模型"><a href="#一致性模型" class="headerlink" title="一致性模型"></a>一致性模型</h1><p>任何语言编写出来的程序，最终都会转换为机器指令，按照一定的顺序去执行，所以在语言层面来讲，都是基于硬件层面提供的一致性模型基础上，来实现自身语言的功能和特性，如何保证语言层面的功能，在转换为硬件指令之后，根据语言的要求正确的运行，这就需要语言提供一种一致性模型的编程能力。Java内存模型就是java语言级别的内存模型抽象</p>
 <h1 id="模型一致性"><a href="#模型一致性" class="headerlink" title="模型一致性"></a>模型一致性</h1><p>模型一致性不止下面列的4种，根据概念的严格化，可以分为很多种，<code>严格一致、顺序一致、因果一致</code>等，在本文中我们只列4种，这4种对我们后期理解 Java内存模型有很大的帮助</p>
 <h2 id="顺序一致性-Sequential-Consistency"><a href="#顺序一致性-Sequential-Consistency" class="headerlink" title="顺序一致性 Sequential Consistency"></a>顺序一致性 Sequential Consistency</h2><p>​    也是常说的<code>串行语义</code>，它不要求全局的时钟顺序，只需要各个CPU局总的时钟顺序，</p>
@@ -363,7 +363,7 @@
 <h2 id="进入一致性-Entry-Consistency"><a href="#进入一致性-Entry-Consistency" class="headerlink" title="进入一致性 Entry Consistency"></a>进入一致性 Entry Consistency</h2><p>和释放一致性一样，也是为了减小弱一致性的粒度，进入同步变量时，获取同步变量的最新状态，保证可以拿到数据更新后的最新值</p>
 <h1 id="再看Java内存模型"><a href="#再看Java内存模型" class="headerlink" title="再看Java内存模型"></a>再看Java内存模型</h1><p>Java内存模型是一种比较松散的语言级内存模型，它通过加内存屏障(Memory Barrier)，实现对共享数据的弱一致性、释放一致性、进入一致性的支持。</p>
 <p>最终语言是以机器指令在运行，JMM适配不同硬件平台，操作硬件指令，来提供一种语言层面满足一致性模型的编程能力,使开发者不需要关心代码是以什么顺序执行，只要能够正确的使用JMM提供的同步原语，就可以保证程序最终表现出来的行为是正确的。</p>
-<p>JMM适配了底层硬件，根据硬件指令提供一些同步原语，实现程序在多线程情况下的可见性，原子性、有序性，主要通过这些原主维护一套语言层面的运行规则 ，来保证语言层面的多线程下表现出来和串行语义一致的结果。</p>
+<p>JMM适配了底层硬件，根据硬件指令提供一些同步原语，实现程序在多线程情况下的可见性，原子性、有序性，主要通过这些原语维护一套语言层面的运行规则 ，来保证语言层面的多线程下表现出来和串行语义一致的结果。</p>
 <p>JMM的这种一致性模型的编程能力，使程序员不需要关运行的代码在执行时候是乱成什么顺序，以什么顺序 执行，只要能够正确的使用JMM提供的同步原语，就可以保证程序最终表现出来的行为是正确的。</p>
 <blockquote>
 <p>主要功能就是屏蔽各硬件平台的差异，通过NATIVE方法，操作硬件指令组合，来实现JAVA中的语义，保证可见性，有序性，原子性。</p>
@@ -543,7 +543,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-count">26</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
