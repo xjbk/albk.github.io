@@ -1,6 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://albk.tech/Docker%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%80%EF%BC%89%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87%E5%AE%89%E8%A3%85centos7.html</loc>
+    <lastmod>2020-02-08</lastmod>
+  </url>  <url>
+    <loc>http://albk.tech/Docker%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%8C%EF%BC%89Centos7%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85Docker.html</loc>
+    <lastmod>2020-02-08</lastmod>
+  </url>  <url>
+    <loc>http://albk.tech/Docker%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%89%EF%BC%89%E8%AE%A4%E8%AF%86Docker%E5%92%8C%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4.html</loc>
+    <lastmod>2020-02-08</lastmod>
+  </url>  <url>
+    <loc>http://albk.tech/Docker%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%9B%9B%EF%BC%89Docker%E6%90%AD%E5%BB%BATomcat.html</loc>
+    <lastmod>2020-02-08</lastmod>
+  </url>  <url>
+    <loc>http://albk.tech/Docker%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%94-Dockerfile%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4.html</loc>
+    <lastmod>2020-02-08</lastmod>
+  </url>  <url>
+    <loc>http://albk.tech/Docker%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%85%AD%EF%BC%89Dockerfile%E6%9E%84%E5%BB%BA%E8%87%AA%E5%AE%9A%E4%B9%89%E9%95%9C%E5%83%8F.html</loc>
+    <lastmod>2020-02-08</lastmod>
+  </url>  <url>
+    <loc>http://albk.tech/Docker%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B8%83%EF%BC%89%E5%AE%9E%E6%88%98-%E6%9E%84%E5%BB%BAREDIS%E9%95%9C%E5%83%8F.html</loc>
+    <lastmod>2020-02-08</lastmod>
+  </url>  <url>
+    <loc>http://albk.tech/Docker%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%85%AB%EF%BC%89%E5%AE%B9%E5%99%A8%E9%97%B4%E5%8D%95%E5%90%91%E9%80%9A%E4%BF%A1.html</loc>
+    <lastmod>2020-02-08</lastmod>
+  </url>  <url>
+    <loc>http://albk.tech/Docker%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%B9%9D%EF%BC%89Volumn%E5%AE%B9%E5%99%A8%E9%97%B4%E5%85%B1%E4%BA%AB%E6%95%B0%E6%8D%AE.html</loc>
+    <lastmod>2020-02-08</lastmod>
+  </url>  <url>
+    <loc>http://albk.tech/Docker%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%8D%81%EF%BC%89Docker%E5%AE%B9%E5%99%A8%E7%BC%96%E6%8E%92-Docker-compose.html</loc>
+    <lastmod>2020-02-08</lastmod>
+  </url>  <url>
+    <loc>http://albk.tech/Docker%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%8D%81%E4%B8%80%EF%BC%89Docker%E7%B3%BB%E5%88%97%E7%BB%93%E6%9D%9F-%E6%96%B0%E7%9A%84%E5%BC%80%E5%A7%8BK8S.html</loc>
+    <lastmod>2020-02-08</lastmod>
+  </url>  <url>
+    <loc>http://albk.tech/Docker%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%8D%81%E4%BA%8C%EF%BC%89%E4%B8%AD%E9%81%87%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98%E6%B1%87%E6%80%BB.html</loc>
+    <lastmod>2020-02-08</lastmod>
+  </url>  <url>
+    <loc>http://albk.tech/Docker%E7%B3%BB%E5%88%97%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0.html</loc>
+    <lastmod>2020-02-08</lastmod>
+  </url>  <url>
     <loc>http://albk.tech/%E8%81%8A%E8%81%8A%E5%86%85%E5%AD%98%E5%B1%8F%E9%9A%9C.html</loc>
     <lastmod>2019-10-25</lastmod>
   </url>  <url>

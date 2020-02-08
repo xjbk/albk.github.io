@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="docker,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="容器编排是什么应用一般由单独容器化的组件组成，须按照一定顺序在网络级别进行组织，以使其能够按照计划运行，这种对多个容器进行组织的流程称为容器编排，它主要是对容器之间的依赖关系进行编排 Docker-composedocker官方提供的工具，强调单机多容器的编排，能力相对有限，只能在一台宿主机上对容器编排，对于大规模集群环境中，多台机器无法支持，在windows, mac 安装完docker后默">
+<meta name="keywords" content="docker">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Docker学习（十）Docker容器编排 Docker-compose">
+<meta property="og:url" content="http://albk.tech/Docker学习（十）Docker容器编排-Docker-compose.html">
+<meta property="og:site_name" content="BK的网络日志">
+<meta property="og:description" content="容器编排是什么应用一般由单独容器化的组件组成，须按照一定顺序在网络级别进行组织，以使其能够按照计划运行，这种对多个容器进行组织的流程称为容器编排，它主要是对容器之间的依赖关系进行编排 Docker-composedocker官方提供的工具，强调单机多容器的编排，能力相对有限，只能在一台宿主机上对容器编排，对于大规模集群环境中，多台机器无法支持，在windows, mac 安装完docker后默">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://pic.albk.tech/albk.jpg">
+<meta property="og:image" content="http://pic.albk.tech/docker-10-1.png">
+<meta property="og:image" content="http://pic.albk.tech/docker-10-2.png">
+<meta property="og:image" content="http://pic.albk.tech/docker-10-3.png">
+<meta property="og:image" content="http://pic.albk.tech/docker-10-4.png">
+<meta property="og:image" content="http://pic.albk.tech/docker-10-5.png">
+<meta property="og:image" content="http://pic.albk.tech/docker-10-6.png">
+<meta property="og:image" content="http://pic.albk.tech/docker-10-7.png">
+<meta property="og:image" content="http://pic.albk.tech/docker-10-8.png">
+<meta property="og:image" content="http://pic.albk.tech/docker-10-9.png">
+<meta property="og:updated_time" content="2020-02-08T08:26:27.298Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Docker学习（十）Docker容器编排 Docker-compose">
+<meta name="twitter:description" content="容器编排是什么应用一般由单独容器化的组件组成，须按照一定顺序在网络级别进行组织，以使其能够按照计划运行，这种对多个容器进行组织的流程称为容器编排，它主要是对容器之间的依赖关系进行编排 Docker-composedocker官方提供的工具，强调单机多容器的编排，能力相对有限，只能在一台宿主机上对容器编排，对于大规模集群环境中，多台机器无法支持，在windows, mac 安装完docker后默">
+<meta name="twitter:image" content="http://pic.albk.tech/albk.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://albk.tech/Docker学习（十）Docker容器编排-Docker-compose.html">
+
+
+
+
+
+  <title>Docker学习（十）Docker容器编排 Docker-compose | BK的网络日志</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">BK的网络日志</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">BK</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://albk.tech/Docker学习（十）Docker容器编排-Docker-compose.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="BK">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/head.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="BK的网络日志">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Docker学习（十）Docker容器编排 Docker-compose</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-02-08T15:57:30+08:00">
+                2020-02-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/Docker学习（十）Docker容器编排-Docker-compose.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/Docker学习（十）Docker容器编排-Docker-compose.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/Docker学习（十）Docker容器编排-Docker-compose.html" class="leancloud_visitors" data-flag-title="Docker学习（十）Docker容器编排 Docker-compose">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="http://pic.albk.tech/albk.jpg" alt="此处输入图片的描述"></p>
+<hr>
+<h1 id="容器编排是什么"><a href="#容器编排是什么" class="headerlink" title="容器编排是什么"></a>容器编排是什么</h1><p>应用一般由单独容器化的组件组成，须按照一定顺序在网络级别进行组织，以使其能够按照计划运行，这种对多个容器进行组织的流程称为容器编排，它主要是对容器之间的依赖关系进行编排</p>
+<h1 id="Docker-compose"><a href="#Docker-compose" class="headerlink" title="Docker-compose"></a>Docker-compose</h1><p>docker官方提供的工具，强调单机多容器的编排，能力相对有限，只能在一台宿主机上对容器编排，对于大规模集群环境中，多台机器无法支持，在windows, mac 安装完docker后默认提供docker-compose，但是在windows server , Linux中默认是不提供的，需要自行安装</p>
+<h1 id="示例场景"><a href="#示例场景" class="headerlink" title="示例场景"></a>示例场景</h1><p>在一个简单的应用部署中，如图</p>
+<p><img src="http://pic.albk.tech/docker-10-1.png" alt="此处输入图片的描述"></p>
+<p>需要用到 nginx , tomcat  , mysql 三个组件，而且这每个组件在部署的时候是有依赖关系的，比如要先有mysql,因为tomcat中的应用需要使用到mysql,最后需要安装nginx，对tocmcat做负载均衡实现集群</p>
+<blockquote>
+<p>顺序如下：<code>mysql -&gt; tomcat -&gt; nginx</code></p>
+</blockquote>
+<p>如果是人工处理的话，虽然简单，但是需要花费长时间， 现在有了docker-compose，就可以对容器进行编排，通过一个yml文件来维护容器编排的逻辑，再通过docker-compose命令对配置文件进行编译解析，就可以实现一个应用的部署</p>
+<p>接下来我们使用docker-compose 部署一个开源博客<code>wordpress</code></p>
+<h1 id="示例一-搭建wordpress开源博客"><a href="#示例一-搭建wordpress开源博客" class="headerlink" title="示例一 搭建wordpress开源博客"></a>示例一 搭建wordpress开源博客</h1><p>整个过程比较简单</p>
+<h2 id="安装docker-compose"><a href="#安装docker-compose" class="headerlink" title="安装docker-compose"></a>安装docker-compose</h2><ul>
+<li><p>获取并自动安装docker-comppose<br><code>sudo curl -L &quot;https://github.com/docker/compose/releases/download/1.25.0/docker-compose-$(uname -s)-$(uname -m)&quot; -o /usr/local/bin/docker-compose</code><br>默认安装目录是<code>/usr/local/bin/docker-compose</code></p>
+</li>
+<li><p>文件夹授权<br><code>sudo chmod +x /usr/local/bin/docker-compose</code></p>
+<blockquote>
+<p>因为要连接国外网站，下载会很慢，可能会被拒绝，多试几次就好</p>
+</blockquote>
+</li>
+<li><p>查看安装的版本<br><code>docker-compose -version</code></p>
+</li>
+</ul>
+<p><img src="http://pic.albk.tech/docker-10-2.png" alt="此处输入图片的描述"></p>
+<h2 id="安装部署开源博客wordpress"><a href="#安装部署开源博客wordpress" class="headerlink" title="安装部署开源博客wordpress"></a>安装部署开源博客wordpress</h2><p>创建目录<code>mkdir -p /usr/local/docker/wordpress</code></p>
+<ul>
+<li><p>编写docker-compose 配置文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">version: &apos;3.3&apos;</span><br><span class="line">services:</span><br><span class="line">   db:</span><br><span class="line">     image: mysql:5.7</span><br><span class="line">     volumes:</span><br><span class="line">       - db_data:/var/lib/mysql</span><br><span class="line">     restart: always</span><br><span class="line">     environment:</span><br><span class="line">       MYSQL_ROOT_PASSWORD: somewordpress</span><br><span class="line">       MYSQL_DATABASE: wordpress</span><br><span class="line">       MYSQL_USER: wordpress</span><br><span class="line">       MYSQL_PASSWORD: wordpress</span><br><span class="line">   wordpress:</span><br><span class="line">     depends_on:</span><br><span class="line">       - db</span><br><span class="line">     image: wordpress:latest</span><br><span class="line">     ports:</span><br><span class="line">       - &quot;8000:80&quot;</span><br><span class="line">     restart: always</span><br><span class="line">     environment:</span><br><span class="line">       WORDPRESS_DB_HOST: db:3306</span><br><span class="line">       WORDPRESS_DB_USER: wordpress</span><br><span class="line">       WORDPRESS_DB_PASSWORD: wordpress</span><br><span class="line">       WORDPRESS_DB_NAME: wordpress</span><br><span class="line">volumes:</span><br><span class="line">    db_data: &#123;&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>配置文件解读</p>
+</li>
+<li><p>解析配置文件并安装 <code>docker-compose up -d</code></p>
+<ul>
+<li>up 解析执行  </li>
+<li>-d 后台运行</li>
+</ul>
+</li>
+</ul>
+<p><img src="http://pic.albk.tech/docker-10-3.png" alt="此处输入图片的描述"></p>
+<ul>
+<li><p>执行过程</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Creating network &quot;wordpress_default&quot; with the default driver</span><br><span class="line">Creating volume &quot;wordpress_db_data&quot; with default driver</span><br><span class="line">Pulling db (mysql:5.7)...</span><br><span class="line">5.7: Pulling from library/mysql</span><br><span class="line">......</span><br><span class="line">Status: Downloaded newer image for mysql:5.7</span><br><span class="line">Pulling wordpress (wordpress:latest)...</span><br><span class="line">latest: Pulling from library/wordpress</span><br><span class="line">......</span><br><span class="line">Creating wordpress_db_1 ... done</span><br><span class="line">Recreating wordpress_wordpress_1 ... done</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查看创建的应用<br><code>docker ps</code><br><img src="http://pic.albk.tech/docker-10-4.png" alt="此处输入图片的描述"><br>  <code>wordpress_wordpress_1</code>  博客的web应用<br>  <code>wordpress_db_1</code> 博客的mysql5.7容器</p>
+</li>
+</ul>
+<h2 id="初始化wordpress"><a href="#初始化wordpress" class="headerlink" title="初始化wordpress"></a>初始化wordpress</h2><p>从上面进程看到WEB应用对外暴露的是8000端口<br>http://宿主机ip:8000 对博客进行一下初始化<br><img src="http://pic.albk.tech/docker-10-5.png" alt="此处输入图片的描述"></p>
+<p><img src="http://pic.albk.tech/docker-10-6.png" alt="此处输入图片的描述"></p>
+<p><img src="http://pic.albk.tech/docker-10-7.png" alt="此处输入图片的描述"></p>
+<p><img src="http://pic.albk.tech/docker-10-8.png" alt="此处输入图片的描述"></p>
+<p><img src="http://pic.albk.tech/docker-10-9.png" alt="此处输入图片的描述"></p>
+<blockquote>
+<p>到这里都是个应用上的一些流程,有兴趣的可以体验一下这个博客，很不错的</p>
+</blockquote>
+<h2 id="成果展示"><a href="#成果展示" class="headerlink" title="成果展示"></a>成果展示</h2><p>到这里我们已经完成了开源博客的部署， 整个过程很简单，整个过程是由docker-compose 这个容器编排工具完成的，通过一个yml配置文件 ，就完成了一个应用的部署，很大节省了运维人员工作量，整个应用的维护，只需要一个yml配置文件</p>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p><a href="https://docs.docker.com/compose/install/" target="_blank" rel="noopener">docker-compose-install</a><br><a href="https://docs.docker.com/compose/wordpress/" target="_blank" rel="noopener">QuickStart : compose and wordpress</a></p>
+<h1 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h1><p>通过docker-compose部署自己的应用时里面有很多东西，本文的例子一个很简单，实际工作中一定不止于此，docker-compose文件中的内容有很多学问，可以到docker官网上看一下，以mysql为例，如果指定初始化数据库的脚本，root用户的密码如何指定等，这块需要用到mysql容器的一些环境变量，这块内容可以参考<a href="https://hub.docker.com/_/mysql" target="_blank" rel="noopener">docker-mysql</a></p>
+<p>相关文章会首发公众号，可以关注公号<strong>albk</strong>，关注后可以获取大量学习视频</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="http://pic.albk.tech/mb-qcode.png" alt="BK wechat" style="width: 200px; max-width: 100%;">
+    <div>扫一扫，用手机访问本站</div>
+</div>
+
+      </div>
+    
+
+    
+
+    
+
+    <div>
+      
+        
+<div style="text-align:center;color: #ccc;font-size:14px;">
+---------------- 本文结束 ----------------<div>
+
+      
+    </div>
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/docker/" rel="tag"># docker</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/Docker学习（九）Volumn容器间共享数据.html" rel="next" title="Docker学习（九）Volumn容器间共享数据">
+                <i class="fa fa-chevron-left"></i> Docker学习（九）Volumn容器间共享数据
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/Docker学习（十一）Docker系列结束-新的开始K8S.html" rel="prev" title="Docker学习（十一）Docker系列结束-新的开始K8S">
+                Docker学习（十一）Docker系列结束-新的开始K8S <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </div></div></article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/head.png" alt="BK">
+            
+              <p class="site-author-name" itemprop="name">BK</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">38</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="tsxy_xujing@163.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.jianshu.com/u/a5230c4f0b7a" target="_blank" title="JianShu">
+                      
+                        <i class="fa fa-fw fa-vk"></i>JianShu</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#容器编排是什么"><span class="nav-number">1.</span> <span class="nav-text">容器编排是什么</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Docker-compose"><span class="nav-number">2.</span> <span class="nav-text">Docker-compose</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#示例场景"><span class="nav-number">3.</span> <span class="nav-text">示例场景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#示例一-搭建wordpress开源博客"><span class="nav-number">4.</span> <span class="nav-text">示例一 搭建wordpress开源博客</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装docker-compose"><span class="nav-number">4.1.</span> <span class="nav-text">安装docker-compose</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装部署开源博客wordpress"><span class="nav-number">4.2.</span> <span class="nav-text">安装部署开源博客wordpress</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#初始化wordpress"><span class="nav-number">4.3.</span> <span class="nav-text">初始化wordpress</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#成果展示"><span class="nav-number">4.4.</span> <span class="nav-text">成果展示</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">5.</span> <span class="nav-text">参考资料</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#写在最后"><span class="nav-number">6.</span> <span class="nav-text">写在最后</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">BK</span>
+
+  
+</div>
+
+
+  <div class="powered-by">沪ICP备19020687号</div>
+ <span class="post-meta-divider">|</span>
+ <div class="powered-by">Copyright © 2019-2019 Blog 不会写BUG的猿</div>
+ 
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  	
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'BdExPoDeir7pcsbmzXAFoBU3-gzGzoHsz',
+        appKey: 'cWkHueKA8heTGngUXd7W7YfN',
+        placeholder: '留下你想说的话,来个互动...',
+        avatar:'mp',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("BdExPoDeir7pcsbmzXAFoBU3-gzGzoHsz", "cWkHueKA8heTGngUXd7W7YfN");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

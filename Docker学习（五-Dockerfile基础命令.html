@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="docker,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="学习Dockerfile，需要对它的基础命令进行了解 FROM - 基于基准镜像 尽量使用官方提供的基准镜像    FROM tomcat:8.5.50-jdk8-openjdk #制作基准镜像（基于tomcat:8.5.50-jdk8-openjdk)  FROM centos #制作基准镜像基于centos:latest  FROM  scratch #不依赖任何基准镜像  LABEL &amp;">
+<meta name="keywords" content="docker">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Docker学习（五) Dockerfile基础命令">
+<meta property="og:url" content="http://albk.tech/Docker学习（五-Dockerfile基础命令.html">
+<meta property="og:site_name" content="BK的网络日志">
+<meta property="og:description" content="学习Dockerfile，需要对它的基础命令进行了解 FROM - 基于基准镜像 尽量使用官方提供的基准镜像    FROM tomcat:8.5.50-jdk8-openjdk #制作基准镜像（基于tomcat:8.5.50-jdk8-openjdk)  FROM centos #制作基准镜像基于centos:latest  FROM  scratch #不依赖任何基准镜像  LABEL &amp;">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://pic.albk.tech/albk3.jpg">
+<meta property="og:image" content="http://pic.albk.tech/docker-6-2.png">
+<meta property="og:image" content="http://pic.albk.tech/docker-6-3.png">
+<meta property="og:image" content="http://pic.albk.tech/docker-6-4.png">
+<meta property="og:updated_time" content="2020-02-08T08:29:32.420Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Docker学习（五) Dockerfile基础命令">
+<meta name="twitter:description" content="学习Dockerfile，需要对它的基础命令进行了解 FROM - 基于基准镜像 尽量使用官方提供的基准镜像    FROM tomcat:8.5.50-jdk8-openjdk #制作基准镜像（基于tomcat:8.5.50-jdk8-openjdk)  FROM centos #制作基准镜像基于centos:latest  FROM  scratch #不依赖任何基准镜像  LABEL &amp;">
+<meta name="twitter:image" content="http://pic.albk.tech/albk3.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://albk.tech/Docker学习（五-Dockerfile基础命令.html">
+
+
+
+
+
+  <title>Docker学习（五) Dockerfile基础命令 | BK的网络日志</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">BK的网络日志</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">BK</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://albk.tech/Docker学习（五-Dockerfile基础命令.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="BK">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/head.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="BK的网络日志">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Docker学习（五) Dockerfile基础命令</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-02-08T15:56:42+08:00">
+                2020-02-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/Docker学习（五-Dockerfile基础命令.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/Docker学习（五-Dockerfile基础命令.html" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/Docker学习（五-Dockerfile基础命令.html" class="leancloud_visitors" data-flag-title="Docker学习（五) Dockerfile基础命令">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="http://pic.albk.tech/albk3.jpg" alt="此处输入图片的描述"></p>
+<hr>
+<p>学习Dockerfile，需要对它的基础命令进行了解</p>
+<h1 id="FROM-基于基准镜像"><a href="#FROM-基于基准镜像" class="headerlink" title="FROM - 基于基准镜像"></a>FROM - 基于基准镜像</h1><blockquote>
+<p>尽量使用官方提供的基准镜像</p>
+</blockquote>
+<ul>
+<li><input checked disabled type="checkbox"> FROM tomcat:8.5.50-jdk8-openjdk #制作基准镜像（基于tomcat:8.5.50-jdk8-openjdk)</li>
+<li><input checked disabled type="checkbox"> FROM centos #制作基准镜像基于centos:latest</li>
+<li><input checked disabled type="checkbox"> FROM  scratch #不依赖任何基准镜像</li>
+</ul>
+<h1 id="LABEL-amp-MAINTAINER-说明信息"><a href="#LABEL-amp-MAINTAINER-说明信息" class="headerlink" title="LABEL &amp; MAINTAINER - 说明信息"></a>LABEL &amp; MAINTAINER - 说明信息</h1><ul>
+<li><input checked disabled type="checkbox"> MAINTAINER albk.tech #当前镜像由哪个个人/机构维护</li>
+<li><input checked disabled type="checkbox"> LABEL version=”1.0” # 说明其它描述信息，这些信息不产生功能影响，只是方便阅读</li>
+<li><input checked disabled type="checkbox"> LABEL description - “BK个人博客” </li>
+</ul>
+<h1 id="WORKDIR-设置工作目录"><a href="#WORKDIR-设置工作目录" class="headerlink" title="WORKDIR  - 设置工作目录"></a>WORKDIR  - 设置工作目录</h1><blockquote>
+<p>WORKDIR 支持相对路径和绝对路径，建议使用<strong>绝对路径</strong>，这样Dockerfile看起来更加清晰，更容易进行维护</p>
+</blockquote>
+<ul>
+<li><input checked disabled type="checkbox"> <code>WORKDIR /usr/local/albk</code> #设置工作目录和linux的cd命令类似，但是如果目标目录不存在，具有自动创建目录的功能</li>
+</ul>
+<h1 id="ADD-amp-COPY-设置工作目录"><a href="#ADD-amp-COPY-设置工作目录" class="headerlink" title="ADD &amp; COPY  - 设置工作目录"></a>ADD &amp; COPY  - 设置工作目录</h1><ul>
+<li><input checked disabled type="checkbox"> <code>ADD hello /</code> # 将hello文件夹复制到容器的根路径下</li>
+<li><input checked disabled type="checkbox"> <code>ADD test.tar.gz /</code> # 解压缩test.tar.gz并复制到容器的根路径下</li>
+<li><input checked disabled type="checkbox"> ADD除了复制，还具备添加远程文件的功能，类似于wget 和curl功能，在实际使用中比较少</li>
+</ul>
+<h1 id="ENV-设置环境常量"><a href="#ENV-设置环境常量" class="headerlink" title="ENV - 设置环境常量"></a>ENV - 设置环境常量</h1><blockquote>
+<p>尽量使用环境常量， 设置常量后，后面的代码可以使用该常量，修改时只需要修改常量定义即可，可提高程序的维护性 </p>
+<ul>
+<li><input checked disabled type="checkbox"> <code>ENV JAVA_HOME /usr/local/openjdk8</code> 设置JAVA_HOME常量</li>
+<li><input checked disabled type="checkbox"> <code>RUN ${JAVA_HOME}/bin/java -jar albk.jar</code> #使用常量执行指令</li>
+</ul>
+</blockquote>
+<h1 id="RUN-amp-CMD-amp-ENTRYPOINT-执行指令"><a href="#RUN-amp-CMD-amp-ENTRYPOINT-执行指令" class="headerlink" title="RUN &amp; CMD &amp; ENTRYPOINT - 执行指令"></a>RUN &amp; CMD &amp; ENTRYPOINT - 执行指令</h1><blockquote>
+<p>这3条指令都可以执行命令，他们的区别如下</p>
+</blockquote>
+<ul>
+<li><input checked disabled type="checkbox"> <code>RUN</code> #在build构建时执行命令</li>
+<li><input checked disabled type="checkbox"> <code>ENTRYPOINT</code> #容器启动时执行命令</li>
+<li><input checked disabled type="checkbox"> <code>CMD</code> #容器启动后执行默认的命令或参数</li>
+</ul>
+<blockquote>
+<p>本质上是<strong>执行时机</strong>不同<br><code>RUN</code>上在构建镜像时(<strong>docker build</strong>)，对镜像内部文件或资源进行调整，创建后镜像是只读的不允许修改<br>CMD|ENTRYPOINT在容器创建（<strong>docker run</strong> ）时执行,对容器内资源进行修改</p>
+</blockquote>
+<h2 id="RUN-构建时运行"><a href="#RUN-构建时运行" class="headerlink" title="RUN-构建时运行"></a>RUN-构建时运行</h2><ul>
+<li><input checked disabled type="checkbox"> <p><code>RUN yum install -y vim</code> #Shell命令格式</p>
+</li>
+<li><p>使用该方式，会创建一个子进程去执行命令</p>
+</li>
+<li><p>执行完毕之后，子进程销毁，并返回主进程</p>
+</li>
+<li><input checked disabled type="checkbox"> <p><code>RUN [&quot;yum&quot;,&quot;install&quot;,&quot;-y&quot;,&quot;vim&quot;]</code> # Exec命令格式</p>
+</li>
+<li><p>使用该方式，会用Exec进程替换当前进程，并且保持PID不变</p>
+</li>
+<li><p>执行完毕，直接退也，并不会返回之前的进程环境</p>
+</li>
+</ul>
+<blockquote>
+<p>这两种命令格式，推荐使用后者， 本质区别就是是否创建子进程</p>
+</blockquote>
+<h2 id="ENTRYPOINT-启动命令-入口点"><a href="#ENTRYPOINT-启动命令-入口点" class="headerlink" title="ENTRYPOINT 启动命令  - 入口点"></a>ENTRYPOINT 启动命令  - 入口点</h2><ul>
+<li><input checked disabled type="checkbox"> <code>ENTRYPOINT</code> 用于在容器启动时执行命令</li>
+<li>如果在程序中存在多个ENTRYPOINT的话，只有最后一个会被执行</li>
+<li>ENTRYPOINT [“ps”] 推荐使用Exec格式</li>
+</ul>
+<h2 id="CMD默认命令"><a href="#CMD默认命令" class="headerlink" title="CMD默认命令"></a>CMD默认命令</h2><ul>
+<li><input checked disabled type="checkbox"> 用于设置默认执行的命令</li>
+<li>如果Dockerfile中出现多个CMD，只有最后一个被执行</li>
+<li>CMD被称为默认命令是指，如果在容器启动时，没有附加指令，使用的默认指令</li>
+<li>如果容器启动时附加指令则CMD会被忽略</li>
+<li>CMD [“ps” , “-ef”] 推荐使用Exec格式</li>
+</ul>
+<h2 id="CMD与ENTRYPOINT区别对比"><a href="#CMD与ENTRYPOINT区别对比" class="headerlink" title="CMD与ENTRYPOINT区别对比"></a>CMD与ENTRYPOINT区别对比</h2><blockquote>
+<p>CMD如果启动附加了指令，则不会执行，而ENTRYPOINT一定会被执行</p>
+</blockquote>
+<h3 id="创建Dockerfile"><a href="#创建Dockerfile" class="headerlink" title="创建Dockerfile"></a>创建Dockerfile</h3><p><code>mkdir -p /usr/local/docker/commandtest</code><br><code>cd /usr/local/docker/commandtest</code><br><code>vim Dockerfile</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">FROM tomcat</span><br><span class="line">RUN [&quot;echo&quot; ,&quot;image building ....&quot;]</span><br><span class="line">ENTRYPOINT [&quot;ps&quot;]</span><br><span class="line">CMD [&quot;-ef&quot;]</span><br></pre></td></tr></table></figure>
+
+<p>保存退出</p>
+<h3 id="编译Dockerfile"><a href="#编译Dockerfile" class="headerlink" title="编译Dockerfile"></a>编译Dockerfile</h3><p>`docker build -t albk.tech/commandtest . </p>
+<blockquote>
+<p>可以看到RUN命令内容在docker build阶段，已经执行`</p>
+</blockquote>
+<p><img src="http://pic.albk.tech/docker-6-2.png" alt="此处输入图片的描述"></p>
+<p><code>docker run albk.tech/commandtest</code></p>
+<p><img src="http://pic.albk.tech/docker-6-3.png" alt="此处输入图片的描述"></p>
+<ul>
+<li>可以看到ENTRYPOINT和CMD命令进行合并了，然后执行了组合命令<code>ps -ef</code></li>
+<li>这样可能看不出他们的区别，我们接下来看一下<br><code>docker run albk.tech/commandtest -aux</code></li>
+</ul>
+<p><img src="http://pic.albk.tech/docker-6-4.png" alt="此处输入图片的描述"></p>
+<blockquote>
+<p>在运行时传入 <code>-aux</code>之后，最终运行的命令是<code>ps -aux</code>,所以说CMD命令不一定执行，当在运行时候，有指定命令，会运行指定的代码，而不是默认代码，这样的组合有很大的好处，可以在不改变Dockerfile的前提下，提供更灵活的配置</p>
+</blockquote>
+<h1 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h1><p>相关文章会首发公众号，可以关注公号<strong>albk</strong>，关注后可以获取大量学习视频</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="http://pic.albk.tech/mb-qcode.png" alt="BK wechat" style="width: 200px; max-width: 100%;">
+    <div>扫一扫，用手机访问本站</div>
+</div>
+
+      </div>
+    
+
+    
+
+    
+
+    <div>
+      
+        
+<div style="text-align:center;color: #ccc;font-size:14px;">
+---------------- 本文结束 ----------------<div>
+
+      
+    </div>
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/docker/" rel="tag"># docker</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/Docker学习（四）Docker搭建Tomcat.html" rel="next" title="Docker学习（四）Docker搭建Tomcat">
+                <i class="fa fa-chevron-left"></i> Docker学习（四）Docker搭建Tomcat
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/Docker学习（六）Dockerfile构建自定义镜像.html" rel="prev" title="Docker学习（六）Dockerfile构建自定义镜像">
+                Docker学习（六）Dockerfile构建自定义镜像 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </div></div></article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/head.png" alt="BK">
+            
+              <p class="site-author-name" itemprop="name">BK</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">38</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="tsxy_xujing@163.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.jianshu.com/u/a5230c4f0b7a" target="_blank" title="JianShu">
+                      
+                        <i class="fa fa-fw fa-vk"></i>JianShu</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#FROM-基于基准镜像"><span class="nav-number">1.</span> <span class="nav-text">FROM - 基于基准镜像</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#LABEL-amp-MAINTAINER-说明信息"><span class="nav-number">2.</span> <span class="nav-text">LABEL &amp; MAINTAINER - 说明信息</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#WORKDIR-设置工作目录"><span class="nav-number">3.</span> <span class="nav-text">WORKDIR  - 设置工作目录</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ADD-amp-COPY-设置工作目录"><span class="nav-number">4.</span> <span class="nav-text">ADD &amp; COPY  - 设置工作目录</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ENV-设置环境常量"><span class="nav-number">5.</span> <span class="nav-text">ENV - 设置环境常量</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#RUN-amp-CMD-amp-ENTRYPOINT-执行指令"><span class="nav-number">6.</span> <span class="nav-text">RUN &amp; CMD &amp; ENTRYPOINT - 执行指令</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#RUN-构建时运行"><span class="nav-number">6.1.</span> <span class="nav-text">RUN-构建时运行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ENTRYPOINT-启动命令-入口点"><span class="nav-number">6.2.</span> <span class="nav-text">ENTRYPOINT 启动命令  - 入口点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CMD默认命令"><span class="nav-number">6.3.</span> <span class="nav-text">CMD默认命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CMD与ENTRYPOINT区别对比"><span class="nav-number">6.4.</span> <span class="nav-text">CMD与ENTRYPOINT区别对比</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建Dockerfile"><span class="nav-number">6.4.1.</span> <span class="nav-text">创建Dockerfile</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编译Dockerfile"><span class="nav-number">6.4.2.</span> <span class="nav-text">编译Dockerfile</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#写在最后"><span class="nav-number">7.</span> <span class="nav-text">写在最后</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">BK</span>
+
+  
+</div>
+
+
+  <div class="powered-by">沪ICP备19020687号</div>
+ <span class="post-meta-divider">|</span>
+ <div class="powered-by">Copyright © 2019-2019 Blog 不会写BUG的猿</div>
+ 
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  	
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'BdExPoDeir7pcsbmzXAFoBU3-gzGzoHsz',
+        appKey: 'cWkHueKA8heTGngUXd7W7YfN',
+        placeholder: '留下你想说的话,来个互动...',
+        avatar:'mp',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("BdExPoDeir7pcsbmzXAFoBU3-gzGzoHsz", "cWkHueKA8heTGngUXd7W7YfN");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
