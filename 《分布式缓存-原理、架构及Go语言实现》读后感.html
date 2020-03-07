@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="JVM,">
+  <meta name="keywords" content="读书,">
 
 
 
@@ -79,26 +79,20 @@
 
 
 
-<meta name="description" content="–引用计数法 是一个老牌垃圾回收算法，通过引用计算来标记，判断一个对象是不是垃圾，是不是要回收。 基本思想 ： 为每一个对象都标记一个引用数量，引用计数器的实现很简单，对于一个对象A，只要有任何一个对象引用了A，则A的引用计数器就加1，当引用失效时，引用计数器就减1。只要对象A的引用计数器的值为0，则对象A就不可能再被使用。  对于上图，根对象和ABC三个对象，有互相引用的关系，ABC引用计数分别">
-<meta name="keywords" content="JVM">
+<meta name="description" content="前言 最近读了一本书《分布式缓存-原理、架构及Go语言实现》作者：胡世杰代码是go语言实现的，这本书不是很厚，这本书在排版上字体比较大，代码占用了较大的篇幅，读起来很快。这本书可以带我们去很快的学习一个缓存框架，整个过程中主要学习作者的一些想法和用的一些技术框架  作者从一个简单的基于http满足基本的set、get、del操作的In Memeory缓存服务，然后通过自己编写的性能测试工具，对这">
+<meta name="keywords" content="读书">
 <meta property="og:type" content="article">
-<meta property="og:title" content="JVM篇之 GC算法">
-<meta property="og:url" content="http://albk.tech/JVM篇之-GC算法.html">
+<meta property="og:title" content="《分布式缓存-原理、架构及Go语言实现》读后感">
+<meta property="og:url" content="http://albk.tech/《分布式缓存-原理、架构及Go语言实现》读后感.html">
 <meta property="og:site_name" content="BK的网络日志">
-<meta property="og:description" content="–引用计数法 是一个老牌垃圾回收算法，通过引用计算来标记，判断一个对象是不是垃圾，是不是要回收。 基本思想 ： 为每一个对象都标记一个引用数量，引用计数器的实现很简单，对于一个对象A，只要有任何一个对象引用了A，则A的引用计数器就加1，当引用失效时，引用计数器就减1。只要对象A的引用计数器的值为0，则对象A就不可能再被使用。  对于上图，根对象和ABC三个对象，有互相引用的关系，ABC引用计数分别">
+<meta property="og:description" content="前言 最近读了一本书《分布式缓存-原理、架构及Go语言实现》作者：胡世杰代码是go语言实现的，这本书不是很厚，这本书在排版上字体比较大，代码占用了较大的篇幅，读起来很快。这本书可以带我们去很快的学习一个缓存框架，整个过程中主要学习作者的一些想法和用的一些技术框架  作者从一个简单的基于http满足基本的set、get、del操作的In Memeory缓存服务，然后通过自己编写的性能测试工具，对这">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://pic.albk.tech/gc1.png">
-<meta property="og:image" content="http://pic.albk.tech/gc2.png">
-<meta property="og:image" content="http://pic.albk.tech/gc3.png">
-<meta property="og:image" content="http://pic.albk.tech/gc4.png">
-<meta property="og:image" content="http://pic.albk.tech/gc5.png">
-<meta property="og:image" content="http://pic.albk.tech/gc6.png">
-<meta property="og:image" content="http://pic.albk.tech/gc7.png">
-<meta property="og:updated_time" content="2019-08-14T16:24:27.490Z">
+<meta property="og:image" content="http://pic.albk.tech/book/gop.png">
+<meta property="og:updated_time" content="2020-03-07T14:41:24.288Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="JVM篇之 GC算法">
-<meta name="twitter:description" content="–引用计数法 是一个老牌垃圾回收算法，通过引用计算来标记，判断一个对象是不是垃圾，是不是要回收。 基本思想 ： 为每一个对象都标记一个引用数量，引用计数器的实现很简单，对于一个对象A，只要有任何一个对象引用了A，则A的引用计数器就加1，当引用失效时，引用计数器就减1。只要对象A的引用计数器的值为0，则对象A就不可能再被使用。  对于上图，根对象和ABC三个对象，有互相引用的关系，ABC引用计数分别">
-<meta name="twitter:image" content="http://pic.albk.tech/gc1.png">
+<meta name="twitter:title" content="《分布式缓存-原理、架构及Go语言实现》读后感">
+<meta name="twitter:description" content="前言 最近读了一本书《分布式缓存-原理、架构及Go语言实现》作者：胡世杰代码是go语言实现的，这本书不是很厚，这本书在排版上字体比较大，代码占用了较大的篇幅，读起来很快。这本书可以带我们去很快的学习一个缓存框架，整个过程中主要学习作者的一些想法和用的一些技术框架  作者从一个简单的基于http满足基本的set、get、del操作的In Memeory缓存服务，然后通过自己编写的性能测试工具，对这">
+<meta name="twitter:image" content="http://pic.albk.tech/book/gop.png">
 
 
 
@@ -128,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="http://albk.tech/JVM篇之-GC算法.html">
+  <link rel="canonical" href="http://albk.tech/《分布式缓存-原理、架构及Go语言实现》读后感.html">
 
 
 
 
 
-  <title>JVM篇之 GC算法 | BK的网络日志</title>
+  <title>《分布式缓存-原理、架构及Go语言实现》读后感 | BK的网络日志</title>
   
 
 
@@ -271,7 +265,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://albk.tech/JVM篇之-GC算法.html">
+    <link itemprop="mainEntityOfPage" href="http://albk.tech/《分布式缓存-原理、架构及Go语言实现》读后感.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="BK">
@@ -288,7 +282,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">JVM篇之 GC算法</h2>
+          <h2 class="post-title" itemprop="name headline">《分布式缓存-原理、架构及Go语言实现》读后感</h2>
         
 
         <div class="post-meta">
@@ -300,8 +294,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-07T16:04:24+08:00">
-                2019-06-07
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-07T22:36:55+08:00">
+                2020-03-07
               </time>
             
 
@@ -311,28 +305,6 @@
           </span>
 
           
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/JVM/" itemprop="url" rel="index">
-                    <span itemprop="name">JVM</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
 
           
             
@@ -341,8 +313,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/JVM篇之-GC算法.html#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/JVM篇之-GC算法.html" itemprop="commentCount"></span>
+                <a href="/《分布式缓存-原理、架构及Go语言实现》读后感.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/《分布式缓存-原理、架构及Go语言实现》读后感.html" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -350,7 +322,7 @@
 
           
           
-             <span id="/JVM篇之-GC算法.html" class="leancloud_visitors" data-flag-title="JVM篇之 GC算法">
+             <span id="/《分布式缓存-原理、架构及Go语言实现》读后感.html" class="leancloud_visitors" data-flag-title="《分布式缓存-原理、架构及Go语言实现》读后感">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -381,76 +353,63 @@
       
 
       
-        <p>–引用计数法</p>
-<p>是一个老牌垃圾回收算法，通过引用计算来标记，判断一个对象是不是垃圾，是不是要回收。</p>
-<p>基本思想 ： 为每一个对象都标记一个引用数量，引用计数器的实现很简单，对于一个对象A，只要有任何一个对象引用了A，则A的引用计数器就加1，当引用失效时，引用计数器就减1。只要对象A的引用计数器的值为0，则对象A就不可能再被使用。</p>
-<p><img src="http://pic.albk.tech/gc1.png" alt="引用计数"></p>
-<p>对于上图，根对象和ABC三个对象，有互相引用的关系，ABC引用计数分别为1</p>
-<p>当A对B的引用失去之后，B的引用变成了0，根据引用计数的规则，引用为0 的B对象就会当作垃圾回收掉，回收之后堆中只剩下根对象和AC。</p>
-<p>引用计数法带来的问题</p>
-<p>1、引用和去引用伴随加法和减法，，因为要实时的计算当前对象有多少个引用，对象的引用和消是无时无刻存在的，所以对影响有一定性能</p>
-<p>2、很难处理循环引用的问题，看下面的问题，<br><img src="http://pic.albk.tech/gc2.png" alt="循环引用"><br>上图中，根对象引用A，引用C，C引用B，B又引用A，所以引用计算A(2),C(1),B(1),当，根对象失去对A的引用时，由于A,B,C三者互相引用，所以三个对象的引用计数都是1，所以A,B,C相当于一个独立体，无法被回收，如果堆中存在大量这样的无用对象，就会导致不停的GC，而GC后又无效果，最终内存溢出</p>
-<p>–标记清除</p>
-<pre><code>标记-清除算法是现代垃圾回收算法的思想基础。    
-
-基本思想：标记-清除算法将垃圾回收分为两个阶段：标记阶段和清除阶段。一种可行的实现是，在标记阶段，首先通过根节点做搜索，标记所有从根节点开始的可达对象。因此，未被标记的对象就是未被引用的垃圾对象。然后，在清除阶段，清除所有未被标记的对象。</code></pre><p><img src="http://pic.albk.tech/gc3.png" alt="标记清除"><br>在标记清除算法中，大致总结思路如下：从根节点开始做两件事情</p>
-<p>1、标活（标记可达对象）,标记A,B,C,D,E是可达对象</p>
-<p>2、去死 （去除不可达对象），去除黑色区域不可达对象</p>
-<p>通过上面图可以反应出，从堆中清空垃圾对象后，堆中的可用空间比较分散不连续，这时候如果有一个大的对象需要申请6个连续的空间，是无法分配，会造成大量的空间碎片。标记压缩算法可以避免这种情况的发生。</p>
-<p>–标记压缩</p>
-<p>基本思路：在标记-清除算法的基础上做了一些优化。和标记-清除算法一样，标记-压缩算法也首先需要从根节点开始，对所有可达对象做一次标记。但之后，它并不简单的清理未标记的对象，而是将所有的存活对象压缩到内存的一端。之后，清理边界外所有的空间。</p>
-<p>执行过程如下图：<br><img src="http://pic.albk.tech/gc4.png" alt="标记压缩"><br>标记压缩<br>大致总结思路如下：从根节点开始做两件事情</p>
-<p>1、标活</p>
-<p>2、移动存活对象到一端</p>
-<p>3、清除边界外的所有空间</p>
-<p>标记压缩对标记清除而言，有什么优势呢？</p>
-<p>相比与标记清除算法，清理之后，会有大量的连续空间，不会有空间碎片，标记-压缩算法适合用于存活对象较多的场合，如老年代。</p>
-<p>–复制算法</p>
-<p>基本思想 ：将原有的内存空间分为两块，每次只使用其中一块，在垃圾回收时，将正在使用的内存中的存活对象复制到未使用的内存块中，之后，清除正在使用的内存块中的所有对象，交换两个内存的角色，完成垃圾回收</p>
-<p>复制算法两空一样大小的空间，下面是复制算法的执行过程：<br><img src="http://pic.albk.tech/gc5.png" alt="标记压缩"><br>复制算法<br>1、标活</p>
-<p>2、复制存活对象从FROM区域到TO区域</p>
-<p>3、交换FROM与TO的角色</p>
-<p>与标记-清除算法相比，复制算法是一种相对高效的回收方法，在现在的JVM中，复制算法一般会用于年轻代，但是复制算法的最大问题是：空间浪费，每次只使用一半的空间。</p>
-<p>可以想想，比如为复制算法分配8G的空间，但是在使用过程中会浪费4G的空间，当然8G的复制空间也只是举个例子，为了更能突出空间的浪费 ，因为复制算法本身的特性决定 ，是需要将存活对象进行一次复制 ，所以复制空间一般都不会很大，因为大的空间，如果在极端情况下，会涉及大量存活对象的移动，这种大量的移动对于系统本身，无疑问是灾难性的。</p>
-<p>在现在的JVM中也不会很大，每一块复制区域默认占用1/10的空间。比如，有10M的空间默认的，FROM和TO区域分别占用1M。</p>
-<p>所以一般整合标记清理思想，对复制算法会做一些改进，如下图：<br><img src="http://pic.albk.tech/gc6.png" alt="标记压缩"><br>复制算法改进<br>因为复制空间越大，浪费的空间越大，复制算法空间一般不会很大，一般在复制过程 中会了现两种情况</p>
-<p>第一种：对象太大，放不到复制空间</p>
-<p>第二种：即使大对象放得下，也会导致大量的小对象无法存放，会导致大量的不符合老年代特性的小对象进行老年代</p>
-<p>所以复制算法一般需要一个担保空间，如上图中蓝色区域。</p>
-<p>比如：C、D、F是大对象，在一执行复制算法后，会直接进入到担保空间。</p>
-<p>对于对JVM堆内存划分有了解的人，可能对上面的图比较熟悉，这其实已经很接近JVM堆空间的结构，蓝色区域复制算法的担保空间就我们经常说的老年代(Old Generation)。顶部的区域就是年轻代（Eden），而中间两块复制算法的空间就是幸存区(Surivor),对比上面和下面的图，发现是完全可以吻合的。</p>
-<p>JVM堆内存划分</p>
-<p><img src="http://pic.albk.tech/gc7.png" alt="标记压缩"></p>
-<p>分代思想</p>
-<p>依据对象的存活周期进行分类</p>
-<p>第一类：有些对象创建后，很快就会回收，我们把短命对象归为新生代，</p>
-<p>第二类：有些对象创建后会长期存在，有可能和JVM生命周期相同，我们把长命对象归为老年代。</p>
-<p>根据不同代的特点，选取合适的收集算法</p>
-<p>–少量对象存活，适合复制算法</p>
-<p>–老年代中的对象有两种：</p>
-<pre><code>老年代中的对象：多次GC没有回收掉，年龄校大的对象，生命周期较长
-
-复制算法空间担保 ，直接进入 老年代的大对象</code></pre><p>所以会有大量对象存活，和大对象，适合标记清理或者标记压缩</p>
-<p>所有的算法，需要能够识别一个垃圾对象，因此需要给出一个可触及性的定义</p>
-<p>什么是可触及的：从根节点可以到达的对象，此对象称为可触及的</p>
-<p>可复活的： 一旦所有引用被释放，就是可复活状态(因为在finalize()中可能复活该对象)</p>
-<p>什么是不可触及的：在finalize()后，可能会进入不可触及状态，不可触及的对象不可能复活，不可触及的对象，是可以回收的</p>
-<p>上面的算法中，我们一直说从根节点查找，都提到了根节点，所以我们要搞清楚什么是根节点？</p>
-<p>–栈中引用的对象（局部变量表）</p>
-<p>–方法区中静态成员或者常量引用的对象（全局对象）</p>
-<p>–JNI方法栈中引用对象</p>
-<p>根是一系列对象的集合，是一砣根节点，文章中为了简单所以只有一个根对象，希望不要给大家带来误解！</p>
-<p>GC中的一个重要 的现象Stop-The-Word</p>
-<p>java中一种全局暂停的现象，所有的JAVA代码停止 ，native代码可能执行，但不能和JVM交互</p>
-<p>引起STW的原因 ：GC 、DUMP线程、堆 DUMP</p>
-<p>多半是因为GC引起的。</p>
-<p>为什么会产生全局停顿?</p>
-<p>GC需要一个安静的状态来完成垃圾的回收，所以需要将用户线程停止，完成垃圾回收后，再继续用户线程。</p>
-<p>STW危害？</p>
-<p>1、影响系统吞吐量，系统响应时间 增长</p>
-<p>2、长时间的服务停止，没有响应，遇到HA系统，可能引起主备切换，最终导致主备同时启动。在一些业务场景下，可能会导致数据不致，甚至无法正常工作。</p>
-<p>大家好我是BK，第一次写文章 ，写和不是很好，有错误的地方，请大家指正，谢谢大家！</p>
-<p>后续会更新GC的种类和各类的区别。希望大家可以关注我。</p>
+        <p><img src="http://pic.albk.tech/book/gop.png" alt="此处输入图片的描述"></p>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><blockquote>
+<p>最近读了一本书《分布式缓存-原理、架构及Go语言实现》作者：胡世杰<br>代码是go语言实现的，这本书不是很厚，这本书在排版上字体比较大，代码占用了较大的篇幅，读起来很快。这本书可以带我们去很快的学习一个缓存框架，整个过程中主要学习作者的一些想法和用的一些技术框架</p>
+</blockquote>
+<p>作者从一个简单的基于http满足基本的<code>set</code>、<code>get</code>、<code>del</code>操作的<code>In Memeory</code>缓存服务，然后通过自己编写的性能测试工具，对这个缓存服务进行性能测试并与redis做对比，给出两个框架结果的差异，整本书就是通过<code>找出性能差异</code>、<code>提出问题</code>、<code>解决问题</code>、<code>验证结果</code>，这样的思路，逐步的对框架进行优化，最终实现一个高性能的分布式缓存</p>
+<h2 id="个人的一些见解"><a href="#个人的一些见解" class="headerlink" title="个人的一些见解"></a>个人的一些见解</h2><ul>
+<li>作者可以很轻松的驾驶分布式缓存框架，单从get、set、del来说性能高于redis</li>
+<li>基于开源的高性能框架去扩展，可以很快去设计一款适合自己业务发展的框架，降底很大的开发成本，比如作者选择RockDB来做数据持久化</li>
+<li>去了解 <code>RockDB</code>、<code>ABNF(Augmented Backus-Naur Form）</code>、<code>gossip协议</code></li>
+<li>整个阅读过程中，可以验证一些自己对缓存框架的思考</li>
+<li>在高性能框架开发时，选择合适的语言很有必要，比如作者实现的分布式缓存框架高于redis，部分原因归于go语言对多线程很好的支持、</li>
+<li>去实现一个go语言开发的版本redis，性能更上一层</li>
+<li>高性能框架的实现，需要发挥多种语言的优势 </li>
+<li>框架中的技术点很多都是类似的，通信协议选择、pipeline技术、异步提或读取性能、批量写入提升写入性能等，对他们的原理有了解，可以指导框架的设计</li>
+</ul>
+<blockquote>
+<p>对于一个好的框架，需要涉及到各方各面的技术点，对设计者的技术广度有很高的要求，在平时工作中，大多数IT开发还是偏向于业务系统开发，大量的CRUD。我们可以对这些技术不太了解，<strong>但是我们一定要知道它，知道每种技术的原理、可以解决什么样的问</strong>题，这对我们的职业发展很有帮助，包括你去理解一些框架设计也会感觉很轻松。</p>
+</blockquote>
+<h1 id="从书中整理的一些问题"><a href="#从书中整理的一些问题" class="headerlink" title="从书中整理的一些问题"></a>从书中整理的一些问题</h1><ul>
+<li>设计中如何选择通信协议？</li>
+<li>pipeline的原理，在哪些框架中应用了</li>
+<li>高性能的数据持久化的框架</li>
+<li>如果提升写入速度? </li>
+<li>如何提升查询速度</li>
+<li>如何保证命令被服务端按顺序处理？</li>
+<li>为什么要集群？实现方式？ </li>
+<li>分布式集群中扩容和缩容时，如何避免全量数据迁移？如何去做数据迁移？</li>
+<li>CAP理论，如何实现CP ? 如何实现AP?</li>
+<li>什么是节点再平衡，如何实现?其它分布式框架怎么实现?</li>
+<li>缓存的TTL如何实现？redis怎么实现的？</li>
+<li>如何提供一套框架自身的性能测试工具？</li>
+<li>In memory有哪些缺陷？怎么解决？</li>
+</ul>
+<h1 id="闲聊几句"><a href="#闲聊几句" class="headerlink" title="闲聊几句"></a>闲聊几句</h1><p>在平时工作中，大多数IT开发偏向于业务系统开发，大量的CRUD，因为在工作中接触到的技术是有限的，在工作多年之后，就会出现工作年限和能力不匹配的情况，之前听一个老师说过一句话，印象挺深的。</p>
+<blockquote>
+<p>“有些人有10年的工作经验，却达不到10年的能力，对于企业这种人是把1年的工作能力用了10年”</p>
+</blockquote>
+<p>这句话特别有道理，现在培训机构很多，每几个月就会培训出大量的IT人员，想在众多人脱颖而出就需要你比其它人知道的更多，更深。</p>
+<pre><code>企业招聘你是为了公司业务向前推进，不是让你来学习的，当然好的企业对于员人的个人发展也是很看重的，大多数企业招聘人员，还是希望来了可以直接上手的。</code></pre><p>在工作中接触的知识是有限的，这就需要我们在工作以外的时间去了解一些未接触过的技术，提升自己技术的知识面，技术广度好的同学，在读这本书时候会发现，作者在上一章尾巴留下疑问的时候，就会在读者脑海中想出相应的解决方案，在下一章阅读时会发现和作者所想一致，整个阅读过程中会行云流水，读起来很快，相关的go代码可以不用仔细去看，但是整个过程和设计思路是我们一定要深思一下，作者为什么要这样做，有哪些优势劣势，</p>
+<p>整本书中对于细节的描述不是很多，我们在阅读中可以多问几个问题，自己多想一想，这样的过程会促使我们成长，当一个问题出现了，解决之后要多围绕当前问题多发散一下，出现的其它问题怎么解决，当自己都想明白了，会有满满的成就感，对于每个问题我们都这样做，我们会很快成长起来。</p>
+<p>其实在平时面试中，一些连环炮的问题都是从一个问题点儿，向外发散的，技术深度都可以通过这些问题反映出来的，多思考是好事儿，</p>
+<h1 id="图书推荐"><a href="#图书推荐" class="headerlink" title="图书推荐"></a>图书推荐</h1><ul>
+<li>Java特种兵</li>
+<li>实战Java高并发程序设计</li>
+<li>Java多线程编程实战指南（核心篇）</li>
+<li>java并发编程的艺术</li>
+<li>深入理解 Java虚拟机 JVM高级特性与最佳实践  周志明</li>
+<li>大话设计模式 程杰</li>
+<li>漫画算法  小灰的算法之旅  魏梦舒</li>
+<li>Redis深度历险 核心原理与应用实践</li>
+<li>从Paxos到Zookeeper分布式一致性原理与实践</li>
+<li>Mysql技术内幕  InnoDB存储引擎  第二版  姜承尧</li>
+</ul>
+<h1 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h1><p>相同各类的书可以多搞几本，都穿插着看一下，因为部分知识重叠，不会浪费太多时间。同一个知识点从多作者的角度去看，对自己的理解会有很大的帮助<br>偏基础的书，要不定时的拿出来多看一下，看完第一遍后面再看的话会很快，加深一下印象，要不时间长了还是会忘记的，多看几次让它成为自己的知识。</p>
+<blockquote>
+<p>扫码关注公众号<code>albk</code>，相关文章会先在公众号发布</p>
+</blockquote>
 
       
     </div>
@@ -484,7 +443,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/JVM/" rel="tag"># JVM</a>
+            <a href="/tags/读书/" rel="tag"># 读书</a>
           
         </div>
       
@@ -497,8 +456,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/使用Logback脱敏-扩展篇.html" rel="next" title="使用Logback脱敏-扩展篇">
-                <i class="fa fa-chevron-left"></i> 使用Logback脱敏-扩展篇
+              <a href="/Docker系列学习笔记.html" rel="next" title="Docker系列学习笔记">
+                <i class="fa fa-chevron-left"></i> Docker系列学习笔记
               </a>
             
           </div>
@@ -506,10 +465,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/JVM篇-之-垃圾收集器.html" rel="prev" title="JVM篇 之 垃圾收集器">
-                JVM篇 之 垃圾收集器 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -566,8 +521,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -645,6 +609,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#个人的一些见解"><span class="nav-number">1.1.</span> <span class="nav-text">个人的一些见解</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#从书中整理的一些问题"><span class="nav-number">2.</span> <span class="nav-text">从书中整理的一些问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#闲聊几句"><span class="nav-number">3.</span> <span class="nav-text">闲聊几句</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#图书推荐"><span class="nav-number">4.</span> <span class="nav-text">图书推荐</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#结束语"><span class="nav-number">5.</span> <span class="nav-text">结束语</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
